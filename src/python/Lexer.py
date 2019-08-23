@@ -76,8 +76,6 @@ class Lexer:
         pass
 
 
-
-
 dfa = DFA(7,[1,2,3,4,5,6],Aritop_table)
 string = input("Input string > ")
 result = dfa.read_string(string)
