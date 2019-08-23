@@ -1,21 +1,34 @@
 #Hello i am lexer V2
 from enum import Enum
+import re
 import string
 
 
 #GLOBAL VARS
 token_list=[]
+letter = string.ascii_letters
+operators = ["+","-","*","/"]
 
 
+id_table = {
+(0,"(_|[A-Z]|[a-z])"):1,(1,"(_|[A-Z]|[a-z]|[0-9])*"):1
+}
+
+aritOp_table = {
 
 
-class TokenValue(Enum):
-    OPERATOR = 1
+}
+
+class Regex(Enum):
+
+class TokenType(Enum):
+    ARITOP = 1,
     KEYWORD = 2
     IDENTIFIER = 3
     SEPARATOR = 4
     NUMBER = 5
     STRING = 6
+    RELOP = 7
 
 class DFA:
     def __init__(self,num_states=2,final_states=[],table={}):
@@ -24,32 +37,25 @@ class DFA:
         self.current_state=0
         self.trans_table=table
 
-        def read_string(self,string):
-            for c in string:
-                self.transition(c)
-                if self.current_state in self.final_states:
-                    return "String accepted"
-                else:
-                    return "String rejected"
-                    def transition(self,char):
-                        key = (self.current_state,char)
-                        if key in self.trans_table:
-                            self.current_state = self.trans_table[key]
+    def read_string(self,string):
+        for c in string:
+            self.transition(c)
+            if self.current_state in self.final_states:
+                return "String accepted"
+            else:
+                return "String rejected"
 
-
-class RegExs(Enum):
-    pass
-
-
-
+    def transition(self,char):
+        for key in self.trans_table:
+            if key[0]==self.current_state:
+                if re.match(key[1],char) is not None:
+                    self.current_state = self.trans_table[key]
 
 
 class Token:
     def __init__(value,lexeme):
         self.value = value
         self.lexeme = lexeme
-
-
 
 
 
@@ -71,15 +77,8 @@ class Lexer:
 
 
 
-trans_table={
-(0,">"):1,(0,"<"):2,(1,"="):3,
-(2,"="):3}
 
-t2={(0,"a"):1,(0,"b"):0,(0,"c"):0,
-(1,"a"):2,(1,"b"):0,(1,"c"):0,
-(2,"a"):2,(2,"b"):0,(2,"c"):0,
-}
-dfa = DFA(3,[2],t2)
+dfa = DFA(2,[1],id_table)
 string = input("Input string > ")
 result = dfa.read_string(string)
 print(result)
