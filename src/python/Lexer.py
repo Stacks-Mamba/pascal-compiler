@@ -9,17 +9,17 @@ token_list=[]
 letter = string.ascii_letters
 operators = ["+","-","*","/"]
 
-
-id_table = {
+#Transition table for identifier DFA
+Id_table = {
 (0,"(_|[A-Z]|[a-z])"):1,(1,"(_|[A-Z]|[a-z]|[0-9])*"):1
 }
 
-aritOp_table = {
-
-
+#Transition table for aritmetic operators DFA
+Aritop_table = {
+(0,"\\+"):1,(0,"-"):4,(0,"\\*"):3,(0,"="):2,(0,"/"):5,
+(1,"="):2,(3,"="):2,(3,"\\*"):6,(4,"="):2,(5,"="):2
 }
 
-class Regex(Enum):
 
 class TokenType(Enum):
     ARITOP = 1,
@@ -78,7 +78,7 @@ class Lexer:
 
 
 
-dfa = DFA(2,[1],id_table)
+dfa = DFA(7,[1,2,3,4,5,6],Aritop_table)
 string = input("Input string > ")
 result = dfa.read_string(string)
 print(result)
