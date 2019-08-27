@@ -11,7 +11,7 @@ operators = ["+","-","*","/"]
 
 #Transition table for identifier DFA
 Id_table = {
-(0,"(_|[A-Za-z])"):1,(1,"(_|[A-Z]|[a-z]|[0-9])*"):1
+(0,"(_|[A-Za-z])"):1,(1,"(_|[A-Za-z]|[0-9])*"):1
 }
 
 #Transition table for aritmetic operators DFA
