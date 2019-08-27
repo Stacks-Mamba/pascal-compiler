@@ -64,6 +64,7 @@ class Lexer:
         self.line = 0
         self.col = 0
         self.src_file = None
+        self.buffer = None
         self.fp = None
 
     #Add and open source file
@@ -73,7 +74,12 @@ class Lexer:
 
     #Function used for getting tokens and adding them to the symbol
     def getToken():
-        pass
+        #Get a line from the file
+        self.buffer = self.fp.readline()
+        self.line+=1
+        #Process the line for a token
+
+
 
 
 dfa = DFA(7,[1,2,3,4,5,6],Aritop_table)
