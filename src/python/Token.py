@@ -3,22 +3,22 @@ import re
 import string
 
 
-
-token_list=[]
 class TokenType(Enum):
+    #All pascal operators
     OPERATORS ={ "+":"TOK_ADD","-":"TOK_SUB","*":"TOK_MUL",":=":"TOK_ATRIB",
        "/":"TOK_DIV","~":"TOK_BN","&":"TOK_BAND","|":"TOK_BOR","!":"TOK_BOR",
         "=":"TOK_EQ","<>":"TOK_NEQ","<":"TOK_LT","<=":"TOK_LTE",">":"TOK_GT",
         ">=":"TOK_GTE"}
 
+    #All pascal delimiters
     DELIMITERS={"(":"TOK_LP",")":"TOK_RP","[":"TOK_LIB","]":"TOK_RIB",
     "{":"TOK_CBL","}":"TOK_CBR","(*":"TOK_PSL","*)":"TOK_PSR",",":"TOK_VIRG",
     ".":"TOK_PONTO",";":"TOK_PV",":":"TOK_DP","..":"TOK_ELIP","^":"TOK_CIRC"}
 
-
+    #All pascal reserved words
     KEYWORDS = { "and":"TOK_AND","array":"TOK_ARRAY","begin":"TOK_BEGIN",
     "case":"TOK_CASE","const":"TOK_CONST","div":"TOK_DIV","do":"TOK_DO",
-    "downto":"TOK_DOWNTO","else":"TOK_ELSE","file":"TOK_FILE",
+    "dow nto":"TOK_DOWNTO","else":"TOK_ELSE","file":"TOK_FILE",
     "for":"TOK_FOR","forward":"TOK_FORWARD","function":"TOK_FUNCTION",
     "goto":"TOK_GOTO","if":"TOK_IF","in":"TOK_IN",
     "label":"TOK_LABEL","main":"TOK_MAIN","mod":"TOK_MOD",
@@ -32,11 +32,8 @@ class TokenType(Enum):
     "private":"TOK_PRIVATE","public":"TOK_PUBLIC","static":"TOK_STATIC",
     "univ":"TOK_UNIV"}
 
-
-
-
+#Class that represents a token contains the value and the lexeme
 class Token:
-
     def __init__(value,lexeme):
         self.value = value
         self.lexeme = lexeme
