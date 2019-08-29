@@ -15,6 +15,9 @@ aritmetic_op = ({
 },[1,2,3,4,5,6])
 
 
+class Rule(Enum):
+    pass
+
 class DFA:
     def __init__(self,num_states=2,final_states=[],table={}):
         self.states=[x for x in range(num_states)]
