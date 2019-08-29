@@ -10,15 +10,18 @@ letter = string.ascii_letters
 operators = ["+","-","*","/"]
 
 #Transition table for identifier DFA
-Id_table = {
+identifier = ({
 (0,"(_|[A-Za-z])"):1,(1,"(_|[A-Za-z]|[0-9])*"):1
-}
+},[1])
 
 #Transition table for aritmetic operators DFA
-Aritop_table = {
+aritmetic_op = ({
 (0,"\\+"):1,(0,"-"):4,(0,"\\*"):3,(0,"="):2,(0,"/"):5,
 (1,"="):2,(3,"="):2,(3,"\\*"):6,(4,"="):2,(5,"="):2
-}
+},[1,2,3,4,5,6])
+
+#Recognizing numbers
+ #number_table
 
 
 class TokenType(Enum):
@@ -82,7 +85,7 @@ class Lexer:
 
 
 
-dfa = DFA(7,[1,2,3,4,5,6],Aritop_table)
+dfa = DFA(7,aritmetic_op[1],aritmetic_op[0])
 string = input("Input string > ")
 result = dfa.read_string(string)
 print(result)
