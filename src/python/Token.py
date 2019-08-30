@@ -32,8 +32,19 @@ class TokenType(Enum):
     "private":"TOK_PRIVATE","public":"TOK_PUBLIC","static":"TOK_STATIC",
     "univ":"TOK_UNIV"}
 
+    #Token for string
+    TOKEN_STR = "TOK_STR"
+
+    #Token for numbers
+    TOKEN_NUM = "TOK_NUM"
+
+    #Token for identifiers
+    TOKEN_ID = "TOK_ID"
+
+
 #Class that represents a token contains the value and the lexeme
 class Token:
-    def __init__(value,lexeme):
+    def __init__(self,value,lexeme,line):
         self.value = value
         self.lexeme = lexeme
+        self.line = line
