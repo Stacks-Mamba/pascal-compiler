@@ -39,7 +39,9 @@ class DFA:
                 if re.match(key[1],char) is not None:
                     self.current_state = self.trans_table[key]
 
-dfa = DFA(7,aritmetic_op[1],aritmetic_op[0])
-string = input("Input string > ")
-result = dfa.read_string(string)
-print(result)
+
+def main():
+    dfa = DFA(7,aritmetic_op[1],aritmetic_op[0])
+    string = input("Input string > ")
+    result = dfa.read_string(string)
+    print(result)
