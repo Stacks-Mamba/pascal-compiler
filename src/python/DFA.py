@@ -36,7 +36,7 @@ class DFA:
     def transition(self,char):
         for key in self.trans_table:
             if key[0]==self.current_state:
-                if re.match(key[1],char) is not None:
+                if re.match(key[1],char) :
                     self.current_state = self.trans_table[key]
 
 

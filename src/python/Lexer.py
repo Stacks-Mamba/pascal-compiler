@@ -2,6 +2,7 @@ from DFA import DFA
 from Token import TokenType,Token
 import string
 from Rules import Rules
+import re
 #The lexer class
 class Lexer:
     def __init__(self):
@@ -20,11 +21,22 @@ class Lexer:
     def getToken(self):
         lexeme = ""
         for line in self.fp:
-            self.buffer = self.fp.readline()
+            self.buffer = line
+            print(line[len(line)-1]=="\n")
+            print(line)
             #Process the line for a token
-            match = re.search(Rules.NUMBERS.value,self.buffer)
-            print(match)
+            for char in self.buffer:
+                if char not in string.whitespace:
+                    lexeme += char
+                else:
+                    for regex in Rules.NUMBERS.value:
+                        match = re.search(regex,lexeme)
+                        if match != None:
+                            print(match.string)
+                            break
+                    lexeme = ""
             self.line+=1
+            lexeme = ""
 
 lexer = Lexer()
 lexer.add_src("source.txt")
