@@ -3,6 +3,7 @@ from Token import TokenType,Token
 import string
 from Rules import Rules
 import re
+#Just a new comment
 #The lexer class
 class Lexer:
     def __init__(self):
