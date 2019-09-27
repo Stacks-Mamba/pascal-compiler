@@ -82,6 +82,32 @@ public class Analex
         char nextChar = lerCaracter();
         return ch == nextChar;
     }
+    
+    private char getNextChar(){
+        if(linha == null)
+            return 0;
+        
+        if(posicaoLinha == linha.length())
+        {
+            try
+            {
+                linha=arquivo.readLine();
+                if(linha == null)//casol leu o fim do arquivo
+                {
+                   // numeroLinha++;
+                    return 0;
+                }
+                linha = linha.concat("\n");
+                //numeroLinha++;
+                posicaoLinha = 0;
+            }catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        char ch = linha.charAt(posicaoLinha);
+        return ch;
+    }
     private void getNewLine()
     {
         try
@@ -110,8 +136,15 @@ public class Analex
             {
                 case NAO_ALFANUMERICO:
                     ch = lerCaracter();
+                    
                     switch(ch)
                     {
+                        case '|':
+                            token = new Token(Tokens.OR,"|",numeroLinha);
+                            break;
+                        case '!':
+                            token = new Token(Tokens.OR,"!",numeroLinha);
+                            break;
                         case '.':
                             token = new Token(Tokens.PONTO,".",numeroLinha);
                             break;
@@ -122,18 +155,23 @@ public class Analex
                             token = new Token(Tokens.VIRGULA,",",numeroLinha);
                             break;
                         case '(':
-                            if(verificaProximoChar(')'))
-                                token = new Token(Tokens.ABREFECHAPAR,"()",numeroLinha);
+                            if( getNextChar()== ')')
+                            {
+                               
+                               token = new Token(Tokens.ABREFECHAPAR,"()",numeroLinha);
+                            } 
                             else{ 
-                                if(verificaProximoChar('.')) 
+                                if(getNextChar()== '*') 
                                 {
-                                    posicaoLinha--;
-                                    token = new Token(Tokens.ABREPARPONTO,"(.",numeroLinha);
-                                }else
-                                    {
-                                        posicaoLinha--;
+                                    //posicaoLinha--;
+                                    
+                                    estado=EstadosAutomato.COMENTARIO;
+                                    lexema= String.valueOf(ch);
+                                    
+                                }else{
+                                        //posicaoLinha--;
                                         token = new Token(Tokens.ABREPAR,"(",numeroLinha);
-                                    }
+                                     }
                             }
                             break;
                         case ')':
@@ -146,13 +184,7 @@ public class Analex
                             token = new Token(Tokens.FECHACOCH,"]",numeroLinha);
                             break;
                         case '*':
-                            if(verificaProximoChar('='))
-                            token = new Token(Tokens.VEZESIGUAL,"*=",numeroLinha);
-                            else
-                            {
-                                posicaoLinha--;
                                 token = new Token(Tokens.VEZES,"*",numeroLinha);
-                            }
                             break;
                         case '=':
                             token = new Token(Tokens.IGUAL,"=",numeroLinha);
@@ -182,26 +214,16 @@ public class Analex
                             }
                             break;
                         case '+':
-                            if(verificaProximoChar('='))
-                                token = new Token(Tokens.MAISIGUAL,"+=",numeroLinha);
-                            else
-                            {
-                                posicaoLinha--;
-                                token = new Token(Tokens.MAIS,"+",numeroLinha);
-                            }                  
+                                token = new Token(Tokens.MAIS,"+",numeroLinha);           
                             break;
                         case '-':
-                            if(verificaProximoChar('='))
-                                token = new Token(Tokens.MENOSIGUAL,"-=",numeroLinha);
-                            else
-                            {
-                                posicaoLinha--;
                                 token = new Token(Tokens.MENOS,"-",numeroLinha);
-                            }    
                             break;
                         case '/':
-                            if(verificaProximoChar('/'))
-                                token = new Token(Tokens.BARRABARRA,"//",numeroLinha);
+                            if(getNextChar()== '*'){
+                               estado=EstadosAutomato.COMENTARIO;
+                               lexema= String.valueOf(ch);
+                            }
                             else
                             {
                                 posicaoLinha--;
@@ -209,10 +231,10 @@ public class Analex
                             }
                             break;
                         case '~':
-                            token = new Token(Tokens.TIL,"~",numeroLinha);
+                            token = new Token(Tokens.NOT,"~",numeroLinha);
                             break;
                         case ':':
-                            if(verificaProximoChar('='))
+                            if(this.verificaProximoChar('='))
                             token = new Token(Tokens.ATRIB,":=",numeroLinha);
                             else
                             {
@@ -220,6 +242,36 @@ public class Analex
                                 token = new Token(Tokens.DOISPONTOS,":",numeroLinha);
                             }
                             break;
+                        case '&':
+                            token = new Token(Tokens.AND,"&",numeroLinha);
+                            break;
+                        case '"':
+                            while(true){
+                                ch = lerCaracter();
+                                //lexema+=String.valueOf(ch);                             
+                                    
+                                    if(ch=='"')
+                                    { 
+                                        estado=EstadosAutomato.NAO_ALFANUMERICO;
+                                        //getNewLine();
+                                        break;
+                                    }
+                                    
+                                
+                                }
+                            break;
+                        case '{':
+                            while(true){
+                                ch = lerCaracter();                           
+                                    if(ch=='}')
+                                    { 
+                                        estado=EstadosAutomato.NAO_ALFANUMERICO;
+                                        break;
+                                    }
+                                    
+                                
+                                }
+                            break;                        
                         default:
                              if(ch == ' ' || ch =='\n' || ch == '\t')
                                  continue;
@@ -240,7 +292,7 @@ public class Analex
                                  estado = EstadosAutomato.NUM_INTEIRO;
                                  lexema = String.valueOf(ch);                            
                              }
-                             else if(ch == '{')
+                             else if((ch == '{')||(ch == '"'))
                              { 
                                  estado = EstadosAutomato.COMENTARIO;
                                  lexema = String.valueOf(ch);
@@ -405,6 +457,9 @@ public class Analex
                             case "end":
                                 token = new Token(Tokens.END,lexema,numeroLinha);
                                 break;
+                            case "end.":
+                                token = new Token(Tokens.END,lexema,numeroLinha);
+                                break;
                             case "set":
                                 token = new Token(Tokens.SET,lexema,numeroLinha);
                                 break;
@@ -470,9 +525,6 @@ public class Analex
                                 break;
                             case "otherwise":
                                 token = new Token(Tokens.OTHERWISE,lexema,numeroLinha);
-                                break;
-                            case "packed":
-                                token = new Token(Tokens.PACKED,lexema,numeroLinha);
                                 break;
                             case "unit":
                                 token = new Token(Tokens.UNIT,lexema,numeroLinha);
@@ -613,7 +665,7 @@ public class Analex
                 case STRING:
                         ch = lerCaracter();
                         if((ch == '\'' && lexema.charAt(lexema.length()-1) != '{')
-                          || (ch == '"' && lexema.charAt(lexema.length()-1) == '{' && lexema.charAt(lexema.length()-2) == '{'))
+                          || (ch == '\'' && lexema.charAt(lexema.length()-1) == '{' && lexema.charAt(lexema.length()-2) == '{'))
                         {
                             lexema += String.valueOf(ch);
                             token = new Token(Tokens.STR, lexema, numeroLinha);
@@ -630,7 +682,7 @@ public class Analex
                                 lexema += String.valueOf(ch);
                             }
                         }
-                    break;
+                        break;
                     case ERRO:
                     ch = lerCaracter();
                     if(Delimitadores.isDelimiter(ch))
@@ -640,7 +692,52 @@ public class Analex
                     }
                     else
                         lexema += String.valueOf(ch);
-                    break;
+                        break;
+                    case COMENTARIO:
+                        
+                        ch = lerCaracter();
+                       lexema+=String.valueOf(ch);
+                       
+                        switch(lexema)
+                        {
+                            case "(*":
+                                while(true){
+                                ch = lerCaracter();
+                                lexema+=String.valueOf(ch);
+                                if(lexema.length()>=2){
+                                    
+                                    if("*)".equals(lexema.substring(lexema.length()-2,lexema.length())))
+                                    { 
+                                        estado=EstadosAutomato.NAO_ALFANUMERICO;
+                                        //getNewLine();
+                                        break;
+                                    }
+                                    
+                                }
+                                }
+                                break;
+                                case "/*":
+                                while(true){
+                                ch = lerCaracter();
+                                lexema+=String.valueOf(ch);
+                                if(lexema.length()>=2){
+                                    
+                                    if("*/".equals(lexema.substring(lexema.length()-2,lexema.length())))
+                                    { 
+                                        estado=EstadosAutomato.NAO_ALFANUMERICO;
+                                        //getNewLine();
+                                        break;
+                                    }
+                                    
+                                }
+                                }
+                                break;
+                                
+                                
+                          
+                        
+                        }
+                        break;
                       
                    
                 
