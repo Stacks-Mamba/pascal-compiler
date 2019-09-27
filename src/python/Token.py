@@ -41,6 +41,11 @@ class TokenType(Enum):
     #Token for identifiers
     TOKEN_ID = {r"[a-zA-z_][a-zA-Z_0-9]*":"TOK_ID"}
 
+    OPERATORS_ARIT ={ r"\+":"TOK_ADD","-":"TOK_SUB","*":"TOK_MUL","/":"TOK_DIV"}
+    DELIMETERS_ARIT = {r"(":"TOK_LP",r")":"TOK_RP"}
+    IDENTIFIER_ARIT = {r"[a-zA-z_][a-zA-Z_0-9]*":"TOK_ID"}
+    TOKEN_NUM_ARIT ={r'\d+':"TOK_NUM"}
+
 
 #Class that represents a token contains the value and the lexeme
 class Token:
