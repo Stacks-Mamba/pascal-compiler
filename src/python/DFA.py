@@ -32,7 +32,7 @@ class DFA:
                     self.current_state = self.trans_table[key]
 
     def isFinalState(self):
-        return True if self.current_state in final_states else False
+        return True if self.current_state in self.final_states else False
 
 def main():
     dfa = DFA(7,aritmetic_op[1],aritmetic_op[0])

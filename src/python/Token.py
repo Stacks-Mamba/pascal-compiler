@@ -41,8 +41,8 @@ class TokenType(Enum):
     #Token for identifiers
     TOKEN_ID = {r"[a-zA-z_][a-zA-Z_0-9]*":"TOK_ID"}
 
-    OPERATORS_ARIT ={ r"\+":"TOK_ADD","-":"TOK_SUB","*":"TOK_MUL","/":"TOK_DIV"}
-    DELIMETERS_ARIT = {r"(":"TOK_LP",r")":"TOK_RP"}
+    OPERATORS_ARIT ={ r"\+":"TOK_ADD",r"-":"TOK_SUB",r"\*":"TOK_MUL","/":"TOK_DIV"}
+    DELIMETERS_ARIT = {r"\(":"TOK_LP",r"\)":"TOK_RP"}
     IDENTIFIER_ARIT = {r"[a-zA-z_][a-zA-Z_0-9]*":"TOK_ID"}
     TOKEN_NUM_ARIT ={r'\d+':"TOK_NUM"}
 
@@ -55,7 +55,7 @@ class Token:
         self.line = line
 
     def __str__(self):
-        return "<{0},{1},{2}>".format(value,lexeme,line)
+        return "<{0},{1},{2}>".format(self.value,self.lexeme,self.line)
 
 
 def main():
