@@ -8,7 +8,7 @@ from DFA import DFA
 #The lexer class
 ARIT_GOL=({(0,r"[+\-*/()]"):5,(0,r"[a-zA-z_]"):1,(0,r"\d"):3,
 (1,r"[a-zA-z_0-9]"):1,(1,r"[^a-zA-z_0-9]"):2,
-(3,r"\d"):3,(3,r"\D"):4},[2,4,5])
+(3,r"\d"):3,(3,r"\D"):4,(5,r"\w|\s"):6},[2,4,6])
 
 
 
@@ -24,15 +24,15 @@ class Lexer:
         self.fp = open(src,"r")
         self.buffer = self.fp.readline()
         self.buffer_size = len(self.buffer)
-        self.dfa = DFA(6,ARIT_GOL[1],ARIT_GOL[0])
+        self.dfa = DFA(7,ARIT_GOL[1],ARIT_GOL[0])
         token_list = []
 
     def hasNextTok(self):
-        return True if self.buffer!=None else False
+        return True if self.buffer!="" else False
 
     def getInput(self):
         self.buffer = self.fp.readline()
-        if self.buffer != None :
+        if self.buffer != "" :
             self.buffer_size = len(self.buffer)
             self.line+=1
             self.col = 0
@@ -50,12 +50,13 @@ class Lexer:
         dfa is not in a final state'''
         while True:
             char = self.buffer[self.col]
+            #print("Line {0}, col {1} : {2}".format(self.line,self.col,char))
             self.dfa.transition(char)
             if self.dfa.isFinalState():
                 break
             lexeme += char
             self.col += 1
-        print(True if lexeme=="" else False)
+        #print(lexeme)
         #Return the match by checking all tokA
         for type in Lexer.tokens:
             for regex in type:
@@ -68,6 +69,6 @@ class Lexer:
 
 lexer = Lexer("src.txt")
 token = ''
-for i in range(10):
+while token != None:
     token = lexer.getToken()
-    #print(token)
+    print(token)
