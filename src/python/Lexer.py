@@ -10,8 +10,6 @@ ARIT_GOL=({(0,r"[+\-*/()]"):5,(0,r"[a-zA-z_]"):1,(0,r"\d"):3,
 (1,r"[a-zA-z_0-9]"):1,(1,r"[^a-zA-z_0-9]"):2,
 (3,r"\d"):3,(3,r"\D"):4,(5,r"\w|\s"):6},[2,4,6])
 
-
-
 class Lexer:
 
     tokens = [TokenType.DELIMETERS_ARIT.value,
@@ -66,9 +64,12 @@ class Lexer:
         #if it gets here
         Exception()
 
-
-lexer = Lexer("src.txt")
-token = ''
-while token != None:
-    token = lexer.getToken()
-    print(token)
+def main():
+    lexer = Lexer("src.txt")
+    token = ''
+    while token != None:
+        token = lexer.getToken()
+        print(token)
+        
+if __name__=="__main__":
+    main()
