@@ -5,15 +5,15 @@ import string
 
 class TokenType(Enum):
     #All pascal operators
-    OPERATORS ={ "+":"TOK_ADD","-":"TOK_SUB","*":"TOK_MUL",":=":"TOK_ATRIB",
+    OPERATORS ={ r"\+":"TOK_ADD","-":"TOK_SUB","*":"TOK_MUL",":=":"TOK_ATRIB",
        "/":"TOK_DIV","~":"TOK_BN","&":"TOK_BAND","|":"TOK_BOR","!":"TOK_BOR",
         "=":"TOK_EQ","<>":"TOK_NEQ","<":"TOK_LT","<=":"TOK_LTE",">":"TOK_GT",
         ">=":"TOK_GTE"}
 
     #All pascal delimiters
-    DELIMITERS={"(":"TOK_LP",")":"TOK_RP","[":"TOK_LIB","]":"TOK_RIB",
-    "{":"TOK_CBL","}":"TOK_CBR","(*":"TOK_PSL","*)":"TOK_PSR",",":"TOK_VIRG",
-    ".":"TOK_PONTO",";":"TOK_PV",":":"TOK_DP","..":"TOK_ELIP","^":"TOK_CIRC"}
+    DELIMITERS={"(":"TOK_LP",")":"TOK_RP",r"\[":"TOK_LIB",r"\]":"TOK_RIB",
+    r"\{":"TOK_CBL",r"\}":"TOK_CBR","(*":"TOK_PSL","*)":"TOK_PSR",",":"TOK_VIRG",
+    r"\.":"TOK_PONTO",";":"TOK_PV",":":"TOK_DP",r"\.\.":"TOK_ELIP",r"\^":"TOK_CIRC"}
 
     #All pascal reserved words
     KEYWORDS = { "and":"TOK_AND","array":"TOK_ARRAY","begin":"TOK_BEGIN",
@@ -33,13 +33,13 @@ class TokenType(Enum):
     "univ":"TOK_UNIV"}
 
     #Token for string
-    TOKEN_STR = "TOK_STR"
+    TOKEN_STR ={r"'[a-zA-z_0-9 \t\n\r\f\v=\-+*\./|{}()<>!]*'":"TOK_STR"}
 
     #Token for numbers
-    TOKEN_NUM = "TOK_NUM"
+    TOKEN_NUM ={r'\d+\.?\d+[Ee]?[+-]?\d+':"TOK_NUM"}
 
     #Token for identifiers
-    TOKEN_ID = "TOK_ID"
+    TOKEN_ID = {r"[a-zA-z_][a-zA-Z_0-9]*":"TOK_ID"}
 
 
 #Class that represents a token contains the value and the lexeme
@@ -48,3 +48,26 @@ class Token:
         self.value = value
         self.lexeme = lexeme
         self.line = line
+
+    def __str__(self):
+        return "<{0},{1},{2}>".format(value,lexeme,line)
+
+
+def main():
+    line=1
+    fp = open("teste1.txt","r")
+    line = fp.readline()
+    for tt in TokenType:
+        for pair in tt.value:
+            for p in pair:
+                print(p)
+                pattern = re.compile(p)
+                matches = pattern.findall(line)
+                if len(matches) > 0:
+                    for match in matches:
+                        print(Token(pair[p],match,line))
+    line-=-1
+
+
+if __name__=="__main__":
+    main()
