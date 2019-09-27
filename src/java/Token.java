@@ -68,6 +68,6 @@ public class Token {
     @Override
     public String toString()
     {
-        return token.name();
+        return "<"+token.name()+","+this.lexema+","+this.linha+">";
     }
 }
