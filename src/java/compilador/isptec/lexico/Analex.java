@@ -415,6 +415,9 @@ public class Analex
                     {
                         switch(lexema)
                         {
+                            case "file":
+                                token = new Token(Tokens.FILE,lexema,numeroLinha); 
+                                break;
                             case "char":
                                 token = new Token(Tokens.CHAR,lexema,numeroLinha);
                                 break;
