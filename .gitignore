@@ -1,5 +1,4 @@
 src/python/CodeGen.py
 src/python/code.txt
-*.txt
 *.pyc
 docs/FileScript.py

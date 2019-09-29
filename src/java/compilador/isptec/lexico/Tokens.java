@@ -12,7 +12,7 @@ package compilador.isptec.lexico;
 public enum Tokens {
     ATRIB,NUMINT,NUMREAL,DIVISAO,ID,EOF,ERRO,IGUAL,MENOR,DIFERENTE,MENORIGUAL,MAIOR,MAIORIGUAL,
     MAIS,MENOS,VEZES,PONTO,PONTOPONTO,DOISPONTOS,DOISPONTOSIGUAL,ABREPAR,
-    ABREFECHAPAR,FECHAPAR,ABRECOCH,FECHACOCH,VIRGULA,BARRAN,PONTOVIRGULA,
+    ABREFECHAPAR,FECHAPAR,ABRERET,FECHARET,VIRGULA,BARRAN,PONTOVIRGULA,
     BARRA,TIL,ARROBA,CIFRAO,SUSTENIDO,MAISIGUAL,MENOSIGUAL,VEZESIGUAL,BARRAIGUAL,
     ABRECOMENTARIO,FECHACOMENTARIO,ABREPARPONTO,PONTOFECHAPAR,BARRABARRA,UNDER,TABULACAO,
     ABSOLUTE,ELSE,NIL,SET,AND,END,NOT,SHL,ARRAY,OBJECT,SHR,ASM,FOR,OF,STRING,INT,REAL,DOUBLE,CHAR,BOOL,CONSTANTE,BEGIN,FUNCTION,
@@ -62,9 +62,9 @@ public enum Tokens {
             return "'()'";
         case FECHAPAR:
             return "')'";
-        case ABRECOCH:
+        case ABRERET:
             return "Operador '['";
-        case FECHACOCH:
+        case FECHARET:
             return "Operador ']'";
         case VIRGULA:
             return "','";
@@ -262,6 +262,6 @@ public enum Tokens {
             return "comando 'new'";
         default:
             return " ";
-    }        
+    }
     }
 }
