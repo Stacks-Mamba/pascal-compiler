@@ -11,14 +11,14 @@ import java.io.IOException;
  *
  * @author hairt
  */
-public class Analex 
+public class Analex
 {
     private BufferedReader arquivo;
     private String arquivoNome;
     private String linha;
     private int numeroLinha;
     private int posicaoLinha;
-    
+
     public Analex()
     {
         this.arquivo=null;
@@ -54,7 +54,7 @@ public class Analex
     {
         if(linha == null)
             return 0;
-        
+
         if(posicaoLinha == linha.length())
         {
             try
@@ -82,11 +82,11 @@ public class Analex
         char nextChar = lerCaracter();
         return ch == nextChar;
     }
-    
+
     private char getNextChar(){
         if(linha == null)
             return 0;
-        
+
         if(posicaoLinha == linha.length())
         {
             try
@@ -121,8 +121,8 @@ public class Analex
         {
             e.printStackTrace();
         }
-    
-    
+
+
     }
     public Token getToken()
     {
@@ -136,7 +136,7 @@ public class Analex
             {
                 case NAO_ALFANUMERICO:
                     ch = lerCaracter();
-                    
+
                     switch(ch)
                     {
                         case '|':
@@ -157,17 +157,17 @@ public class Analex
                         case '(':
                             if( getNextChar()== ')')
                             {
-                               
+
                                token = new Token(Tokens.ABREFECHAPAR,"()",numeroLinha);
-                            } 
-                            else{ 
-                                if(getNextChar()== '*') 
+                            }
+                            else{
+                                if(getNextChar()== '*')
                                 {
                                     //posicaoLinha--;
-                                    
+
                                     estado=EstadosAutomato.COMENTARIO;
                                     lexema= String.valueOf(ch);
-                                    
+
                                 }else{
                                         //posicaoLinha--;
                                         token = new Token(Tokens.ABREPAR,"(",numeroLinha);
@@ -214,7 +214,7 @@ public class Analex
                             }
                             break;
                         case '+':
-                                token = new Token(Tokens.MAIS,"+",numeroLinha);           
+                                token = new Token(Tokens.MAIS,"+",numeroLinha);
                             break;
                         case '-':
                                 token = new Token(Tokens.MENOS,"-",numeroLinha);
@@ -227,7 +227,7 @@ public class Analex
                             else
                             {
                                 posicaoLinha--;
-                                token = new Token(Tokens.DIVISAO,"/",numeroLinha); 
+                                token = new Token(Tokens.DIVISAO,"/",numeroLinha);
                             }
                             break;
                         case '~':
@@ -248,30 +248,30 @@ public class Analex
                         case '"':
                             while(true){
                                 ch = lerCaracter();
-                                //lexema+=String.valueOf(ch);                             
-                                    
+                                //lexema+=String.valueOf(ch);
+
                                     if(ch=='"')
-                                    { 
+                                    {
                                         estado=EstadosAutomato.NAO_ALFANUMERICO;
                                         //getNewLine();
                                         break;
                                     }
-                                    
-                                
+
+
                                 }
                             break;
                         case '{':
                             while(true){
-                                ch = lerCaracter();                           
+                                ch = lerCaracter();
                                     if(ch=='}')
-                                    { 
+                                    {
                                         estado=EstadosAutomato.NAO_ALFANUMERICO;
                                         break;
                                     }
-                                    
-                                
+
+
                                 }
-                            break;                        
+                            break;
                         default:
                              if(ch == ' ' || ch =='\n' || ch == '\t')
                                  continue;
@@ -280,20 +280,20 @@ public class Analex
                              else if(ch == '\'')
                              {
                                  estado = EstadosAutomato.STRING;
-                                 lexema= String.valueOf(ch);                       
+                                 lexema= String.valueOf(ch);
                              }
                              else if(Character.isLetter(ch))
                              {
                                  estado = EstadosAutomato.IDENTIFICADOR;
-                                 lexema = String.valueOf(ch);                             
+                                 lexema = String.valueOf(ch);
                              }
                              else if(Character.isDigit(ch))
                              {
                                  estado = EstadosAutomato.NUM_INTEIRO;
-                                 lexema = String.valueOf(ch);                            
+                                 lexema = String.valueOf(ch);
                              }
                              else if((ch == '{')||(ch == '"'))
-                             { 
+                             {
                                  estado = EstadosAutomato.COMENTARIO;
                                  lexema = String.valueOf(ch);
                              }else if(ch == '(')
@@ -301,8 +301,8 @@ public class Analex
                                  if(verificaProximoChar('*'))
                                  {
                                      estado = EstadosAutomato.COMENTARIO;
-                                     lexema=String.valueOf(ch);                                
-                                 }                            
+                                     lexema=String.valueOf(ch);
+                                 }
                              }
                              else
                              {
@@ -310,7 +310,7 @@ public class Analex
                                  lexema = String.valueOf(ch);
                              }
                             break;
-                                       
+
                     }
                 break;
                 case NUM_INTEIRO:
@@ -318,7 +318,7 @@ public class Analex
                     if(Delimitadores.isDelimiter(ch))
                     {
                         token = new Token(Tokens.NUMINT,lexema,numeroLinha);
-                        posicaoLinha--;                 
+                        posicaoLinha--;
                     }
                     else
                     {
@@ -326,13 +326,13 @@ public class Analex
                         {
                             estado = EstadosAutomato.NUM_REAL_DECIMAL;
                             lexema += String.valueOf('.');
-                            continue;                      
+                            continue;
                         }
                         else if(ch == 'e')
                         {
                             estado = EstadosAutomato.NUM_REAL_EXP;
                             lexema += String.valueOf('e');
-                            continue;                       
+                            continue;
                         }
                         else if(Character.isDigit(ch))
                              lexema += String.valueOf(ch);
@@ -342,8 +342,8 @@ public class Analex
                             lexema +=String.valueOf(ch);
                             continue;
                         }
-                        
-                    
+
+
                     }
                 break;
                 case NUM_REAL_DECIMAL:
@@ -359,7 +359,7 @@ public class Analex
                         {
                             estado = EstadosAutomato.NUM_REAL_EXP;
                             lexema +=String.valueOf('e');
-                            continue;                    
+                            continue;
                         }
                         else if(Character.isDigit(ch))
                             lexema += String.valueOf(ch);
@@ -368,9 +368,9 @@ public class Analex
                             estado = EstadosAutomato.ERRO;
                             lexema += String.valueOf(ch);
                             continue;
-                        
+
                         }
-                    
+
                     }
                 break;
                 case NUM_REAL_EXP:
@@ -381,8 +381,8 @@ public class Analex
                             token = new Token(Tokens.NUMREAL,lexema,numeroLinha);
                         else
                             token = new Token(Tokens.ERRO,lexema,numeroLinha);
-                        
-                        posicaoLinha--;                        
+
+                        posicaoLinha--;
                     }
                     else
                     {
@@ -646,7 +646,7 @@ public class Analex
                             default:
                                 token = new Token(Tokens.ID, lexema, numeroLinha);
                                 break;
-                        
+
                         }
                         posicaoLinha--;
                     }
@@ -694,10 +694,10 @@ public class Analex
                         lexema += String.valueOf(ch);
                         break;
                     case COMENTARIO:
-                        
+
                         ch = lerCaracter();
                        lexema+=String.valueOf(ch);
-                       
+
                         switch(lexema)
                         {
                             case "(*":
@@ -705,14 +705,14 @@ public class Analex
                                 ch = lerCaracter();
                                 lexema+=String.valueOf(ch);
                                 if(lexema.length()>=2){
-                                    
+
                                     if("*)".equals(lexema.substring(lexema.length()-2,lexema.length())))
-                                    { 
+                                    {
                                         estado=EstadosAutomato.NAO_ALFANUMERICO;
                                         //getNewLine();
                                         break;
                                     }
-                                    
+
                                 }
                                 }
                                 break;
@@ -721,32 +721,32 @@ public class Analex
                                 ch = lerCaracter();
                                 lexema+=String.valueOf(ch);
                                 if(lexema.length()>=2){
-                                    
+
                                     if("*/".equals(lexema.substring(lexema.length()-2,lexema.length())))
-                                    { 
+                                    {
                                         estado=EstadosAutomato.NAO_ALFANUMERICO;
                                         //getNewLine();
                                         break;
                                     }
-                                    
+
                                 }
                                 }
                                 break;
-                                
-                                
-                          
-                        
+
+
+
+
                         }
                         break;
-                      
-                   
-                
-        
-        
+
+
+
+
+
                 }
 
         }
 
-       return token;  
+       return token;
     }
 }
