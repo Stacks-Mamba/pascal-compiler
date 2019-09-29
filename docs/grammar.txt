@@ -1,7 +1,7 @@
 <program> ::= PROGRAM ID PONTOVIRGULA <block> PONTO
 <block> ::= <label declaration part> <constant definition part> <type definition part> <variable declaration part> <procedure and function declaration part> <statement part>
 <label declaration part> ::= <empty> | LABEL <label> {VIRGULA <label>} PONTOVIRGULA
-<label> ::= NUMINT **
+<label> ::= NUMINT
 <constant definition part> ::= <empty> | CONST <constant definition> { PONTOVIRGULA <constant definition>} PONTOVIRGULA
 <constant definition> ::= ID IGUAL <constant>
 <constant> ::= <unsigned number> | <sign> <unsigned number> | <constant identifier> | <sign> <constant identifier> | STRING
@@ -30,7 +30,7 @@
 <case label> ::= <constant>
 <set type> ::=SET OF <base type>
 <base type> ::= <simple type>
-<file type> ::= file of <type> **
+<file type> ::= FILE OF <type>
 <pointer type> ::= <type identifier>
 <variable declaration part> ::= <empty> | VAR <variable declaration> {PONTOVIRGULA <variable declaration>} PONTOVIRGULA
 <variable declaration> ::= ID {VIRGULA ID} DOISPONTOS <type>
@@ -70,7 +70,7 @@
 <term> ::= <factor> | <term> <multiplying operator> <factor>
 <multiplying operator> ::= VEZES | DIVISAO | DIV | MOD | AND
 <factor> ::= <variable> | <unsigned constant> | ABREPAR <expression> FECHAPAR | <function designator> | <set> | NOT <factor>
-<unsigned constant> ::= <unsigned number> | STRING | ** <constant identifier> <nil>**
+<unsigned constant> ::= <unsigned number> | STRING | <constant identifier> | NIL
 <function designator > ::= <function identifier> <function designator 1>
 <function designator 1> ::= ABREPAR <actual parameter> {VIRGULA <actual parameter>} FECHAPAR | <empty>
 <function identifier> ::= ID
