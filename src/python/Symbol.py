@@ -32,7 +32,7 @@ class Terminal(Symbol):
     def checkSymbol(self,token):
         if self.token == EMPTY:
             return True
-        elif self.token == token:
+        elif self.token == token.value:
             return True
         return False
 

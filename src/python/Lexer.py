@@ -68,10 +68,11 @@ class TokenStream:
     EOS = "END_OF_STREAM"
     def __init__(self,lexer):
         self.lexer = lexer
+        self.current_token = None
 
     def getNextToken(self):
-        nextToken = self.lexer.getToken()
-        return nextToken if nextToken != None else EOS
+        nextToken = lexer.getToken()
+        self.current_token = nextToken if nextToken != None else EOS
 
 
 

@@ -36,4 +36,7 @@ class Parser:
         self.tokenStream = TokenStream(lexer)
 
     def parseProgram(self):
-        pass
+        #Get first token
+        self.tokenStream.getNextToken()
+        #Start the parsing of the program
+        E.checkSymbol(self.tokenStream)
