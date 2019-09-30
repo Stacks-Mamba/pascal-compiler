@@ -2,12 +2,9 @@
 '''
 Grammar for the aritmetic expression  language
 E -> (E) E1 |- E E1|id E1 | INT E1
-E1 -> +E E1 | *E | <empty>
+E1 -> + E E1 | * E E1| <empty>
 '''
-
-
-
-
+from Lexer import TokenStream
 
 class Symbol:
     def __init__(self,name):
@@ -16,10 +13,12 @@ class Symbol:
     def checkSymbol(self,token):
         pass
 
+    def __str__(self):
+        return self.name
 
     @staticmethod
-    def error():
-        pass
+    def error(tokenStream):
+        print("Something broke on line: {}".format(tokenStream.current_token.line))
 
 
 class Terminal(Symbol):
@@ -29,12 +28,19 @@ class Terminal(Symbol):
         super().__init__(name)
         self.token = token
 
-    def checkSymbol(self,token):
-        if self.token == EMPTY:
+    def checkSymbol(self,tokenStream):
+        token = tokenStream.current_token.value
+        if self.token == Terminal.EMPTY:
+            print(token)
             return True
-        elif self.token == token.value:
+        elif self.token == token:
+            print(token)
+            return True
+        elif TokenStream.EOS == token:
+            print(token)
             return True
         return False
+
 
 
 
@@ -49,16 +55,20 @@ class Derivation:
     def addSymbol(self,symbol):
         self.symbols.append(symbol)
 
-    def testDerivation(self,token):
-        return self.symbols[0].checkSymbol(token)
+    def testDerivation(self,tokenStream):
+        return self.symbols[0].checkSymbol(tokenStream)
 
-    def derive(self,token):
+    def derive(self,tokenStream):
         for s in self.symbols:
-            result = s.checkSymbol(token)
+            result = s.checkSymbol(tokenStream)
             if not result:
+                Symbol.error(tokenStream)
                 return False
+            tokenStream.getNextToken()
         return True
 
+    def __str__(self):
+        return str(self.symbols)
 
 
 '''Class that represents a Non Terminal symbols, that appear on
@@ -74,9 +84,7 @@ class NonTerminal(Symbol):
         self.derivations.append(derivation)
 
     #Function to check a none terminal
-    def checkSymbol(self,token):
-        result = False
+    def checkSymbol(self,tokenStream):
         for d in self.derivations:
-            if d.testDerivation(token):
-                result = result and d.derive(token)
-        return result
+            if d.testDerivation(tokenStream):
+                d.derive(tokenStream)

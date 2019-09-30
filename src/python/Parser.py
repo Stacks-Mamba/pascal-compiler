@@ -6,7 +6,7 @@ empty = Terminal("empty",Terminal.EMPTY)
 integer = Terminal("int","TOK_NUM")
 identifier = Terminal("id","TOK_ID")
 minus = Terminal("aritmec1","TOK_SUB")
-plus = Terminal("aritmec2","TOK_PLUS")
+plus = Terminal("aritmec2","TOK_ADD")
 mult = Terminal("aritmec3","TOK_MUL")
 rp = Terminal("rp","TOK_RP")
 lp = Terminal("lp","TOK_LP")
@@ -24,7 +24,7 @@ for d in [d1E,d2E,d3E,d4E]:
 
 #DerivationsE1
 d1E1 = Derivation(plus,E,E1)
-d2E1 = Derivation(mult,E)
+d2E1 = Derivation(mult,E,E1)
 d3E1 = Derivation(empty)
 
 for d in [d1E1,d2E1,d3E1]:
@@ -40,3 +40,12 @@ class Parser:
         self.tokenStream.getNextToken()
         #Start the parsing of the program
         E.checkSymbol(self.tokenStream)
+
+
+
+def main():
+    lexer = Lexer("src.txt")
+    parser = Parser(lexer)
+    parser.parseProgram()
+
+main()
