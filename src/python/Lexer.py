@@ -64,12 +64,23 @@ class Lexer:
         #if it gets here
         Exception()
 
+class TokenStream:
+    EOS = "END_OF_STREAM"
+    def __init__(self,lexer):
+        self.lexer = lexer
+
+    def getNextToken(self):
+        nextToken = self.lexer.getToken()
+        return nextToken if nextToken != None else EOS
+
+
+
 def main():
     lexer = Lexer("src.txt")
     token = ''
     while token != None:
         token = lexer.getToken()
         print(token)
-        
+
 if __name__=="__main__":
     main()

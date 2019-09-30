@@ -16,7 +16,7 @@
 <subrange type> ::= <constant> PONTOPONTO <constant>
 <type identifier> ::= ID
 <structured type> ::= <array type> | <record type> | <set type> | <file type>
-<array type> ::= ARRAY [<index type>{VIRGULA <index type>}] OF <component type>
+<array type> ::= ARRAY [ <index type> { VIRGULA <index type>} ] OF <component type>
 <index type> ::= <simple type>
 <component type> ::= <type>
 <record type> ::= RECORD <field list> END
