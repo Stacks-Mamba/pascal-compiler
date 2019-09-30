@@ -17,8 +17,8 @@ class Symbol:
         return self.name
 
     @staticmethod
-    def error(tokenStream):
-        print("Something broke on line: {}".format(tokenStream.current_token.line))
+    def error(tokenStream,s):
+        print("Something broke on line: {}\nExpected {}".format(tokenStream.current_token.line,s))
 
 
 class Terminal(Symbol):
@@ -62,7 +62,7 @@ class Derivation:
         for s in self.symbols:
             result = s.checkSymbol(tokenStream)
             if not result:
-                Symbol.error(tokenStream)
+                Symbol.error(tokenStream,s)
                 return False
             tokenStream.getNextToken()
         return True
@@ -87,4 +87,6 @@ class NonTerminal(Symbol):
     def checkSymbol(self,tokenStream):
         for d in self.derivations:
             if d.testDerivation(tokenStream):
-                d.derive(tokenStream)
+                result = d.derive(tokenStream)
+                return result
+        return False
