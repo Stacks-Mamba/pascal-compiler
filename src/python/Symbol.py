@@ -1,7 +1,7 @@
 
 '''
 Grammar for the aritmetic expression  language
-E -> (E) E1 |-E E1|id E1 | INT E1
+E -> (E) E1 |- E E1|id E1 | INT E1
 E1 -> +E E1 | *E | <empty>
 '''
 
