@@ -8,17 +8,17 @@ import java.util.*;
  *
  * @author hairt
  */
-public class AnalisadorSintatico {
+public class Parser {
     private Token lookahead;
-    private Analex analisadorLexico;
-    
+    private Analex lexer;
+
     private static final int EXPECTED_ERROR = 1;
     private static final int UNKNOWN_ERROR = 2;
 
-    public AnalisadorSintatico(String arquivo) throws IOException
+    public Parser(String arquivo) throws IOException
     {
-        analisadorLexico = new Analex();
-        analisadorLexico.abreArquivo(arquivo);
+        lexer = new Analex();
+        lexer.abreArquivo(arquivo);
     }
     //Error Handling methods
     private void erro(Tokens expected,int type){
@@ -33,20 +33,20 @@ public class AnalisadorSintatico {
             break;
       }
     }
-    
-    
+
+
 
     //Function that advances the input
     private void consume()
     {
 
-      lookahead = analisadorLexico.getToken();
+      lookahead = lexer.getToken();
 
     }
 
     public void parser()
     {
-        lookahead = analisadorLexico.getToken();
+        lookahead = lexer.getToken();
         program();
         consume(Tokens.EOF);
         System.out.println("Compilação realizada com sucesso.");
