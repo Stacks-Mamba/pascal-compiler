@@ -24,11 +24,11 @@ public class AnalisadorSintatico {
     }
     private void program()
     {
-    
+
     }
     private void empty()
     {
-        
+
     }
     private void emptystatement(){
         empty();
@@ -86,49 +86,49 @@ public class AnalisadorSintatico {
     {
      if(lookahead.getToken().equals(Tokens.MAIS))
          consume(Tokens.MAIS);
-     if(lookahead.getToken().equals(Tokens.MENOS))
+     else if(lookahead.getToken().equals(Tokens.MENOS))
          consume(Tokens.MENOS);
-     if(lookahead.getToken().equals(Tokens.OR))
+     else else if(lookahead.getToken().equals(Tokens.OR))
          consume(Tokens.OR);
     }
     private void relationalOperator()
     {
      if(lookahead.getToken().equals(Tokens.IGUAL))
          consume(Tokens.IGUAL);
-     if(lookahead.getToken().equals(Tokens.DIFERENTE))
+     else if(lookahead.getToken().equals(Tokens.DIFERENTE))
          consume(Tokens.DIFERENTE);
-     if(lookahead.getToken().equals(Tokens.MENOR))
+     else if(lookahead.getToken().equals(Tokens.MENOR))
          consume(Tokens.MENOR);
-     if(lookahead.getToken().equals(Tokens.MENORIGUAL))
+     else if(lookahead.getToken().equals(Tokens.MENORIGUAL))
          consume(Tokens.MENORIGUAL);
-     if(lookahead.getToken().equals(Tokens.MAIORIGUAL))
+     else if(lookahead.getToken().equals(Tokens.MAIORIGUAL))
          consume(Tokens.MAIORIGUAL);
-     if(lookahead.getToken().equals(Tokens.MAIOR))
+     else if(lookahead.getToken().equals(Tokens.MAIOR))
          consume(Tokens.MAIOR);
-     if(lookahead.getToken().equals(Tokens.IN))
+     else if(lookahead.getToken().equals(Tokens.IN))
          consume(Tokens.IN);
     }
     private void multiplyingOperator()
     {
      if(lookahead.getToken().equals(Tokens.VEZES))
          consume(Tokens.VEZES);
-     if(lookahead.getToken().equals(Tokens.DIVISAO))
+     else if(lookahead.getToken().equals(Tokens.DIVISAO))
          consume(Tokens.DIVISAO);
-     if(lookahead.getToken().equals(Tokens.DIV))
+     else if(lookahead.getToken().equals(Tokens.DIV))
          consume(Tokens.DIV);
-     if(lookahead.getToken().equals(Tokens.MOD))
+     else if(lookahead.getToken().equals(Tokens.MOD))
          consume(Tokens.MOD);
-     if(lookahead.getToken().equals(Tokens.AND))
+     else if(lookahead.getToken().equals(Tokens.AND))
          consume(Tokens.AND);
-     if(lookahead.getToken().equals(Tokens.MAIOR))
+     else if(lookahead.getToken().equals(Tokens.MAIOR))
          consume(Tokens.MAIOR);
     }
-    
+
     private void sign()
     {
      if(lookahead.getToken().equals(Tokens.MAIS))
          consume(Tokens.MAIS);
-     if(lookahead.getToken().equals(Tokens.MENOS))
+     else if(lookahead.getToken().equals(Tokens.MENOS))
          consume(Tokens.MENOS);
     }
     private void consume(Tokens token)
