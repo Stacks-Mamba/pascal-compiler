@@ -12,15 +12,17 @@ public class Parser {
     private Token lookahead;
     private Analex lexer;
 
-    private static final int EXPECTED_ERROR = 1;
-    private static final int UNKNOWN_ERROR = 2;
+    private static final int EXPECTED_ERROR = 1; //Erro quando só tem uma alternativa
+    private static final int UNKNOWN_ERROR = 2; // Erro para várias alternativas
 
     public Parser(String arquivo) throws IOException
     {
         lexer = new Analex();
         lexer.abreArquivo(arquivo);
     }
-    //Error Handling methods
+
+
+    //Error Handling method
     private void erro(Tokens expected,int type){
       switch(type){
         case 1:
