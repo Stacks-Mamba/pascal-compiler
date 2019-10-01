@@ -62,11 +62,13 @@ class Derivation:
             if not result:
                 Symbol.error(tokenStream,s)
                 return False
+            print("{} -> {}".format(tokenStream.current_token,self))
             tokenStream.getNextToken()
         return True
 
     def __str__(self):
-        return " ".join(self.symbols)
+        strings = [str(s) for s in self.symbols]
+        return " ".join(strings)
 
 '''Class that represents a Non Terminal symbols, that appear on
 both side of a production rule'''
@@ -76,7 +78,6 @@ class NonTerminal(Symbol):
     def __init__(self,descrip,*derivations):
         super().__init__(descrip)
         self.derivations = list(derivations)
-        self.emptyProduction = False
 
     def addDerivation(self,derivation):
         self.derivations.append(derivation)
@@ -84,6 +85,7 @@ class NonTerminal(Symbol):
     #Function to check a none terminal
     def checkSymbol(self,tokenStream):
         print(self)
+        result = False
         for d in self.derivations:
             if d.testDerivation(tokenStream):
                 result = d.derive(tokenStream)
