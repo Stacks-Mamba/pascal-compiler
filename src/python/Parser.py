@@ -5,9 +5,9 @@ from Lexer import Lexer,TokenStream
 empty = Terminal("empty",Terminal.EMPTY)
 integer = Terminal("int","TOK_NUM")
 identifier = Terminal("id","TOK_ID")
-minus = Terminal("aritmec1","TOK_SUB")
-plus = Terminal("aritmec2","TOK_ADD")
-mult = Terminal("aritmec3","TOK_MUL")
+minus = Terminal("-","TOK_SUB")
+plus = Terminal("+","TOK_ADD")
+mult = Terminal("*","TOK_MUL")
 rp = Terminal("rp","TOK_RP")
 lp = Terminal("lp","TOK_LP")
 E = NonTerminal("E")
@@ -35,7 +35,7 @@ class Parser:
     def __init__(self,lexer):
         self.tokenStream = TokenStream(lexer)
 
-    def parseProgram(self):
+    def parse(self):
         #Get first token
         self.tokenStream.getNextToken()
         #Start the parsing of the program
@@ -46,6 +46,6 @@ class Parser:
 def main():
     lexer = Lexer("src.txt")
     parser = Parser(lexer)
-    parser.parseProgram()
+    parser.parse()
 
 main()

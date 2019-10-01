@@ -72,7 +72,7 @@ class TokenStream:
 
     def getNextToken(self):
         nextToken = self.lexer.getToken()
-        self.current_token = nextToken if nextToken != None else EOS
+        self.current_token = nextToken if nextToken != None else Token(TokenStream.EOS,"",-1)
 
 
 

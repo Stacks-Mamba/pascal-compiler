@@ -7,14 +7,14 @@ E1 -> + E E1 | * E E1| <empty>
 '''
 
 class Symbol:
-    def __init__(self,name):
-        self.name = name
+    def __init__(self,descrip):
+        self.descrip = descrip
 
     def checkSymbol(self,token):
         pass
 
     def __str__(self):
-        return self.name
+        return self.descrip
 
     @staticmethod
     def error(tokenStream,s):
@@ -24,21 +24,18 @@ class Symbol:
 class Terminal(Symbol):
     EMPTY = "EMPTY_TOKEN"
     #Token that represents this non t
-    def __init__(self,name,token):
-        super().__init__(name)
+    def __init__(self,descrip,token):
+        super().__init__(descrip)
         self.token = token
 
     def checkSymbol(self,tokenStream):
         token = tokenStream.current_token
         if self.token == Terminal.EMPTY:
-            print(token)
             return True
         elif self.token == token.value:
-            print(token)
             return True
         elif TokenStream.EOS == token.value:
-            print(token)
-            return True
+            return False
         return False
 
 
@@ -69,16 +66,15 @@ class Derivation:
         return True
 
     def __str__(self):
-        return str(self.symbols)
-
+        return " ".join(self.symbols)
 
 '''Class that represents a Non Terminal symbols, that appear on
 both side of a production rule'''
 
 class NonTerminal(Symbol):
 
-    def __init__(self,name,*derivations):
-        super().__init__(name)
+    def __init__(self,descrip,*derivations):
+        super().__init__(descrip)
         self.derivations = list(derivations)
         self.emptyProduction = False
 
