@@ -1,8 +1,9 @@
-﻿package compilador.isptec.sintatico;
+package compilador.isptec.sintatico;
 import compilador.isptec.lexico.Analex;
 import compilador.isptec.lexico.Tokens;
 import compilador.isptec.lexico.Token;
 import java.io.IOException;
+import java.util.*;
 /**
  *
  * @author hairt
@@ -10,11 +11,39 @@ import java.io.IOException;
 public class AnalisadorSintatico {
     private Token lookahead;
     private Analex analisadorLexico;
+    
+    private static final int EXPECTED_ERROR = 1;
+    private static final int UNKNOWN_ERROR = 2;
+
     public AnalisadorSintatico(String arquivo) throws IOException
     {
         analisadorLexico = new Analex();
         analisadorLexico.abreArquivo(arquivo);
     }
+    //Error Handling methods
+    private void erro(Tokens expected,int type){
+      switch(type){
+        case 1:
+            System.err.println("Erro na linha "+lookahead.getLinha());
+            System.err.println("Era esperado o token " + expected + " porém foi recebido "+ lookahead.getToken()+".");
+            System.exit(1);
+            break;
+        case 2:
+            System.err.println(String.format("Símbolo inesperado:%s. Linha:%d",lookahead.getLexema(),lookahead.getLinha()));
+            break;
+      }
+    }
+    
+    
+
+    //Function that advances the input
+    private void consume()
+    {
+
+      lookahead = analisadorLexico.getToken();
+
+    }
+
     public void parser()
     {
         lookahead = analisadorLexico.getToken();
@@ -37,111 +66,122 @@ public class AnalisadorSintatico {
     {
         if(lookahead.getToken().equals(Tokens.NUMINT))
         {
-            consume(Tokens.NUMINT);
+            consume();
         }
+        else
+            error(Tokens.NUMINT,EXPECTED_ERROR);
     }
     private void fieldIdentifier()
     {
         if(lookahead.getToken().equals(Tokens.ID))
         {
-            consume(Tokens.ID);
+            consume();
         }
+        else
+            error(Tokens.ID,EXPECTED_ERROR);
     }
     private void controlVariable()
     {
         if(lookahead.getToken().equals(Tokens.ID))
         {
-            consume(Tokens.ID);
+            consume();
         }
+        else
+          error(Tokens.ID,EXPECTED_ERROR);
     }
     private void functionIdentifier()
     {
         if(lookahead.getToken().equals(Tokens.ID))
         {
-            consume(Tokens.ID);
+            consume();
         }
+        else
+          error(Tokens.ID,EXPECTED_ERROR);
+
     }
     private void procedureIdentifier()
     {
         if(lookahead.getToken().equals(Tokens.ID))
         {
-            consume(Tokens.ID);
+            consume();
         }
+        else
+            error(Tokens.ID,EXPECTED_ERROR);
     }
     private void variableIdentifier()
     {
         if(lookahead.getToken().equals(Tokens.ID))
         {
-            consume(Tokens.ID);
+            consume();
         }
+        else
+          error(Tokens.ID,EXPECTED_ERROR);
     }
-    private void constantIdentifier()
-    {
+    private void constantIdentifier(){
         if(lookahead.getToken().equals(Tokens.ID))
         {
-            consume(Tokens.ID);
+            consume();
         }
+        else
+          error(Tokens.ID,EXPECTED_ERROR);
     }
-    private void addingOperator()
-    {
+    private void addingOperator(){
      if(lookahead.getToken().equals(Tokens.MAIS))
-         consume(Tokens.MAIS);
+         consume();
      else if(lookahead.getToken().equals(Tokens.MENOS))
-         consume(Tokens.MENOS);
-     else else if(lookahead.getToken().equals(Tokens.OR))
-         consume(Tokens.OR);
+         consume();
+     else if(lookahead.getToken().equals(Tokens.OR))
+         consume();
+      else
+        error(Tokens.MAIS,UNKNOWN_ERROR);
     }
+
     private void relationalOperator()
     {
      if(lookahead.getToken().equals(Tokens.IGUAL))
-         consume(Tokens.IGUAL);
+         consume();
      else if(lookahead.getToken().equals(Tokens.DIFERENTE))
-         consume(Tokens.DIFERENTE);
+         consume();
      else if(lookahead.getToken().equals(Tokens.MENOR))
-         consume(Tokens.MENOR);
+         consume();
      else if(lookahead.getToken().equals(Tokens.MENORIGUAL))
-         consume(Tokens.MENORIGUAL);
+         consume();
      else if(lookahead.getToken().equals(Tokens.MAIORIGUAL))
-         consume(Tokens.MAIORIGUAL);
+         consume();
      else if(lookahead.getToken().equals(Tokens.MAIOR))
-         consume(Tokens.MAIOR);
+         consume();
      else if(lookahead.getToken().equals(Tokens.IN))
-         consume(Tokens.IN);
+         consume();
+      else
+       error(Tokens.MAIS,UNKNOWN_ERROR);
     }
+
     private void multiplyingOperator()
     {
      if(lookahead.getToken().equals(Tokens.VEZES))
-         consume(Tokens.VEZES);
+         consume();
      else if(lookahead.getToken().equals(Tokens.DIVISAO))
-         consume(Tokens.DIVISAO);
+         consume();
      else if(lookahead.getToken().equals(Tokens.DIV))
-         consume(Tokens.DIV);
+         consume();
      else if(lookahead.getToken().equals(Tokens.MOD))
-         consume(Tokens.MOD);
+         consume();
      else if(lookahead.getToken().equals(Tokens.AND))
-         consume(Tokens.AND);
+         consume();
      else if(lookahead.getToken().equals(Tokens.MAIOR))
-         consume(Tokens.MAIOR);
+         consume();
+      else
+        error(Tokens.VEZES,UNKNOWN_ERROR);
     }
 
     private void sign()
     {
      if(lookahead.getToken().equals(Tokens.MAIS))
-         consume(Tokens.MAIS);
+         consume();
      else if(lookahead.getToken().equals(Tokens.MENOS))
-         consume(Tokens.MENOS);
+         consume();
+      else
+       error(Tokens.MAIS,UNKNOWN_ERROR);
     }
-    private void consume(Tokens token)
-    {
-        if(lookahead.getToken() == token)
-        {
-            lookahead = analisadorLexico.getToken();
-        }
-        else
-        {
-            System.err.println("Erro na linha "+lookahead.getLinha());
-            System.err.println("Era esperado o token " + token + " porém foi recebido "+ lookahead.getToken()+".");
-            System.exit(1);
-        }
-    }
+
 }
