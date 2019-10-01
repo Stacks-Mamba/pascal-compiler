@@ -41,9 +41,8 @@ public class Parser {
     //Function that advances the input
     private void consume()
     {
-
+      //Get next input symbol
       lookahead = lexer.getToken();
-
     }
 
     public void parser()
