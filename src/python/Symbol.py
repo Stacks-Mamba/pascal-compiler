@@ -1,10 +1,10 @@
+from Lexer import TokenStream
 
 '''
 Grammar for the aritmetic expression  language
 E -> (E) E1 |- E E1|id E1 | INT E1
 E1 -> + E E1 | * E E1| <empty>
 '''
-from Lexer import TokenStream
 
 class Symbol:
     def __init__(self,name):
@@ -29,14 +29,14 @@ class Terminal(Symbol):
         self.token = token
 
     def checkSymbol(self,tokenStream):
-        token = tokenStream.current_token.value
+        token = tokenStream.current_token
         if self.token == Terminal.EMPTY:
             print(token)
             return True
-        elif self.token == token:
+        elif self.token == token.value:
             print(token)
             return True
-        elif TokenStream.EOS == token:
+        elif TokenStream.EOS == token.value:
             print(token)
             return True
         return False
@@ -47,6 +47,7 @@ class Terminal(Symbol):
 ''' Class that represents the right side of a production rules
 which are strings of terminals and Nonterminals
 '''
+
 class Derivation:
 
     def __init__(self,*symbols):
@@ -79,14 +80,15 @@ class NonTerminal(Symbol):
     def __init__(self,name,*derivations):
         super().__init__(name)
         self.derivations = list(derivations)
+        self.emptyProduction = False
 
     def addDerivation(self,derivation):
         self.derivations.append(derivation)
 
     #Function to check a none terminal
     def checkSymbol(self,tokenStream):
+        print(self)
         for d in self.derivations:
             if d.testDerivation(tokenStream):
                 result = d.derive(tokenStream)
-                return result
-        return False
+        return result
