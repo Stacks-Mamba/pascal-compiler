@@ -64,7 +64,7 @@
 <referenced variable> ::= <pointer variable>
 <pointer variable> ::= <variable>
 <expression> ::= <simple expression> | <simple expression> <relational operator> <simple expression>
-<relational operator> ::= IGUAL | DIFERENTE | MENOR | MENORIGUAL | MAIORIGUAL | MENOR | IN
+<relational operator> ::= IGUAL | DIFERENTE | MENOR | MENORIGUAL | MAIORIGUAL | MAIOR | IN
 <simple expression> ::= <term> | <sign> <term>| <simple expression> <adding operator> <term>
 <adding operator> ::= MAIS | MENOS | OR
 <term> ::= <factor> | <term> <multiplying operator> <factor>
