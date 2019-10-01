@@ -23,7 +23,7 @@ public class Parser {
 
 
     //Error Handling method
-    private void erro(Tokens expected,int type){
+    private void error(Tokens expected,int type){
       switch(type){
         case 1:
             System.err.println("Erro na linha "+lookahead.getLinha());
@@ -50,7 +50,7 @@ public class Parser {
     {
         lookahead = lexer.getToken();
         program();
-        consume(Tokens.EOF);
+        consume();
         System.out.println("Compilação realizada com sucesso.");
     }
     private void program()

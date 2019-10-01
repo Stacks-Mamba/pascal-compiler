@@ -178,10 +178,10 @@ public class Analex
                             token = new Token(Tokens.FECHAPAR,")",numeroLinha);
                             break;
                         case '[':
-                            token = new Token(Tokens.ABRECOCH,"[",numeroLinha);
+                            token = new Token(Tokens.ABRERET,"[",numeroLinha);
                             break;
                         case ']':
-                            token = new Token(Tokens.FECHACOCH,"]",numeroLinha);
+                            token = new Token(Tokens.FECHARET,"]",numeroLinha);
                             break;
                         case '*':
                                 token = new Token(Tokens.VEZES,"*",numeroLinha);
