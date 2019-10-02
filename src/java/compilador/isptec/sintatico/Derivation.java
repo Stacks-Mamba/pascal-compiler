@@ -21,7 +21,7 @@ public class Derivation {
         this.symbols = new ArrayList<>();
     }
     
-    public void addSymbol(Symbol symbol){
+    public void addSymbol(Derivable symbol){
         symbols.add(symbol);
     }
     
@@ -72,10 +72,7 @@ public class Derivation {
                     while(aux.verify(Parser.lookahead)==1){
                         aux.derive();
                     }
-                }
-                else{
-                    Parser.consume();
-                }
+                }  
             }
         }
     }

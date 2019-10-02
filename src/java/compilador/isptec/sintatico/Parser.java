@@ -15,7 +15,7 @@ public class Parser {
     public static final int EXPECTED_ERROR = 1; //Erro quando só tem uma alternativa
     public static final int UNKNOWN_ERROR = 2; // Erro para várias alternativas
 
-    public static void initParser(String arquivo) throws IOException
+    private static void initParser(String arquivo) throws IOException
     {
         lexer = new Analex();
         lexer.abreArquivo(arquivo);
@@ -33,6 +33,7 @@ public class Parser {
             break;
         case 2:
             System.err.println(String.format("Símbolo inesperado:%s. Linha:%d",lookahead.getLexema(),lookahead.getLinha()));
+            System.exit(1);
             break;
       }
     }
@@ -42,8 +43,10 @@ public class Parser {
     //Function that advances the input
     public static void consume()
     {
+      System.out.println("Current input symbol: "+lookahead);
       //Get next input symbol
       lookahead = lexer.getToken();
+      System.out.println("Next input symbol: "+lookahead);
     }
 
     public static void parse(String file) throws IOException
@@ -51,10 +54,18 @@ public class Parser {
         //Initialize parser
         initParser(file);
         //Comecar a execucao da análise léxica
-        
+        Grammar.initPH();
+        int index = Grammar.PH.checkSymbol(lookahead);
+        if (index>-1)
+            Grammar.PH.getDerivation(index).derive();
+        else
+            Parser.error(lookahead.getToken(), UNKNOWN_ERROR);
         //Mensagem de sucesso
         System.out.println("Compilacao Terminada com sucesso");
-        
+    }
+    
+    public static void main(String[] args) throws IOException {
+        Parser.parse("source.pas");
     }
 
 }

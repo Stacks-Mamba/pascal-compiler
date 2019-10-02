@@ -9,7 +9,7 @@ import compilador.isptec.lexico.*;
  *
  * @author stacks
  */
-public class Terminal extends Symbol  {
+public class Terminal extends Symbol implements Derivable  {
     
     
     
@@ -24,6 +24,8 @@ public class Terminal extends Symbol  {
     @Override
     public int checkSymbol(Token t){
         if(t.getToken() == this.token || this.descrip == EMPTY_SYMBOL){
+            System.out.printf("A token matchou:%s",t.getToken());
+            System.out.println("Entrou");
             return 1;
         }
         else{

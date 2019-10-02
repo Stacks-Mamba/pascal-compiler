@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author stacks
  */
-public class NonTerminal extends Symbol{
+public class NonTerminal extends Symbol implements Derivable{
     
     private final ArrayList<Derivation> derivations;
     
