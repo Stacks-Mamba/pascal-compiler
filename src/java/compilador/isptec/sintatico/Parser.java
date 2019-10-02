@@ -80,133 +80,152 @@ public class Parser {
     {
          consume();    
     }
-    private void labelDeclarationpart(){
-        if(lookahead.getToken().equals(Tokens.LABEL))
+    private void labelDeclarationpart()
         {
-           consume();
-           label();
-           while(lookahead.getToken().equals(Tokens.VIRGULA))
-           {
-               consume();
-               label();
-           }
-           if(lookahead.getToken().equals(Tokens.PONTOVIRGULA))
+            if(lookahead.getToken().equals(Tokens.LABEL))
+            {
+            consume();
+            label();
+            while(lookahead.getToken().equals(Tokens.VIRGULA))
+            {
                 consume();
+                label();
+            }
+            if(lookahead.getToken().equals(Tokens.PONTOVIRGULA))
+                    consume();
+                else
+                    error(Tokens.PONTOVIRGULA,EXPECTED_ERROR);
+                
+                
+            }
             else
-                error(Tokens.PONTOVIRGULA,EXPECTED_ERROR);
-               
-               
+                empty();
         }
-        else
-            empty();
-    }
+    private void constantdefpart()
+        {
+          //  if(lookahead.getToken().equals(Tokens.CONST))
+        }
+    private void constant()
+        {
+            /*if(lookahead.getToken().equals(Tokens.STRING))
+                {
+                    consume();
+                }
+                else if()*/
+        }
+    private void sign1()
+        {
+
+        }
     private void emptystatement()
-    {
-        empty();
-    }
+        {
+            empty();
+        }
     private void label()
-    {
-        if(lookahead.getToken().equals(Tokens.NUMINT))
         {
-            consume();
+            if(lookahead.getToken().equals(Tokens.NUMINT))
+            {
+                consume();
+            }
+            else
+                error(Tokens.NUMINT,EXPECTED_ERROR);
         }
-        else
-            error(Tokens.NUMINT,EXPECTED_ERROR);
-    }
     private void Identifier()
-    {
-        if(lookahead.getToken().equals(Tokens.ID))
         {
-            consume();
+            if(lookahead.getToken().equals(Tokens.ID))
+            {
+                consume();
+            }
+            else
+                error(Tokens.ID,EXPECTED_ERROR);
         }
-        else
-            error(Tokens.ID,EXPECTED_ERROR);
-    }
     private void controlVariable()
-    {
-        if(lookahead.getToken().equals(Tokens.ID))
         {
-            consume();
+            if(lookahead.getToken().equals(Tokens.ID))
+            {
+                consume();
+            }
+            else
+            error(Tokens.ID,EXPECTED_ERROR);
         }
-        else
-          error(Tokens.ID,EXPECTED_ERROR);
-    }
-    private void addingOperator(){
-        switch (lookahead.getToken()) {
-            case MAIS:
-                consume();
-                break;
-            case MENOS:
-                consume();
-                break;
-            case OR:
-                consume();
-                break;
-            default:
-                error(Tokens.MAIS,UNKNOWN_ERROR);
-                break;
+    private void addingOperator()
+        {
+            switch (lookahead.getToken()) {
+                case MAIS:
+                    consume();
+                    break;
+                case MENOS:
+                    consume();
+                    break;
+                case OR:
+                    consume();
+                    break;
+                default:
+                    error(Tokens.MAIS,UNKNOWN_ERROR);
+                    break;
+            }
         }
-    }
 
     private void relationalOperator()
-    {
-        switch (lookahead.getToken()) {
-            case IGUAL:
-                consume();
-                break;
-            case DIFERENTE:
-                consume();
-                break;
-            case MENOR:
-                consume();
-                break;
-            case MENORIGUAL:
-                consume();
-                break;
-            case MAIORIGUAL:
-                consume();
-                break;
-            case MAIOR:
-                consume();
-                break;
-            case IN:
-                consume();
-                break;
-            default:
-                error(Tokens.MAIS,UNKNOWN_ERROR);
-                break;
+        {
+            switch (lookahead.getToken()) {
+                case IGUAL:
+                    consume();
+                    break;
+                case DIFERENTE:
+                    consume();
+                    break;
+                case MENOR:
+                    consume();
+                    break;
+                case MENORIGUAL:
+                    consume();
+                    break;
+                case MAIORIGUAL:
+                    consume();
+                    break;
+                case MAIOR:
+                    consume();
+                    break;
+                case IN:
+                    consume();
+                    break;
+                default:
+                    error(Tokens.MAIS,UNKNOWN_ERROR);
+                    break;
+            }
         }
-    }
 
     private void multiplyingOperator()
-    {
-        switch (lookahead.getToken()) {
-            case VEZES:
-                consume();
-                break;
-            case DIVISAO:
-                consume();
-                break;
-            case DIV:
-                consume();
-                break;
-            case MOD:
-                consume();
-                break;
-            case AND:
-                consume();
-                break;
-            case MAIOR:
-                consume();
-                break;
-            default:
-                error(Tokens.VEZES,UNKNOWN_ERROR);
-                break;
+        {
+            switch (lookahead.getToken()) {
+                case VEZES:
+                    consume();
+                    break;
+                case DIVISAO:
+                    consume();
+                    break;
+                case DIV:
+                    consume();
+                    break;
+                case MOD:
+                    consume();
+                    break;
+                case AND:
+                    consume();
+                    break;
+                case MAIOR:
+                    consume();
+                    break;
+                default:
+                    error(Tokens.VEZES,UNKNOWN_ERROR);
+                    break;
+            }
         }
-    }
-    private void entireVariable(){
-        Identifier();
-    }
+    private void entireVariable()
+        {
+            Identifier();
+        }
     private void resultType(){
         Identifier();
     }

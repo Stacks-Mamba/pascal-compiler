@@ -2,7 +2,8 @@
 <block> ::= <label declaration part> <constant definition part> <type definition part> <variable declaration part> <procedure and function declaration part> <statement part>
 <constant definition part> ::= <empty> | CONST <constant definition> { PONTOVIRGULA <constant definition>} PONTOVIRGULA
 <constant definition> ::= ID IGUAL <constant>
-<constant> ::= <unsigned number> | <sign> <unsigned number> | <constant identifier> | <sign> <constant identifier> | STRING
+<constant> ::= <unsigned number> | <sign> <sign 1> | <constant identifier> | STRING
+<sign 1> ::= <unsigned number> | <constant identifier>
 <type definition part> ::= <empty> | TYPE <type definition> {PONTOVIRGULA <type definition>} PONTOVIRGULA
 <type definition> ::= ID IGUAL <type>
 <type> ::= <simple type> | <structured type> | <pointer type>
