@@ -58,121 +58,180 @@ public class Parser {
     }
     private void empty()
     {
+         consume();    
+    }
+    private void labelDeclarationpart()
+        {
+            if(lookahead.getToken().equals(Tokens.LABEL))
+            {
+            consume();
+            label();
+            while(lookahead.getToken().equals(Tokens.VIRGULA))
+            {
+                consume();
+                label();
+            }
+            if(lookahead.getToken().equals(Tokens.PONTOVIRGULA))
+                    consume();
+                else
+                    error(Tokens.PONTOVIRGULA,EXPECTED_ERROR);
 
+
+            }
+            else
+                empty();
+        }
+    private void constantdefpart()
+        {
+          // if(lookahead.getToken().equals(Tokens.CONST))
+        }
+    private void constantdef(){
+        if(lookahead.getToken().equals(Tokens.ID))
+          {
+              consume();
+              if(lookahead.getToken().equals(Tokens.IGUAL))
+              {
+                  constant();
+              }
+              else
+              {
+                  error(Tokens.IGUAL,EXPECTED_ERROR);
+              }
+          }else{
+              error(Tokens.ID,EXPECTED_ERROR);
+          }
     }
-    private void emptystatement(){
-        empty();
-    }
+    private void constant()
+        {
+            if(lookahead.getToken().equals(Tokens.STRING))
+                {
+                    consume();
+                }
+                else if((lookahead.getToken().equals(Tokens.MAIS))||(lookahead.getToken().equals(Tokens.MAIS)))
+                    {sign();
+                    sign1();
+                    }else{
+                        sign1();
+                    }
+        }
+    private void sign1()
+        {
+           if(!(lookahead.getToken().equals(Tokens.MAIS))||!(lookahead.getToken().equals(Tokens.MAIS)))
+                unsignedNumber();
+                else
+                identifier();
+        }
+    private void emptystatement()
+        {
+            empty();
+        }
     private void label()
-    {
-        if(lookahead.getToken().equals(Tokens.NUMINT))
         {
-            consume();
+            if(lookahead.getToken().equals(Tokens.NUMINT))
+            {
+                consume();
+            }
+            else
+                error(Tokens.NUMINT,EXPECTED_ERROR);
         }
-        else
-            error(Tokens.NUMINT,EXPECTED_ERROR);
-    }
-    private void fieldIdentifier()
-    {
-        if(lookahead.getToken().equals(Tokens.ID))
+    private void identifier()
         {
-            consume();
+            if(lookahead.getToken().equals(Tokens.ID))
+            {
+                consume();
+            }
+            else
+                error(Tokens.ID,EXPECTED_ERROR);
         }
-        else
-            error(Tokens.ID,EXPECTED_ERROR);
-    }
     private void controlVariable()
-    {
-        if(lookahead.getToken().equals(Tokens.ID))
         {
-            consume();
-        }
-        else
-          error(Tokens.ID,EXPECTED_ERROR);
-    }
-    private void functionIdentifier()
-    {
-        if(lookahead.getToken().equals(Tokens.ID))
-        {
-            consume();
-        }
-        else
-          error(Tokens.ID,EXPECTED_ERROR);
-
-    }
-    private void procedureIdentifier()
-    {
-        if(lookahead.getToken().equals(Tokens.ID))
-        {
-            consume();
-        }
-        else
+            if(lookahead.getToken().equals(Tokens.ID))
+            {
+                consume();
+            }
+            else
             error(Tokens.ID,EXPECTED_ERROR);
-    }
-    private void variableIdentifier()
-    {
-        if(lookahead.getToken().equals(Tokens.ID))
-        {
-            consume();
         }
-        else
-          error(Tokens.ID,EXPECTED_ERROR);
-    }
-    private void constantIdentifier(){
-        if(lookahead.getToken().equals(Tokens.ID))
+    private void addingOperator()
         {
-            consume();
+            switch (lookahead.getToken()) {
+                case MAIS:
+                    consume();
+                    break;
+                case MENOS:
+                    consume();
+                    break;
+                case OR:
+                    consume();
+                    break;
+                default:
+                    error(Tokens.MAIS,UNKNOWN_ERROR);
+                    break;
+            }
         }
-        else
-          error(Tokens.ID,EXPECTED_ERROR);
-    }
-    private void addingOperator(){
-     if(lookahead.getToken().equals(Tokens.MAIS))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.MENOS))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.OR))
-         consume();
-      else
-        error(Tokens.MAIS,UNKNOWN_ERROR);
-    }
 
     private void relationalOperator()
-    {
-     if(lookahead.getToken().equals(Tokens.IGUAL))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.DIFERENTE))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.MENOR))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.MENORIGUAL))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.MAIORIGUAL))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.MAIOR))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.IN))
-         consume();
-      else
-       error(Tokens.MAIS,UNKNOWN_ERROR);
-    }
+        {
+            switch (lookahead.getToken()) {
+                case IGUAL:
+                    consume();
+                    break;
+                case DIFERENTE:
+                    consume();
+                    break;
+                case MENOR:
+                    consume();
+                    break;
+                case MENORIGUAL:
+                    consume();
+                    break;
+                case MAIORIGUAL:
+                    consume();
+                    break;
+                case MAIOR:
+                    consume();
+                    break;
+                case IN:
+                    consume();
+                    break;
+                default:
+                    error(Tokens.MAIS,UNKNOWN_ERROR);
+                    break;
+            }
+        }
 
     private void multiplyingOperator()
-    {
-     if(lookahead.getToken().equals(Tokens.VEZES))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.DIVISAO))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.DIV))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.MOD))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.AND))
-         consume();
-     else if(lookahead.getToken().equals(Tokens.MAIOR))
-         consume();
-      else
-        error(Tokens.VEZES,UNKNOWN_ERROR);
+        {
+            switch (lookahead.getToken()) {
+                case VEZES:
+                    consume();
+                    break;
+                case DIVISAO:
+                    consume();
+                    break;
+                case DIV:
+                    consume();
+                    break;
+                case MOD:
+                    consume();
+                    break;
+                case AND:
+                    consume();
+                    break;
+                case MAIOR:
+                    consume();
+                    break;
+                default:
+                    error(Tokens.VEZES,UNKNOWN_ERROR);
+                    break;
+            }
+        }
+    private void entireVariable()
+        {
+            Identifier();
+        }
+    private void resultType(){
+        Identifier();
     }
 
     private void sign()
