@@ -55,8 +55,10 @@ public class Parser {
     public void parser()
     {
         lookahead = lexer.getToken();
-        program();
+        //program();
+        constantdefpart();
         consume();
+        if(lookahead.getToken().equals(Tokens.EOF))
         System.out.println("Compilação realizada com sucesso.");
     }
     private void program()
@@ -103,7 +105,24 @@ public class Parser {
         }
     private void constantdefpart()
         {
-          // if(lookahead.getToken().equals(Tokens.CONST))
+            if(lookahead.getToken().equals(Tokens.CONST))
+            {
+                consume();
+                constantdef();
+                while(lookahead.getToken().equals(Tokens.PONTOVIRGULA))
+                {
+                    consume();
+                    if(lookahead.getToken().equals(Tokens.ID))
+                    {
+                    constantdef();
+                    if(lookahead.getToken().equals(Tokens.PONTOVIRGULA))
+                        break;
+                    }else{
+                       break;
+                    }
+                }
+            }else
+                error(Tokens.CONST,EXPECTED_ERROR);
         }
     private void constantdef(){
         if(lookahead.getToken().equals(Tokens.ID))
@@ -111,6 +130,7 @@ public class Parser {
               consume();
               if(lookahead.getToken().equals(Tokens.IGUAL))
               {
+                  consume();
                   constant();
               }
               else
@@ -128,7 +148,8 @@ public class Parser {
                     consume();
                 }
                 else if((lookahead.getToken().equals(Tokens.MAIS))||(lookahead.getToken().equals(Tokens.MAIS)))
-                    {sign();
+                    {
+                    sign();
                     sign1();
                     }else{
                         sign1();
@@ -248,10 +269,10 @@ public class Parser {
         }
     private void entireVariable()
         {
-            Identifier();
+            identifier();
         }
     private void resultType(){
-        Identifier();
+        identifier();
     }
     private void sign()
     {
