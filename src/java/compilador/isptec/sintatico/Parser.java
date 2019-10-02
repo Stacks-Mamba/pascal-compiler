@@ -103,19 +103,43 @@ public class Parser {
         }
     private void constantdefpart()
         {
-          //  if(lookahead.getToken().equals(Tokens.CONST))
+          // if(lookahead.getToken().equals(Tokens.CONST))
         }
+    private void constantdef(){
+        if(lookahead.getToken().equals(Tokens.ID))
+          {
+              consume();
+              if(lookahead.getToken().equals(Tokens.IGUAL))
+              {
+                  constant();
+              }
+              else
+              {
+                  error(Tokens.IGUAL,EXPECTED_ERROR);
+              }
+          }else{
+              error(Tokens.ID,EXPECTED_ERROR);
+          }
+    }
     private void constant()
         {
-            /*if(lookahead.getToken().equals(Tokens.STRING))
+            if(lookahead.getToken().equals(Tokens.STRING))
                 {
                     consume();
                 }
-                else if()*/
+                else if((lookahead.getToken().equals(Tokens.MAIS))||(lookahead.getToken().equals(Tokens.MAIS)))
+                    {sign();
+                    sign1();
+                    }else{
+                        sign1();
+                    }
         }
     private void sign1()
         {
-
+           if(!(lookahead.getToken().equals(Tokens.MAIS))||!(lookahead.getToken().equals(Tokens.MAIS)))
+                unsignedNumber();
+                else
+                identifier();
         }
     private void emptystatement()
         {
@@ -130,7 +154,7 @@ public class Parser {
             else
                 error(Tokens.NUMINT,EXPECTED_ERROR);
         }
-    private void Identifier()
+    private void identifier()
         {
             if(lookahead.getToken().equals(Tokens.ID))
             {
