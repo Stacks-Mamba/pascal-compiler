@@ -69,7 +69,6 @@
 <element 1> ::= PONTOPONTO <expression> | <empty>
 <procedure statement> ::= <procedure identifier> <procedure statement 1>
 <procedure statement 1> ::= ABREPAR <actual parameter> {VIRGULA <actual parameter> } FECHAPAR | <empty>
-<procedure identifier> ::= ID
 <actual parameter> ::= <expression> | <variable> | <procedure identifier> | <function identifier>
 <structured statement> ::= <compound statement> | <conditional statement> | <repetitive statement> | <with statement>
 <compound statement> ::= BEGIN <statement> {PONTOVIRGULA <statement> } END PONTOVIRGULA

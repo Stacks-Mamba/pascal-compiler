@@ -93,7 +93,7 @@ public class Parser {
         else
             error(Tokens.NUMINT,EXPECTED_ERROR);
     }
-    private void fieldIdentifier()
+    private void Identifier()
     {
         if(lookahead.getToken().equals(Tokens.ID))
         {
@@ -104,42 +104,6 @@ public class Parser {
     }
     private void controlVariable()
     {
-        if(lookahead.getToken().equals(Tokens.ID))
-        {
-            consume();
-        }
-        else
-          error(Tokens.ID,EXPECTED_ERROR);
-    }
-    private void functionIdentifier()
-    {
-        if(lookahead.getToken().equals(Tokens.ID))
-        {
-            consume();
-        }
-        else
-          error(Tokens.ID,EXPECTED_ERROR);
-
-    }
-    private void procedureIdentifier()
-    {
-        if(lookahead.getToken().equals(Tokens.ID))
-        {
-            consume();
-        }
-        else
-            error(Tokens.ID,EXPECTED_ERROR);
-    }
-    private void variableIdentifier()
-    {
-        if(lookahead.getToken().equals(Tokens.ID))
-        {
-            consume();
-        }
-        else
-          error(Tokens.ID,EXPECTED_ERROR);
-    }
-    private void constantIdentifier(){
         if(lookahead.getToken().equals(Tokens.ID))
         {
             consume();
