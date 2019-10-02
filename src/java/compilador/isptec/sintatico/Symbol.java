@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package compilador.isptec.sintatico;
-
+import compilador.isptec.lexico.*;
 /**
  *
  * @author stacks
@@ -14,10 +14,12 @@ package compilador.isptec.sintatico;
 
 public abstract class Symbol {
     
-    private final String descrip;
+    protected final String descrip;
     
     public Symbol(String descrip){
         
         this.descrip = descrip;
     }
+    
+    public abstract int checkSymbol(Token t);
 }

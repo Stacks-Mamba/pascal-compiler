@@ -5,7 +5,9 @@
  */
 package compilador.isptec.sintatico;
 
+import compilador.isptec.lexico.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  *
@@ -21,5 +23,48 @@ public class Derivation {
     
     public void addSymbol(Symbol symbol){
         symbols.add(symbol);
+    }
+    
+    public boolean checkDerivation(Token t){
+        if(symbols.get(0).getClass() == Terminal.class){
+            return (symbols.get(0).checkSymbol(t) > 0);
+        }
+        else{
+            return (symbols.get(0).checkSymbol(t) > -1);
+        }
+    }
+    
+    
+    //Método para verificar o lado direito das regras de producao
+    public void derive(){
+        //Para cada símbolo na regra
+        for(Symbol s:symbols){
+            
+            //Se for um terminal
+            if(s.getClass() == Terminal.class){
+                Terminal aux = (Terminal) s;
+                if(aux.checkSymbol(Parser.lookahead)==1){
+                    Parser.consume();
+                }
+                else{
+                    Parser.error(aux.getToken(),Parser.EXPECTED_ERROR);
+                }
+            }
+            
+            //Se for não terminal
+            else{
+                NonTerminal aux = (NonTerminal) s;
+                //Get the index of the correct derivation
+                int index = aux.checkSymbol(Parser.lookahead);
+                
+                if(index>=0){
+                    //Aqui é a chamada recursiva que garante a derivacao
+                    aux.getDerivation(index).derive();
+                }
+                else{
+                    Parser.error(Parser.lookahead.getToken(),Parser.EXPECTED_ERROR);
+                }
+            }
+        }
     }
 }

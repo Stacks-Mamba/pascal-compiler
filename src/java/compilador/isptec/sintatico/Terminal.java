@@ -11,11 +11,28 @@ import compilador.isptec.lexico.*;
  */
 public class Terminal extends Symbol {
     
+    
+    
     private Tokens token;
-            
+    public final static String EMPTY_SYMBOL = "E";  
+    
     public Terminal(String descrip,Tokens token){
         super(descrip);
         this.token = token;
+    }
+    
+    @Override
+    public int checkSymbol(Token t){
+        if(t.getToken() == this.token || this.descrip == EMPTY_SYMBOL){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+    
+    public Tokens getToken(){
+        return token;
     }
     
 }
