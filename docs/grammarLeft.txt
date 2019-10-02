@@ -3,9 +3,6 @@
 <type definition part> ::= <empty> | TYPE <type definition> {PONTOVIRGULA <type definition>} PONTOVIRGULA
 <type definition> ::= ID IGUAL <type>
 <type> ::= <simple type> | <structured type> | <pointer type>
-<simple type> ::= <scalar type> | <subrange type> | <type identifier>
-<scalar type> ::= ABREPAR ID{VIRGULA ID} FECHAPAR
-<subrange type> ::= <constant> PONTOPONTO <constant>
 <structured type> ::= <array type> | <record type> | <set type> | <file type>
 <array type> ::= ARRAY [ <index type> { VIRGULA <index type>} ] OF <component type>
 <index type> ::= <simple type>
