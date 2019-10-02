@@ -1,6 +1,5 @@
 <program> ::= PROGRAM ID PONTOVIRGULA <block> PONTO
 <block> ::= <label declaration part> <constant definition part> <type definition part> <variable declaration part> <procedure and function declaration part> <statement part>
-<constant definition part> ::= <empty> | CONST <constant definition> { PONTOVIRGULA <constant definition>} PONTOVIRGULA
 <type definition part> ::= <empty> | TYPE <type definition> {PONTOVIRGULA <type definition>} PONTOVIRGULA
 <type definition> ::= ID IGUAL <type>
 <type> ::= <simple type> | <structured type> | <pointer type>
