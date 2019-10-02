@@ -12,7 +12,7 @@ import compilador.isptec.lexico.*;
 
 /*Classe que representa um símbolo terminal ou não terminal*/
 
-public abstract class Symbol {
+public abstract class Symbol implements Derivable {
     
     protected final String descrip;
     
@@ -22,4 +22,5 @@ public abstract class Symbol {
     }
     
     public abstract int checkSymbol(Token t);
+    
 }

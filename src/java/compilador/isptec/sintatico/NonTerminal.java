@@ -40,4 +40,8 @@ public class NonTerminal extends Symbol{
         return derivations.get(index);
     }
     
+    @Override
+    public int verify(Token t){
+        return checkSymbol(t);
+    }
 }

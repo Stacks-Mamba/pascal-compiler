@@ -9,7 +9,7 @@ import compilador.isptec.lexico.*;
  *
  * @author stacks
  */
-public class Terminal extends Symbol {
+public class Terminal extends Symbol  {
     
     
     
@@ -33,6 +33,11 @@ public class Terminal extends Symbol {
     
     public Tokens getToken(){
         return token;
+    }
+    
+    @Override
+    public int verify(Token t){
+        return checkSymbol(t);
     }
     
 }

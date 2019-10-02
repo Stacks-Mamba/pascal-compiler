@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class Derivation {
     
-    private ArrayList<Symbol> symbols;
+    private ArrayList<Derivable> symbols;
     
     public Derivation(){
         this.symbols = new ArrayList<>();
@@ -26,11 +26,11 @@ public class Derivation {
     }
     
     public boolean checkDerivation(Token t){
-        if(symbols.get(0).getClass() == Terminal.class){
-            return (symbols.get(0).checkSymbol(t) > 0);
+        if(symbols.get(0).getClass() == Terminal.class || symbols.get(0).getClass() == Sequence.class){
+            return (symbols.get(0).verify(t) > 0);
         }
         else{
-            return (symbols.get(0).checkSymbol(t) > -1);
+            return (symbols.get(0).verify(t) > -1);
         }
     }
     
@@ -38,7 +38,7 @@ public class Derivation {
     //Método para verificar o lado direito das regras de producao
     public void derive(){
         //Para cada símbolo na regra
-        for(Symbol s:symbols){
+        for(Derivable s:symbols){
             
             //Se for um terminal
             if(s.getClass() == Terminal.class){
@@ -52,7 +52,7 @@ public class Derivation {
             }
             
             //Se for não terminal
-            else{
+            else if(s.getClass() == NonTerminal.class){
                 NonTerminal aux = (NonTerminal) s;
                 //Get the index of the correct derivation
                 int index = aux.checkSymbol(Parser.lookahead);
@@ -63,6 +63,18 @@ public class Derivation {
                 }
                 else{
                     Parser.error(Parser.lookahead.getToken(),Parser.EXPECTED_ERROR);
+                }
+            }
+            else{
+                
+                Sequence aux = (Sequence) s;
+                if(aux.verify(Parser.lookahead)==1){
+                    while(aux.verify(Parser.lookahead)==1){
+                        aux.derive();
+                    }
+                }
+                else{
+                    Parser.consume();
                 }
             }
         }
