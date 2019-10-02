@@ -1,6 +1,5 @@
 <program> ::= PROGRAM ID PONTOVIRGULA <block> PONTO
 <block> ::= <label declaration part> <constant definition part> <type definition part> <variable declaration part> <procedure and function declaration part> <statement part>
-<label declaration part> ::= <empty> | LABEL <label> {VIRGULA <label>} PONTOVIRGULA
 <constant definition part> ::= <empty> | CONST <constant definition> { PONTOVIRGULA <constant definition>} PONTOVIRGULA
 <constant definition> ::= ID IGUAL <constant>
 <constant> ::= <unsigned number> | <sign> <unsigned number> | <constant identifier> | <sign> <constant identifier> | STRING
@@ -82,7 +81,6 @@
 <while statement> ::= WHILE <expression> DO <statement>
 <repeat statement> ::= REPEAT <statement> {PONTOVIRGULA <statement>} UNTIL <expression>
 <for statement> ::= FOR <control variable> DOISPONTOSIGUAL <for list> DO <statement>
-<control variable> ::= ID
 <for list> ::= <initial value> TO <final value> | <initial value> DOWNTO <final value>
 <initial value> ::= <expression>
 <final value> ::= <expression>

@@ -78,7 +78,27 @@ public class Parser {
     }
     private void empty()
     {
-
+         consume();    
+    }
+    private void labelDeclarationpart(){
+        if(lookahead.getToken().equals(Tokens.LABEL))
+        {
+           consume();
+           label();
+           while(lookahead.getToken().equals(Tokens.VIRGULA))
+           {
+               consume();
+               label();
+           }
+           if(lookahead.getToken().equals(Tokens.PONTOVIRGULA))
+                consume();
+            else
+                error(Tokens.PONTOVIRGULA,EXPECTED_ERROR);
+               
+               
+        }
+        else
+            empty();
     }
     private void emptystatement()
     {
@@ -185,18 +205,10 @@ public class Parser {
         }
     }
     private void entireVariable(){
-        variableIdentifier();
+        Identifier();
     }
     private void resultType(){
-        typeIdentifier();
-    }
-    private void typeIdentifier(){
-        if(lookahead.getToken().equals(Tokens.ID))
-        {
-            consume();
-        }
-        else
-            error(Tokens.ID,EXPECTED_ERROR);
+        Identifier();
     }
     private void sign()
     {
