@@ -308,6 +308,71 @@ public class Grammar {
         type.addDerivation(new Derivation(scalar_type),new Derivation(subrange_type),new Derivation(structured_type),new Derivation(idT),new Derivation(empty));     
     }
     
+    public static void produceStructuredType(){
+        Grammar.structured_type.addDerivation(new Derivation(array_type),new Derivation(record_type),new Derivation(set_type),new Derivation(file_type));
+    }
+    
+    public static void produceArrayType(){
+        array_type.addDerivation(new Derivation(arrayT,abreretT,index_type,new Sequence(virgulaT,index_type),fecharetT,ofT,type));
+    }
+    
+    public static void produceRecordType(){
+        record_type.addDerivation(new Derivation(recordT,field_list,endT));
+        
+    }
+    
+    public static void produceFieldList(){
+        field_list.addDerivation(new Derivation(fixed_part,fixed_part_1),new Derivation(variant_part));
+    }
+    
+    public static void produceFixedPart1(){
+        fixed_part_1.addDerivation(new Derivation(pontovirgulaT,variant_part),new Derivation(empty));
+    }
+    
+    public static void produceFixedPart(){
+        fixed_part.addDerivation(new Derivation(record_section,new Sequence(pontovirgulaT,record_section)));
+    }
+    
+    public static void produceRecordSection(){
+        record_section.addDerivation(new Derivation(idT,new Sequence(virgulaT,idT),pontovirgulaT,type),new Derivation(empty));
+    }
+    
+    public static void produceVariantType(){
+        variant_type.addDerivation(new Derivation(caseT,tag_field,idT,ofT,variant,new Sequence(pontovirgulaT,variant)));
+    }
+    
+    public static void produceTagField(){
+        tag_field.addDerivation(new Derivation(idT,doispontosT),new Derivation(empty));
+    }
+    
+    public static void produceVariant(){
+        variant.addDerivation(new Derivation(Grammar.case_label_list,doispontosT,abreparT,field_list,fechaparT),new Derivation(empty));
+    }
+    
+    public static void produceCaseLabelList(){
+        Grammar.case_label_list.addDerivation(new Derivation(constant,new Sequence(virgulaT,constant)));
+    }
+    
+    public static void produceSetType(){
+        set_type.addDerivation(new Derivation(setT,ofT,base_type));
+    }
+    
+    public static void ProducebaseType(){
+        base_type.addDerivation(new Derivation(scalar_type),new Derivation(subrange_type),new Derivation(idT));
+    }
+    
+    public static void produceFileType(){
+        file_type.addDerivation(new Derivation(fileT,ofT,type));
+    }
+    
+    public static void produceVarDeclPart(){
+        Grammar.variable_declaration_part.addDerivation
+    }
+    
+    
+    
+    
+    
     
     public static void initGrammar(){
         produceProgram();
@@ -318,6 +383,20 @@ public class Grammar {
         produceTypeDefPart();
         produceTypeDef();
         produceType();
+        produceStructuredType();
+        produceArrayType();
+        produceRecordType();
+        produceFieldList();
+        produceFixedPart1();
+        produceFixedPart();
+        produceRecordSection();
+        produceVariantType();
+        produceTagField();
+        produceVariant();
+        produceCaseLabelList();
+        produceSetType();
+        ProducebaseType();
+        produceFileType();
         produceSign();
         produceUnsignedNumber();
         produceGoToStatement();

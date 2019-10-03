@@ -1,17 +1,3 @@
-<structured type> ::= <array type> | <record type> | <set type> | <file type>
-<array type> ::= ARRAY [ <index type> { VIRGULA <index type>} ] OF <type>
-<record type> ::= RECORD <field list> END
-<field list> ::= <fixed part> <fixed part 1> | <variant part>
-<fixed part 1> ::= PONTOVIRGULA <variant part> | <empty>
-<fixed part> ::= <record section> {PONTOVIRGULA <record section>}
-<record section> ::= ID {VIRGULA ID} PONTOVIRGULA <type> | <empty>
-<variant type> ::= CASE <tag field> ID OF <variant> { PONTOVIRGULA <variant>}
-<tag field> ::= ID DOISPONTOS | <empty>
-<variant> ::= <case label list> DOISPONTOS ABREPAR <field list> FECHAPAR | <empty>
-<case label list> ::= <constant> {VIRGULA <constant>}
-<set type> ::=SET OF <base type>
-<base type> ::= <scalar type> | <subrange type> | ID
-<file type> ::= FILE OF <type>
 <variable declaration part> ::= <empty> | VAR <variable declaration> {PONTOVIRGULA <variable declaration>} PONTOVIRGULA
 <variable declaration> ::= ID {VIRGULA ID} DOISPONTOS <type>
 <procedure and function declaration part> ::= {<procedure or function declaration> PONTOVIRGULA}
