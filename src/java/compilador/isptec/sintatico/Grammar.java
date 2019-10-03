@@ -140,50 +140,113 @@ public class Grammar {
     public static Terminal otherwiseT = new Terminal("OTHERWISE",Tokens.OTHERWISE);
     public static Terminal fileT = new Terminal("FILE",Tokens.FILE);
 
-
-
-
-
-
-    //Program Heading production
-    public static NonTerminal programHeading = new NonTerminal("<Program Heading>");
-    public static Terminal id = new Terminal("ID",Tokens.ID);
-    public static Terminal virgula = new Terminal(",",Tokens.VIRGULA);
-    public static Terminal program = new Terminal("program",Tokens.PROGRAM);
-    public static Terminal parl = new Terminal("(",Tokens.ABREPAR);
-    public static Terminal parr = new Terminal(")",Tokens.FECHAPAR);
-    public static Terminal pv = new Terminal(";",Tokens.PONTOVIRGULA);
-
-
-
-
+    
+    
+    
+    
+    
+    //Non terminal
+    public static NonTerminal program = new NonTerminal("program");
+    public static NonTerminal program_heading = new NonTerminal("program_heading");
+    public static NonTerminal block = new NonTerminal("block");
+    public static NonTerminal label_declaration_part = new NonTerminal("label_declaration_part");
+    public static NonTerminal constant_definition_part = new NonTerminal("constant_definition_part");
+    public static NonTerminal type_definition_part = new NonTerminal("type_definition_part");
+    public static NonTerminal variable_declaration_part = new NonTerminal("variable_declaration_part");
+    public static NonTerminal procedure_and_function_declaration_part = new NonTerminal("procedure_and_function_declaration_part");
+    public static NonTerminal statement_part = new NonTerminal("statement_part");
+    public static NonTerminal empty = new NonTerminal("empty");
+    public static NonTerminal constant_definition = new NonTerminal("constant_definition");
+    public static NonTerminal constant = new NonTerminal("constant");
+    public static NonTerminal unsigned_number = new NonTerminal("unsigned_number");
+    public static NonTerminal sign = new NonTerminal("sign");
+    public static NonTerminal sign_1 = new NonTerminal("sign_1");
+    public static NonTerminal type_definition = new NonTerminal("type_definition");
+    public static NonTerminal type = new NonTerminal("type");
+    public static NonTerminal scalar_type = new NonTerminal("scalar_type");
+    public static NonTerminal subrange_type = new NonTerminal("subrange_type");
+    public static NonTerminal structured_type = new NonTerminal("structured_type");
+    public static NonTerminal array_type = new NonTerminal("array_type");
+    public static NonTerminal record_type = new NonTerminal("record_type");
+    public static NonTerminal set_type = new NonTerminal("set_type");
+    public static NonTerminal file_type = new NonTerminal("file_type");
+    public static NonTerminal index_type = new NonTerminal("index_type");
+    public static NonTerminal field_list = new NonTerminal("field_list");
+    public static NonTerminal fixed_part = new NonTerminal("fixed_part");
+    public static NonTerminal fixed_part_1 = new NonTerminal("fixed_part_1");
+    public static NonTerminal variant_part = new NonTerminal("variant_part");
+    public static NonTerminal record_section = new NonTerminal("record_section");
+    public static NonTerminal variant_type = new NonTerminal("variant_type");
+    public static NonTerminal tag_field = new NonTerminal("tag_field");
+    public static NonTerminal variant = new NonTerminal("variant");
+    public static NonTerminal case_label_list = new NonTerminal("case_label_list");
+    public static NonTerminal base_type = new NonTerminal("base_type");
+    public static NonTerminal variable_declaration = new NonTerminal("variable_declaration");
+    public static NonTerminal procedure_or_function_declaration = new NonTerminal("procedure_or_function_declaration");
+    public static NonTerminal procedure_declaration = new NonTerminal("procedure_declaration");
+    public static NonTerminal function_declaration = new NonTerminal("function_declaration");
+    public static NonTerminal procedure_heading = new NonTerminal("procedure_heading");
+    public static NonTerminal procedure_heading_1 = new NonTerminal("procedure_heading_1");
+    public static NonTerminal formal_parameter_section = new NonTerminal("formal_parameter_section");
+    public static NonTerminal parameter_group = new NonTerminal("parameter_group");
+    public static NonTerminal function_heading = new NonTerminal("function_heading");
+    public static NonTerminal function_heading_1 = new NonTerminal("function_heading_1");
+    public static NonTerminal result_type = new NonTerminal("result_type");
+    public static NonTerminal compound_statement = new NonTerminal("compound_statement");
+    public static NonTerminal statement = new NonTerminal("statement");
+    public static NonTerminal unlabelled_statement = new NonTerminal("unlabelled_statement");
+    public static NonTerminal simple_statement = new NonTerminal("simple_statement");
+    public static NonTerminal structured_statement = new NonTerminal("structured_statement");
+    public static NonTerminal simple_statement_1 = new NonTerminal("simple_statement_1");
+    public static NonTerminal go_to_statement = new NonTerminal("go_to_statement");
+    public static NonTerminal variable_2 = new NonTerminal("variable_2");
+    public static NonTerminal expression = new NonTerminal("expression");
+    public static NonTerminal function_designator_1 = new NonTerminal("function_designator_1");
+    public static NonTerminal assignment_statement = new NonTerminal("assignment_statement");
+    public static NonTerminal variable = new NonTerminal("variable");
+    public static NonTerminal array_variable = new NonTerminal("array_variable");
+    public static NonTerminal record_variable = new NonTerminal("record_variable");
+    public static NonTerminal simple_expression = new NonTerminal("simple_expression");
+    public static NonTerminal expression_2 = new NonTerminal("expression_2");
+    public static NonTerminal relational_operator = new NonTerminal("relational_operator");
+    public static NonTerminal term = new NonTerminal("term");
+    public static NonTerminal adding_operator = new NonTerminal("adding_operator");
+    public static NonTerminal factor = new NonTerminal("factor");
+    public static NonTerminal term_1 = new NonTerminal("term_1");
+    public static NonTerminal multiplying_operator = new NonTerminal("multiplying_operator");
+    public static NonTerminal factor_2 = new NonTerminal("factor_2");
+    public static NonTerminal unsigned_constant = new NonTerminal("unsigned_constant");
+    public static NonTerminal set = new NonTerminal("set");
+    public static NonTerminal factor_3 = new NonTerminal("factor_3");
+    public static NonTerminal function_designator_ = new NonTerminal("function_designator_");
+    public static NonTerminal actual_parameter = new NonTerminal("actual_parameter");
+    public static NonTerminal element_list = new NonTerminal("element_list");
+    public static NonTerminal element = new NonTerminal("element");
+    public static NonTerminal element_1 = new NonTerminal("element_1");
+    public static NonTerminal procedure_statement = new NonTerminal("procedure_statement");
+    public static NonTerminal conditional_statement = new NonTerminal("conditional_statement");
+    public static NonTerminal repetitive_statement = new NonTerminal("repetitive_statement");
+    public static NonTerminal with_statement = new NonTerminal("with_statement");
+    public static NonTerminal if_statement = new NonTerminal("if_statement");
+    public static NonTerminal case_statement = new NonTerminal("case_statement");
+    public static NonTerminal if_statement_2 = new NonTerminal("if_statement_2");
+    public static NonTerminal case_list_element = new NonTerminal("case_list_element");
+    public static NonTerminal while_statement = new NonTerminal("while_statement");
+    public static NonTerminal for_statement = new NonTerminal("for_statement");
+    public static NonTerminal repeat_statement = new NonTerminal("repeat_statement");
+    public static NonTerminal for_list = new NonTerminal("for_list");
+    public static NonTerminal for_list_1 = new NonTerminal("for_list_1");
+    public static NonTerminal record_variable_list = new NonTerminal("record_variable_list");
+    
+    public static void initSign(){
+        sign.addDerivation(new Derivation(maisT),new Derivation(menosT));
+    }
+    
     public static void initPH(){
         Derivation d = new Derivation();
-        d.addSymbol(program);
-        d.addSymbol(id);
-        d.addSymbol(parl);
-        d.addSymbol(id);
-        Sequence s = new Sequence();
-        s.addSymbol(virgula);
-        s.addSymbol(id);
-        d.addSymbol(s);
-        d.addSymbol(parr);
-        d.addSymbol(pv);
-        PH.addDerivation(d);
-    }
-
-
-    public static void getTokenFile() throws IOException{
-        File f = new File("TokenDeclaration.txt");
-        f.createNewFile();
-        PrintWriter out = new PrintWriter(new FileOutputStream(f));
-        for(Tokens t:Tokens.values()){
-            out.printf("public static Terminal %sT = new Terminal(\"%s\",Tokens.%s);\n",t.name().toLowerCase(),t.name(),t.name());
-        }
-        out.close();
-    }
-
-    public static void main(String[] args) throws IOException {
-        getTokenFile();
+    }    
+    
+    public static void initGrammar(){
+        initSign();
     }
 }

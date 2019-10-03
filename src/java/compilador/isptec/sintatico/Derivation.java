@@ -21,6 +21,12 @@ public class Derivation {
         this.symbols = new ArrayList<>();
     }
     
+    public Derivation(Derivable...derivables){
+        for(Derivable d:derivables){
+            symbols.add(d);
+        }
+    }
+    
     public void addSymbol(Derivable symbol){
         symbols.add(symbol);
     }

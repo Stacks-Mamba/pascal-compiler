@@ -55,9 +55,9 @@ public class Parser {
         initParser(file);
         //Comecar a execucao da análise léxica
         Grammar.initPH();
-        int index = Grammar.PH.checkSymbol(lookahead);
+        int index = Grammar.program_heading.checkSymbol(lookahead);
         if (index>-1)
-            Grammar.PH.getDerivation(index).derive();
+            Grammar.program_heading.getDerivation(index).derive();
         else
             Parser.error(lookahead.getToken(), UNKNOWN_ERROR);
         //Mensagem de sucesso

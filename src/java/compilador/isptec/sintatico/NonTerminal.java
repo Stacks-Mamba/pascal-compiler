@@ -24,6 +24,12 @@ public class NonTerminal extends Symbol implements Derivable{
         this.derivations.add(d);
     }
     
+    public void addDerivation(Derivation...derivations){
+        for(Derivation d:derivations){
+            this.derivations.add(d);
+        }
+    }
+    
     @Override
     public int checkSymbol(Token t){
         int c=0;
