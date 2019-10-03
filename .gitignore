@@ -2,3 +2,5 @@ src/python/CodeGen.py
 src/python/code.txt
 *.pyc
 docs/FileScript.py
+/src/java/Compiler/nbproject/private/
+/src/java/Compiler/build/
