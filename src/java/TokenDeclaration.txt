@@ -1,17 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package compilador.isptec.sintatico;
-import compilador.isptec.lexico.*;
-import java.io.*;
-/**
- *
- * @author stacks
- */
-public class Grammar {
-    //Símbolos terminais
     public static Terminal atribT = new Terminal("ATRIB",Tokens.ATRIB);
     public static Terminal numintT = new Terminal("NUMINT",Tokens.NUMINT);
     public static Terminal numrealT = new Terminal("NUMREAL",Tokens.NUMREAL);
@@ -139,51 +125,3 @@ public class Grammar {
     public static Terminal newT = new Terminal("NEW",Tokens.NEW);
     public static Terminal otherwiseT = new Terminal("OTHERWISE",Tokens.OTHERWISE);
     public static Terminal fileT = new Terminal("FILE",Tokens.FILE);
-
-
-
-
-
-
-    //Program Heading production
-    public static NonTerminal programHeading = new NonTerminal("<Program Heading>");
-    public static Terminal id = new Terminal("ID",Tokens.ID);
-    public static Terminal virgula = new Terminal(",",Tokens.VIRGULA);
-    public static Terminal program = new Terminal("program",Tokens.PROGRAM);
-    public static Terminal parl = new Terminal("(",Tokens.ABREPAR);
-    public static Terminal parr = new Terminal(")",Tokens.FECHAPAR);
-    public static Terminal pv = new Terminal(";",Tokens.PONTOVIRGULA);
-
-
-
-
-    public static void initPH(){
-        Derivation d = new Derivation();
-        d.addSymbol(program);
-        d.addSymbol(id);
-        d.addSymbol(parl);
-        d.addSymbol(id);
-        Sequence s = new Sequence();
-        s.addSymbol(virgula);
-        s.addSymbol(id);
-        d.addSymbol(s);
-        d.addSymbol(parr);
-        d.addSymbol(pv);
-        PH.addDerivation(d);
-    }
-
-
-    public static void getTokenFile() throws IOException{
-        File f = new File("TokenDeclaration.txt");
-        f.createNewFile();
-        PrintWriter out = new PrintWriter(new FileOutputStream(f));
-        for(Tokens t:Tokens.values()){
-            out.printf("public static Terminal %sT = new Terminal(\"%s\",Tokens.%s);\n",t.name().toLowerCase(),t.name(),t.name());
-        }
-        out.close();
-    }
-
-    public static void main(String[] args) throws IOException {
-        getTokenFile();
-    }
-}

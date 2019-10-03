@@ -53,7 +53,8 @@ Adapted from pascal.g by  Hakki Dogusan, Piet Schoutteten and Marton Papp
 */
 expression
 grammar pascal;
-actualParameter
+component
+functionDesignator
 program
    : programHeading (INTERFACE)? block DOT
    ;
