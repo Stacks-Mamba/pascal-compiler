@@ -1,4 +1,3 @@
-<type> ::= <scalar type> | <subrange type> | <structured type> | ID | <empty>
 <structured type> ::= <array type> | <record type> | <set type> | <file type>
 <array type> ::= ARRAY [ <index type> { VIRGULA <index type>} ] OF <type>
 <record type> ::= RECORD <field list> END
