@@ -139,7 +139,7 @@ public class Grammar {
     public static Terminal newT = new Terminal("NEW",Tokens.NEW);
     public static Terminal otherwiseT = new Terminal("OTHERWISE",Tokens.OTHERWISE);
     public static Terminal fileT = new Terminal("FILE",Tokens.FILE);
-
+    public static Terminal empty = new Terminal(Terminal.EMPTY_SYMBOL,Tokens.ERRO);
     
     
     
@@ -155,7 +155,6 @@ public class Grammar {
     public static NonTerminal variable_declaration_part = new NonTerminal("variable_declaration_part");
     public static NonTerminal procedure_and_function_declaration_part = new NonTerminal("procedure_and_function_declaration_part");
     public static NonTerminal statement_part = new NonTerminal("statement_part");
-    public static NonTerminal empty = new NonTerminal("empty");
     public static NonTerminal constant_definition = new NonTerminal("constant_definition");
     public static NonTerminal constant = new NonTerminal("constant");
     public static NonTerminal unsigned_number = new NonTerminal("unsigned_number");
@@ -238,15 +237,61 @@ public class Grammar {
     public static NonTerminal for_list_1 = new NonTerminal("for_list_1");
     public static NonTerminal record_variable_list = new NonTerminal("record_variable_list");
     
-    public static void initSign(){
+    public static void produceSign(){
         sign.addDerivation(new Derivation(maisT),new Derivation(menosT));
     }
     
-    public static void initPH(){
+    public static void produceUnsignedNumber(){
+        unsigned_number.addDerivation(new Derivation(numintT),new Derivation(numrealT));
+    }
+    
+    public static void produceGoToStatement(){
+        go_to_statement.addDerivation(new Derivation(gotoT,numintT));
+    }
+    
+    public static void produceSign1(){
+        sign_1.addDerivation(new Derivation(unsigned_number),new Derivation(idT));
+    }
+    
+    public static void produceConstant(){
+        constant.addDerivation(new Derivation(unsigned_number),new Derivation(sign,sign_1),new Derivation(idT),new Derivation(stringT));
+    }
+    
+    
+    public static void produceConstantdef(){
+        constant_definition.addDerivation(new Derivation(idT,igualT,constant));
+    }
+    
+    public static void produceSubrangeType(){
+        subrange_type.addDerivation(new Derivation(constant,pontopontoT,constant));
+    }
+    
+    public static void produceScalarType(){
+        scalar_type.addDerivation(new Derivation(abreparT,idT,new Sequence(virgulaT,idT),fechaparT));
+        
+    }
+    
+    public static void produceIndexType(){
+        index_type.addDerivation(new Derivation(scalar_type),new Derivation(subrange_type),new Derivation(idT));
+    }
+    
+    
+    
+    public static void producePH(){
         Derivation d = new Derivation();
     }    
     
     public static void initGrammar(){
-        initSign();
+        produceSign();
+        produceUnsignedNumber();
+        produceGoToStatement();
+        produceSign1();
+        produceConstant();
+        produceConstantdef();
+        produceSubrangeType();
+        produceScalarType();
+        
     }
+    
+    
 }

@@ -18,6 +18,10 @@ public class Sequence extends Derivation implements Derivable {
         super();
     }
     
+    public Sequence(Derivable...ds){
+        super(ds);
+    }
+    
     @Override
     public int verify(Token t){
         return (super.checkDerivation(t))?1:0;
