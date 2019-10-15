@@ -460,9 +460,6 @@ public class Analex
                             case "end":
                                 token = new Token(Tokens.END,lexema,numeroLinha);
                                 break;
-                            case "end.":
-                                token = new Token(Tokens.END,lexema,numeroLinha);
-                                break;
                             case "set":
                                 token = new Token(Tokens.SET,lexema,numeroLinha);
                                 break;
@@ -645,6 +642,9 @@ public class Analex
                                 break;
                             case "new":
                                 token = new Token(Tokens.NEW,lexema,numeroLinha);
+                                break;
+                            case "function":
+                                token = new Token(Tokens.FUNCTION,lexema,numeroLinha);
                                 break;
                             default:
                                 token = new Token(Tokens.ID, lexema, numeroLinha);

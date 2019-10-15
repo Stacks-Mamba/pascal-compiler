@@ -366,12 +366,236 @@ public class Grammar {
     }
     
     public static void produceVarDeclPart(){
-        Grammar.variable_declaration_part.addDerivation
+        Grammar.variable_declaration_part.addDerivation(new Derivation(varT,Grammar.variable_declaration,new Sequence(pontovirgulaT,Grammar.variable_declaration),pontovirgulaT));
+    }
+    
+    public static void produceVarDeclaration(){
+        Grammar.variable_declaration.addDerivation(new Derivation(idT,new Sequence(virgulaT,idT),atribT,type));
+    }
+    
+    public static void produceProcAndFuncDeclPart(){
+        Grammar.procedure_and_function_declaration_part.addDerivation(new Derivation(new Sequence(Grammar.procedure_or_function_declaration,pontovirgulaT)));
+    }
+    
+    public static void produceProcOrFuncDeclPart(){
+        Grammar.procedure_or_function_declaration.addDerivation(new Derivation(Grammar.procedure_declaration),new Derivation(Grammar.function_declaration));
+    }
+    
+    public static void produceProcDecl(){
+        Grammar.procedure_declaration.addDerivation(new Derivation(Grammar.procedure_heading,block));
+    }
+    
+    public static void produceProcHeading(){
+        Grammar.procedure_heading.addDerivation(new Derivation(procedureT,idT,Grammar.procedure_heading_1));
+    }
+    
+    public static void produceProcHeading1(){
+        Grammar.procedure_heading_1.addDerivation(new Derivation(pontovirgulaT),new Derivation(abreparT,Grammar.formal_parameter_section,new Sequence(pontovirgulaT,Grammar.formal_parameter_section),fechaparT,doispontosT,type,pontovirgulaT));
+    }
+    
+    public static void produceFormalParamSection(){
+        Grammar.formal_parameter_section.addDerivation(new Derivation(parameter_group),new Derivation(varT,Grammar.parameter_group),new Derivation(functionT,Grammar.parameter_group),new Derivation(procedureT,idT,new Sequence(virgulaT,idT)));
+    }
+    
+    public static void produceParameterGroup(){
+        Grammar.parameter_group.addDerivation(new Derivation(idT,new Sequence(virgulaT,idT),doispontosT,type));
+    }
+    
+    public static void produceFunctionDecl(){
+        Grammar.function_declaration.addDerivation(new Derivation(Grammar.function_heading,block));
+    }
+    
+    public static void produceFunctionHead(){
+        Grammar.function_heading.addDerivation(new Derivation(functionT,idT,Grammar.function_heading_1));
+    }
+    
+    public static void produceFunctionHead1(){
+        Grammar.function_heading_1.addDerivation(new Derivation(doispontosT,result_type,pontovirgulaT),new Derivation(abreparT,Grammar.formal_parameter_section,new Sequence(pontovirgulaT,Grammar.formal_parameter_section),fechaparT,doispontosT,type,pontovirgulaT));
+    }
+    
+    public static void produceStatementPart(){
+        Grammar.statement_part.addDerivation(new Derivation(Grammar.compound_statement));
+    }
+    
+    public static void produceStatement(){
+        Grammar.statement.addDerivation(new Derivation(Grammar.unlabelled_statement),new Derivation(numintT,doispontosT,Grammar.unlabelled_statement));
+    }
+    
+    public static void unlabelledStatement(){
+        Grammar.unlabelled_statement.addDerivation(new Derivation(simple_statement),new Derivation(structured_statement));
+    }
+    
+    public static void produceSimpleStmt(){
+        Grammar.simple_statement.addDerivation(new Derivation(idT,Grammar.simple_statement_1),new Derivation(Grammar.go_to_statement), new Derivation(empty));
+    }
+    
+    public static void produceSimpleStmt1(){
+        Grammar.simple_statement_1.addDerivation(new Derivation(Grammar.variable_2,atribT,expression),new Derivation(Grammar.function_designator_1));
+    }
+    
+    public static void produceAssignStmt(){
+        Grammar.assignment_statement.addDerivation(new Derivation(idT,variable_2,atribT,expression));
     }
     
     
     
+    public static void produceVariable(){
+        variable.addDerivation(new Derivation(idT,variable_2));
+    }
     
+    public static void produceVariable2(){
+        variable_2.addDerivation(new Derivation(array_variable,variable_2),new Derivation(record_variable,variable_2),new Derivation(empty));
+    }
+    
+    public static void produceRecordVariable(){
+        record_variable.addDerivation(new Derivation(pontoT,idT));
+    }
+    
+    public static void produceArrayVariable(){
+        array_variable.addDerivation(new Derivation(abreretT,expression, new Sequence(virgulaT,expression),fecharetT));
+    }
+    
+    public static void produceExpression(){
+        expression.addDerivation(new Derivation(simple_expression,expression_2));
+    }
+    
+    public static void produceExpression2(){
+        expression_2.addDerivation(new Derivation(relational_operator,simple_expression), new Derivation(empty));
+    }
+    
+    public static void produceRelationalOperator(){
+        relational_operator.addDerivation(new Derivation(igualT), new Derivation(diferenteT), new Derivation(menorT), new Derivation(menorigualT), new Derivation(maiorigualT), new Derivation(maiorT), new Derivation(inT));
+    }
+    
+    public static void produceSimpleExpression(){
+        simple_expression.addDerivation(new Derivation(term), new Derivation(sign,term), new Derivation(simple_expression, adding_operator, term));
+    }
+    
+    public static void produceAddingOperator(){
+        adding_operator.addDerivation(new Derivation(maisT), new Derivation(menosT), new Derivation(orT));
+    }
+    
+    public static void produceTerm(){
+        term.addDerivation(new Derivation(factor, term_1));
+    }
+    
+    public static void produceTerm1(){
+        term_1.addDerivation(new Derivation(multiplying_operator, factor, term_1), new Derivation(empty));
+    }
+    
+    public static void produceMultiplyingOperator(){
+        multiplying_operator.addDerivation(new Derivation(vezesT), new Derivation(divisaoT), new Derivation(divT), new Derivation(modT), new Derivation(andT));
+    }
+    
+    public static void produceFactor(){
+        factor.addDerivation(new Derivation(idT, factor_2), new Derivation(unsigned_constant), new Derivation(abreparT,expression,fechaparT), new Derivation(set), new Derivation(notT, factor));
+    }
+    
+    public static void produceFactor2(){
+        factor_2.addDerivation(new Derivation(variable_2, factor_3), new Derivation(function_designator_1), new Derivation(empty));
+    }
+    
+    public static void produceFactor3(){
+        factor_3.addDerivation(new Derivation(array_variable), new Derivation(record_variable), new Derivation(empty));
+    }
+    
+    public static void produceUnsignedConstant(){
+        unsigned_constant.addDerivation(new Derivation(unsigned_number), new Derivation(stringT), new Derivation(idT), new Derivation(nilT) );
+    }
+    
+    public static void produceFunctionDesignator(){
+        function_designator_.addDerivation(new Derivation(idT, function_designator_1));
+    }
+    
+    public static void produceFunctionDesignator1(){
+        function_designator_1.addDerivation(new Derivation(abreparT,actual_parameter, new Sequence(virgulaT, actual_parameter),fechaparT), new Derivation(empty));
+    }
+    
+    public static void produceSet(){
+        set.addDerivation(new Derivation(abreparT,element_list,fechaparT));
+    }
+    
+    public static void produceElementList(){
+        element_list.addDerivation(new Derivation(element, new Sequence(virgulaT,element)));
+    }
+    
+    public static void produceElement(){
+        element.addDerivation(new Derivation(expression, element_1));
+    }
+    
+    public static void produceElement_1(){
+        element_1.addDerivation(new Derivation(pontopontoT,expression), new Derivation(empty));
+    }
+    
+    public static void produceProcedureStatement(){
+        procedure_statement.addDerivation(new Derivation(idT, function_designator_1));
+    }
+    
+     public static void produceActualParameter(){
+        actual_parameter.addDerivation(new Derivation(expression), new Derivation(unsigned_constant), new Derivation(idT, factor_2));
+    }
+    
+    public static void produceStructuredStatement(){
+        structured_statement.addDerivation(new Derivation(compound_statement), new Derivation(conditional_statement), new Derivation(repetitive_statement), new Derivation(with_statement));
+    }
+    
+    public static void produceCompoundStatement(){
+        compound_statement.addDerivation(new Derivation(beginT, statement, new Sequence(pontovirgulaT, statement), endT, pontovirgulaT));
+    }
+    
+    public static void produceConditionalStatement(){
+        conditional_statement.addDerivation(new Derivation(if_statement), new Derivation(case_statement));
+    }
+    
+    public static void produceIfStatement(){
+        if_statement.addDerivation(new Derivation(ifT, expression, thenT, statement, if_statement_2));
+    }
+    
+    public static void produceIfStatement2(){
+        if_statement_2.addDerivation(new Derivation(elseT,statement), new Derivation(empty));
+    }
+    
+    public static void produceCaseStatement(){
+        case_statement.addDerivation(new Derivation(caseT, expression, ofT, case_list_element, new Sequence(pontovirgulaT,case_list_element),endT));
+    }
+    
+    public static void produceCaseListElement(){
+        case_list_element.addDerivation(new Derivation(case_label_list, pontoT, statement), new Derivation(empty));
+    }
+    
+    
+    public static void produceRepetitiveStatement(){
+        repetitive_statement.addDerivation(new Derivation(while_statement), new Derivation(repeat_statement), new Derivation(for_statement));
+    }
+    
+    public static void produceWhileStatement(){
+        while_statement.addDerivation(new Derivation(whileT, expression, doT, statement));
+    }
+    
+    public static void produceRepeatStatement(){
+        repeat_statement.addDerivation(new Derivation(repeatT, statement, new Sequence(pontovirgulaT, statement), untilT, expression));
+    }
+    
+    public static void produceForStatement(){
+        for_statement.addDerivation(new Derivation(forT, idT, atribT, for_list, doT, statement));
+    }
+    
+    public static void produceForList(){
+        for_list.addDerivation(new Derivation(expression, for_list_1));
+    }
+    
+    public static void produceForList1(){
+        for_list_1.addDerivation(new Derivation(toT, expression), new Derivation(downtoT, expression));
+    }
+    
+    
+    public static void produceWithStatement(){
+        with_statement.addDerivation(new Derivation(withT, record_variable_list, doT, statement));
+    }
+    
+    public static void produceRecordVaribleList(){
+        record_variable_list.addDerivation(new Derivation(variable, new Sequence(virgulaT, variable)));
+    }
     
     
     public static void initGrammar(){
@@ -397,6 +621,65 @@ public class Grammar {
         produceSetType();
         ProducebaseType();
         produceFileType();
+        produceVarDeclPart();
+        produceVarDeclaration();
+        produceProcAndFuncDeclPart();
+        produceProcOrFuncDeclPart();
+        produceProcDecl();
+        produceProcHeading();
+        produceProcHeading1();
+        produceFunctionHead();
+        produceFormalParamSection();
+        produceParameterGroup();
+        produceFunctionDecl();
+        produceFunctionHead1();
+        produceStatementPart();
+        produceStatement();
+        unlabelledStatement();
+        produceSimpleStmt();
+        produceSimpleStmt1();
+        produceAssignStmt();
+        produceVariable();
+        produceVariable2();
+        produceRecordVariable();
+        produceArrayVariable();
+        produceArrayVariable();
+        produceExpression();
+        produceExpression2();
+        produceRelationalOperator();
+        produceSimpleExpression();
+        produceAddingOperator();
+        produceTerm();
+        produceTerm1();
+        produceMultiplyingOperator();
+        produceFactor();
+        produceFactor2();
+        produceFactor3();
+        produceUnsignedConstant();
+        produceFunctionDesignator();
+        produceFunctionDesignator1();
+        produceSet();
+        produceElementList();
+        produceElement();
+        produceElement_1();
+        produceProcedureStatement();
+        produceActualParameter();
+        produceStructuredStatement();
+        produceCompoundStatement();
+        produceConditionalStatement();
+        produceIfStatement();
+        produceIfStatement2();
+        produceCaseStatement();
+        produceCaseListElement();
+        produceCaseLabelList();
+        produceRepetitiveStatement();
+        produceWhileStatement();
+        produceRepeatStatement();
+        produceForStatement();
+        produceForList();
+        produceForList1();
+        produceWithStatement();
+        produceRecordVaribleList();
         produceSign();
         produceUnsignedNumber();
         produceGoToStatement();

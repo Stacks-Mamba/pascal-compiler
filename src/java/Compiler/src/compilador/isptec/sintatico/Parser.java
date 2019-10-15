@@ -65,7 +65,7 @@ public class Parser {
     }
     
     public static void main(String[] args) throws IOException {
-        Parser.parse("source.pas");
+        Parser.parse("teste2.pas");
     }
 
 }
