@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 /**
  *
- * @author hairt
+ * @author Hairt,Versus and Stacks
  */
 public class Analex
 {
@@ -416,7 +416,7 @@ public class Analex
                         switch(lexema)
                         {
                             case "file":
-                                token = new Token(Tokens.FILE,lexema,numeroLinha); 
+                                token = new Token(Tokens.FILE,lexema,numeroLinha);
                                 break;
                             case "char":
                                 token = new Token(Tokens.CHAR,lexema,numeroLinha);
