@@ -24,6 +24,6 @@ public class Sequence extends Derivation implements Derivable {
     
     @Override
     public int verify(Token t){
-        return (super.checkDerivation(t))?1:0;
+        return (super.checkDerivation(t))?0:-1;
     }
 }

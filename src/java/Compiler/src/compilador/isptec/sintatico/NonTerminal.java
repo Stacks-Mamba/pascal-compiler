@@ -6,6 +6,7 @@
 package compilador.isptec.sintatico;
 import compilador.isptec.lexico.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -25,9 +26,7 @@ public class NonTerminal extends Symbol implements Derivable{
     }
     
     public void addDerivation(Derivation...derivations){
-        for(Derivation d:derivations){
-            this.derivations.add(d);
-        }
+        this.derivations.addAll(Arrays.asList(derivations));
     }
     
     @Override
@@ -50,4 +49,7 @@ public class NonTerminal extends Symbol implements Derivable{
     public int verify(Token t){
         return checkSymbol(t);
     }
+    
+    
+    
 }

@@ -24,15 +24,17 @@ public class Parser {
 
 
     //Error Handling method
-    public static void error(Tokens expected,int type){
+    public static void error(Tokens expected,Symbol s,int type){
       switch(type){
         case 1:
             System.err.println("Erro na linha "+lookahead.getLinha());
             System.err.println("Linha "+lookahead.getLinha()+": Era esperado o token " + expected + " porém foi recebido "+ lookahead.getToken()+".");
+            System.err.printf("Thrown by symbol: %s\n",s);
             System.exit(1);
             break;
         case 2:
             System.err.println(String.format("Símbolo inesperado:%s. Linha:%d",lookahead.getLexema(),lookahead.getLinha()));
+            System.err.printf("Thrown by symbol: %s\n",s);
             System.exit(1);
             break;
       }
@@ -59,13 +61,13 @@ public class Parser {
         if (index>-1)
             Grammar.program.getDerivation(index).derive();
         else
-            Parser.error(lookahead.getToken(), UNKNOWN_ERROR);
+            Parser.error(lookahead.getToken(),Grammar.program,UNKNOWN_ERROR);
         //Mensagem de sucesso
         System.out.println("Compilacao Terminada com sucesso");
     }
     
     public static void main(String[] args) throws IOException {
-        Parser.parse("teste2.pas");
+        Parser.parse("source.txt");
     }
 
 }

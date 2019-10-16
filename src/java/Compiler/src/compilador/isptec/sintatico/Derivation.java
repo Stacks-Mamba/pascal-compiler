@@ -7,7 +7,7 @@ package compilador.isptec.sintatico;
 
 import compilador.isptec.lexico.*;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Arrays;
 
 /**
  *
@@ -23,9 +23,7 @@ public class Derivation {
     
     public Derivation(Derivable...derivables){
         this.symbols = new ArrayList<>();
-        for(Derivable d:derivables){
-            symbols.add(d);
-        }
+        symbols.addAll(Arrays.asList(derivables));
     }
     
     public void addSymbol(Derivable symbol){
@@ -33,12 +31,7 @@ public class Derivation {
     }
     
     public boolean checkDerivation(Token t){
-        if(symbols.get(0).getClass() == Terminal.class || symbols.get(0).getClass() == Sequence.class){
-            return (symbols.get(0).verify(t) > 0);
-        }
-        else{
-            return (symbols.get(0).verify(t) > -1);
-        }
+        return (symbols.get(0).verify(t) > -1);
     }
     
     
@@ -50,14 +43,14 @@ public class Derivation {
             //Se for um terminal
             if(s.getClass() == Terminal.class){
                 Terminal aux = (Terminal) s;
-                if(aux.checkSymbol(Parser.lookahead)==1){
+                if(aux.checkSymbol(Parser.lookahead)==0){
+                    System.out.printf("A token matchou:%s\n",Parser.lookahead.getToken());
                     Parser.consume();
                 }
                 else{
-                    Parser.error(aux.getToken(),Parser.EXPECTED_ERROR);
+                    Parser.error(aux.getToken(),aux,Parser.EXPECTED_ERROR);
                 }
             }
-            
             //Se for não terminal
             else if(s.getClass() == NonTerminal.class){
                 NonTerminal aux = (NonTerminal) s;
@@ -65,22 +58,29 @@ public class Derivation {
                 int index = aux.checkSymbol(Parser.lookahead);
                 
                 if(index>=0){
+                    System.out.printf("Current non-terminal: %s\n",aux);
                     //Aqui é a chamada recursiva que garante a derivacao
                     aux.getDerivation(index).derive();
+                    
                 }
                 else{
-                    Parser.error(Parser.lookahead.getToken(),Parser.EXPECTED_ERROR);
+                    Parser.error(Parser.lookahead.getToken(),aux,Parser.EXPECTED_ERROR);
                 }
             }
             else{
                 
                 Sequence aux = (Sequence) s;
-                if(aux.verify(Parser.lookahead)==1){
-                    while(aux.verify(Parser.lookahead)==1){
+                if(aux.verify(Parser.lookahead)==0){
+                    while(aux.verify(Parser.lookahead)==0){
                         aux.derive();
                     }
-                }  
+                }
+                else{
+                    Parser.consume();
+                } 
             }
         }
     }
+    
+    
 }
