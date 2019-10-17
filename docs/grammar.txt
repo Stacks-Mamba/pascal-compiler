@@ -1,4 +1,3 @@
-
 <program> ::= <program heading> <block> PONTO
 <program heading> ::= PROGRAM ID ABREPAR ID { PONTOVIRGULA ID } FECHAPAR PONTOVIRGULA
 <block> ::= <label declaration part> <constant definition part> <type definition part> <variable declaration part> <procedure and function declaration part> <statement part>

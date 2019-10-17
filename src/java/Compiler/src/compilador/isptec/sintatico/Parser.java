@@ -87,7 +87,9 @@ public class Parser {
                         int i = 1;
                         boolean hasEmpty = true;
                         while(hasEmpty && i!= symbs.size()){
-                            firstArray.addAll(first(symbs.get(i-1)));
+                            ArrayList<Derivable> auxArray = first(symbs.get(i-1));
+                            auxArray.remove(Grammar.empty);
+                            firstArray.addAll(auxArray);
                             if(! first(symbs.get(i)).contains(Grammar.empty)){
                                 hasEmpty = false;
                             }
