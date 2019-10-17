@@ -66,6 +66,47 @@ public class Parser {
         System.out.println("Compilacao Terminada com sucesso");
     }
     
+    
+    public static ArrayList<Derivable> first(Derivable s){
+        ArrayList<Derivable> firstArray = new ArrayList();
+        /*Actual code gies here*/
+        if(s.getClass() == Terminal.class){
+            firstArray.add(s);
+        }
+        else if(s.getClass()==NonTerminal.class && !first(s).contains(Grammar.empty)){
+            NonTerminal aux = (NonTerminal) s;
+            
+            for(Derivation d:aux.getDerivation()){
+                Derivable symbol = d.getSymbols().get(0);
+                if(first(symbol).contains(Grammar.empty)){
+                    ArrayList<Derivable> symbs=d.getSymbols();
+                    if(symbs.size()==1){
+                       firstArray.add(Grammar.empty);
+                    }
+                    else{
+                        int i = 1;
+                        boolean hasEmpty = true;
+                        while(hasEmpty && i!= symbs.size()){
+                            firstArray.addAll(first(symbs.get(i-1)));
+                            if(! first(symbs.get(i)).contains(Grammar.empty)){
+                                hasEmpty = false;
+                            }
+                            i++;
+                        }
+                        if(hasEmpty){
+                            firstArray.addAll(first(symbs.get(i-1)));
+                        }
+                    }
+                }
+                else{
+                    firstArray.addAll(first(d.getSymbols().get(0)));
+                }
+            }
+        }
+        /***********/
+        return firstArray;
+    }
+    
     public static void main(String[] args) throws IOException {
         Parser.parse("source.txt");
     }

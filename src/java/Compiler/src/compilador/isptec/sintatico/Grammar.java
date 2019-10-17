@@ -281,7 +281,7 @@ public class Grammar {
     }
     
     public static void producePH(){
-        program_heading.addDerivation(new Derivation(programT,idT,abreparT,idT,new Sequence(pontovirgulaT,idT),fechaparT,pontovirgulaT));
+        program_heading.addDerivation(new Derivation(programT,idT,abreparT,idT,/*new Sequence(pontovirgulaT,idT),*/fechaparT,pontovirgulaT));
     }
 
     public static void produceBlock(){

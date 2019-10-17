@@ -12,7 +12,7 @@ import compilador.isptec.lexico.*;
 
 /*Classe que representa um símbolo terminal ou não terminal*/
 
-public abstract class Symbol  {
+public abstract class Symbol implements Derivable  {
     
     protected final String descrip;
     
@@ -26,5 +26,14 @@ public abstract class Symbol  {
     @Override
     public String toString(){
         return this.descrip;
+    }
+    
+    @Override
+    public boolean equals(Object o){
+      if(o.getClass()==this.getClass()){
+          Symbol aux = (Symbol) o;
+          return this.descrip.equals(aux.toString());
+      }   
+      return false;
     }
 }

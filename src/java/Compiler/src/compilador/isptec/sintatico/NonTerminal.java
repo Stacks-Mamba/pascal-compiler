@@ -45,6 +45,11 @@ public class NonTerminal extends Symbol implements Derivable{
         return derivations.get(index);
     }
     
+     public ArrayList<Derivation> getDerivation(){
+        return derivations;
+    }
+    
+    
     @Override
     public int verify(Token t){
         return checkSymbol(t);

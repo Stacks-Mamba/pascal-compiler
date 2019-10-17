@@ -81,6 +81,11 @@ public class Derivation {
             }
         }
     }
+
+    public ArrayList<Derivable> getSymbols()
+    {
+        return symbols;
+    }
     
     
 }

@@ -1,16 +1,12 @@
-program Fact_rec(output);
-function factorial(n:integer):integer;
+program convert(output);
+const addin = 32; mulby = 2.8; low = 0; high = 39;
+var degree : low..high;
 begin
-  if n>1 then
-    factorial:=n*factorial(n-1)
-  else
-    factorial:=1;
-end;
-var n, f: integer;
-begin
-  write('n = ');
-  readln(n);
-  f:=factorial(n);
-  writeln(n,'! = ',f);
-  readln;
+     writeln(separator);
+     for degree := low to high do
+     begin write(degree.'c'.round(degree*mulby + addin).'f');
+	if odd(degree) then writeln
+     end;
+     writeln;
+     writeln(separator)
 end.
