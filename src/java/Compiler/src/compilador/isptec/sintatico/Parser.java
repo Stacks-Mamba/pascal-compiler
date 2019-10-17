@@ -72,8 +72,9 @@ public class Parser {
         /*Actual code gies here*/
         if(s.getClass() == Terminal.class){
             firstArray.add(s);
+            return firstArray;
         }
-        else if(s.getClass()==NonTerminal.class && !first(s).contains(Grammar.empty)){
+        else if(s.getClass()==NonTerminal.class){
             NonTerminal aux = (NonTerminal) s;
             
             for(Derivation d:aux.getDerivation()){
@@ -97,6 +98,7 @@ public class Parser {
                         }
                         if(hasEmpty){
                             firstArray.addAll(first(symbs.get(i-1)));
+                            
                         }
                     }
                 }
@@ -110,7 +112,15 @@ public class Parser {
     }
     
     public static void main(String[] args) throws IOException {
-        Parser.parse("source.txt");
+       // Parser.parse("source.txt");
+       NonTerminal type = new NonTerminal("type");
+       NonTerminal simple = new NonTerminal("simple");
+       type.addDerivation(new Derivation(simple),new Derivation(Grammar.vezesT,Grammar.idT),new Derivation(Grammar.arrayT,Grammar.abreretT,simple,Grammar.fecharetT,Grammar.ofT,type));
+       simple.addDerivation(new Derivation(Grammar.intT),new Derivation(Grammar.charT),new Derivation(Grammar.numintT,Grammar.pontopontoT,Grammar.numintT));
+       for(Derivable d:first(type)){
+           System.out.println(d);
+       }
+       
     }
 
 }
