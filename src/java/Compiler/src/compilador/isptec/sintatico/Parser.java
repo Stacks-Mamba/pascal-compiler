@@ -107,20 +107,42 @@ public class Parser {
                 }
             }
         }
+        else if(s.getClass()==Sequence.class){
+            Sequence aux = (Sequence) s;
+            ArrayList<Derivable> symbs = aux.getSymbols();
+            if(first(symbs.get(0)).contains(Grammar.empty)){
+                System.out.println("Has empty");
+                int i = 1;
+                boolean hasEmpty = true;
+                while(hasEmpty && i!= symbs.size()){
+                    ArrayList<Derivable> auxArray = first(symbs.get(i-1));
+                    auxArray.remove(Grammar.empty);
+                    firstArray.addAll(auxArray);
+                    if(! first(symbs.get(i)).contains(Grammar.empty)){
+                        hasEmpty = false;
+                    }
+                    i++;
+                }
+                if(hasEmpty){
+                    firstArray.addAll(first(symbs.get(i-1)));
+                            
+                }
+            }
+            else{
+                firstArray.addAll(first(symbs.get(0)));
+            }
+            
+        }
         /***********/
         return firstArray;
     }
     
     public static void main(String[] args) throws IOException {
        // Parser.parse("source.txt");
-       NonTerminal type = new NonTerminal("type");
-       NonTerminal simple = new NonTerminal("simple");
-       type.addDerivation(new Derivation(simple),new Derivation(Grammar.vezesT,Grammar.idT),new Derivation(Grammar.arrayT,Grammar.abreretT,simple,Grammar.fecharetT,Grammar.ofT,type));
-       simple.addDerivation(new Derivation(Grammar.intT),new Derivation(Grammar.charT),new Derivation(Grammar.numintT,Grammar.pontopontoT,Grammar.numintT));
-       for(Derivable d:first(type)){
+       Grammar.initGrammar();
+       for(Derivable d:first(Grammar.block)){
            System.out.println(d);
        }
-       
     }
 
 }

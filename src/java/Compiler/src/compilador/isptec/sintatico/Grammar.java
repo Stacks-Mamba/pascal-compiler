@@ -366,7 +366,7 @@ public class Grammar {
     }
     
     public static void produceVarDeclPart(){
-        Grammar.variable_declaration_part.addDerivation(new Derivation(varT,Grammar.variable_declaration,new Sequence(pontovirgulaT,Grammar.variable_declaration),pontovirgulaT));
+        Grammar.variable_declaration_part.addDerivation(new Derivation(varT,Grammar.variable_declaration,new Sequence(pontovirgulaT,Grammar.variable_declaration),pontovirgulaT),new Derivation(Grammar.empty));
     }
     
     public static void produceVarDeclaration(){
