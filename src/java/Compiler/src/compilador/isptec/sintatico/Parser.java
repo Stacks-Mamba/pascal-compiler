@@ -69,71 +69,54 @@ public class Parser {
     
     public static ArrayList<Derivable> first(Derivable s){
         ArrayList<Derivable> firstArray = new ArrayList();
-        /*Actual code gies here*/
+        /*Actual code goes here*/
         if(s.getClass() == Terminal.class){
             firstArray.add(s);
-            return firstArray;
         }
         else if(s.getClass()==NonTerminal.class){
             NonTerminal aux = (NonTerminal) s;
-            
             for(Derivation d:aux.getDerivation()){
                 Derivable symbol = d.getSymbols().get(0);
                 if(first(symbol).contains(Grammar.empty)){
                     ArrayList<Derivable> symbs=d.getSymbols();
                     if(symbs.size()==1){
-                       firstArray.add(Grammar.empty);
+                       firstArray.addAll(first(symbol));
                     }
                     else{
+                        ArrayList<Derivable> auxArray = first(symbs.get(0));               
+                        auxArray.remove(Grammar.empty);
+                        firstArray.addAll(auxArray);
                         int i = 1;
-                        boolean hasEmpty = true;
-                        while(hasEmpty && i!= symbs.size()){
-                            ArrayList<Derivable> auxArray = first(symbs.get(i-1));
+                        boolean addNext = true;
+                        while(addNext && i< symbs.size()-1){
+                            auxArray = first(symbs.get(i));               
                             auxArray.remove(Grammar.empty);
                             firstArray.addAll(auxArray);
-                            if(! first(symbs.get(i)).contains(Grammar.empty)){
-                                hasEmpty = false;
-                            }
+                            addNext = first(symbs.get(i)).contains(Grammar.empty);
                             i++;
                         }
-                        if(hasEmpty){
-                            firstArray.addAll(first(symbs.get(i-1)));
-                            
+                        if(addNext){
+                            firstArray.addAll(first(symbs.get(i)));
                         }
                     }
                 }
                 else{
-                    firstArray.addAll(first(d.getSymbols().get(0)));
+                    firstArray.addAll(first(symbol));
                 }
             }
         }
         else if(s.getClass()==Sequence.class){
             Sequence aux = (Sequence) s;
-            ArrayList<Derivable> symbs = aux.getSymbols();
-            if(first(symbs.get(0)).contains(Grammar.empty)){
-                System.out.println("Has empty");
-                int i = 1;
-                boolean hasEmpty = true;
-                while(hasEmpty && i!= symbs.size()){
-                    ArrayList<Derivable> auxArray = first(symbs.get(i-1));
-                    auxArray.remove(Grammar.empty);
-                    firstArray.addAll(auxArray);
-                    if(! first(symbs.get(i)).contains(Grammar.empty)){
-                        hasEmpty = false;
-                    }
-                    i++;
-                }
-                if(hasEmpty){
-                    firstArray.addAll(first(symbs.get(i-1)));
-                            
-                }
-            }
-            else{
-                firstArray.addAll(first(symbs.get(0)));
-            }
-            
+            Derivable symbol = aux.getSymbols().get(0);
+            firstArray.addAll(first(symbol));
+            firstArray.add(Grammar.empty);
         }
-        /***********/
+       /**********
+        System.out.println("*********First Array*******");
+        for(Derivable d:firstArray){
+            System.out.println(d);
+        }
+        System.out.println("*********************");*/
         return firstArray;
     }
     
