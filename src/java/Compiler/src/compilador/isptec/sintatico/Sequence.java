@@ -24,6 +24,14 @@ public class Sequence extends RightSide implements Parseable {
     
     @Override
     public void parse(){
-        
+        Sequence aux = (Sequence) s;
+        if(aux.verify(Parser.lookahead)==0){
+            while(aux.verify(Parser.lookahead)==0){
+                aux.derive();
+            }
+        }
+        else{
+            Parser.consume();
+        }
     }
 }

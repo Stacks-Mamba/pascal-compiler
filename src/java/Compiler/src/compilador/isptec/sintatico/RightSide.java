@@ -35,7 +35,7 @@ public class RightSide {
     }
     
     //Método para verificar o lado direito das regras de producao
-    public void derive(){
+   /* public void derive(){
         //Para cada símbolo na regra
         for(Parseable s:symbols){
             
@@ -79,7 +79,7 @@ public class RightSide {
                 } 
             }
         }
-    }
+    }*/
 
     public ArrayList<Parseable> getSymbols(){
         return symbols;
