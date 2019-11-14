@@ -57,12 +57,7 @@ public class Parser {
         initParser(file);
         //Comecar a execucao da análise léxica
         Grammar.initGrammar();
-        int index = Grammar.program.checkSymbol(lookahead);
-        if (index>-1)
-            Grammar.program.getRightSide(index).derive();
-        else
-            Parser.error(lookahead.getToken(),Grammar.program,UNKNOWN_ERROR);
-        //Mensagem de sucesso
+        Grammar.FIRST_PRODUCTION.parse();
         System.out.println("Compilacao Terminada com sucesso");
     }
     
@@ -122,11 +117,7 @@ public class Parser {
     }
     
     public static void main(String[] args) throws IOException {
-       // Parser.parse("source.txt");
-       Grammar.initGrammar();
-       for(Parseable d:first(Grammar.block)){
-           System.out.println(d);
-       }
+       Parser.parse("source.txt");
     }
 
 }

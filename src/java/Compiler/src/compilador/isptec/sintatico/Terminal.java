@@ -42,8 +42,11 @@ public class Terminal extends Symbol implements Parseable  {
     
     @Override
     public void parse(){
-        //Verificar se esse símbolo  
-        if(this.matchToken(Parser.lookahead)){
+        //Verificar se esse símbolo
+        if(this.descrip.equals(EMPTY_SYMBOL)){
+            return;
+        }
+        else if(this.matchToken(Parser.lookahead)){
              Parser.consume();
         }
         else{

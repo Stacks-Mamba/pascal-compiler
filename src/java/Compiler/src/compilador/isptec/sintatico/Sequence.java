@@ -24,14 +24,13 @@ public class Sequence extends RightSide implements Parseable {
     
     @Override
     public void parse(){
-        Sequence aux = (Sequence) s;
-        if(aux.verify(Parser.lookahead)==0){
-            while(aux.verify(Parser.lookahead)==0){
-                aux.derive();
+        Parseable symbol = this.getSymbols().get(0);
+        ArrayList<Terminal> firstList = Parser.first(symbol);
+        firstList.remove(Grammar.empty);
+        while(Terminal.containsToken(firstList,Parser.lookahead)){
+            for(Parseable p:this.getSymbols()){
+                p.parse();
             }
-        }
-        else{
-            Parser.consume();
         }
     }
 }
