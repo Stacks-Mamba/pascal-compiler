@@ -12,7 +12,7 @@ import compilador.isptec.lexico.*;
  *
  * @author stacks
  */
-public interface Derivable {
+public interface Parseable {
     
-    public abstract int verify(Token t);
+    public abstract void parse();
 }

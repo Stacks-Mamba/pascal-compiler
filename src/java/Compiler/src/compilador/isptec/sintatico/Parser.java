@@ -59,7 +59,7 @@ public class Parser {
         Grammar.initGrammar();
         int index = Grammar.program.checkSymbol(lookahead);
         if (index>-1)
-            Grammar.program.getDerivation(index).derive();
+            Grammar.program.getRightSide(index).derive();
         else
             Parser.error(lookahead.getToken(),Grammar.program,UNKNOWN_ERROR);
         //Mensagem de sucesso
@@ -67,23 +67,24 @@ public class Parser {
     }
     
     
-    public static ArrayList<Derivable> first(Derivable s){
-        ArrayList<Derivable> firstArray = new ArrayList();
+    public static ArrayList<Terminal> first(Parseable s){
+        ArrayList<Terminal> firstArray = new ArrayList();
         /*Actual code goes here*/
         if(s.getClass() == Terminal.class){
-            firstArray.add(s);
+            Terminal aux = (Terminal) s;
+            firstArray.add(aux);
         }
         else if(s.getClass()==NonTerminal.class){
             NonTerminal aux = (NonTerminal) s;
-            for(Derivation d:aux.getDerivation()){
-                Derivable symbol = d.getSymbols().get(0);
+            for(RightSide d:aux.getDerivation()){
+                Parseable symbol = d.getSymbols().get(0);
                 if(first(symbol).contains(Grammar.empty)){
-                    ArrayList<Derivable> symbs=d.getSymbols();
+                    ArrayList<Parseable> symbs=d.getSymbols();
                     if(symbs.size()==1){
                        firstArray.addAll(first(symbol));
                     }
                     else{
-                        ArrayList<Derivable> auxArray = first(symbs.get(0));               
+                        ArrayList<Terminal> auxArray = first(symbs.get(0));               
                         auxArray.remove(Grammar.empty);
                         firstArray.addAll(auxArray);
                         int i = 1;
@@ -107,7 +108,7 @@ public class Parser {
         }
         else if(s.getClass()==Sequence.class){
             Sequence aux = (Sequence) s;
-            Derivable symbol = aux.getSymbols().get(0);
+            Parseable symbol = aux.getSymbols().get(0);
             firstArray.addAll(first(symbol));
             firstArray.add(Grammar.empty);
         }
@@ -123,7 +124,7 @@ public class Parser {
     public static void main(String[] args) throws IOException {
        // Parser.parse("source.txt");
        Grammar.initGrammar();
-       for(Derivable d:first(Grammar.block)){
+       for(Parseable d:first(Grammar.block)){
            System.out.println(d);
        }
     }

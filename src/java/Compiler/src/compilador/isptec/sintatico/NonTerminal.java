@@ -12,48 +12,50 @@ import java.util.Arrays;
  *
  * @author stacks
  */
-public class NonTerminal extends Symbol implements Derivable{
+public class NonTerminal extends Symbol implements Parseable{
     
-    private final ArrayList<Derivation> derivations;
+    private final ArrayList<RightSide> derivations;
     
     public NonTerminal(String descrip) {
         super(descrip);
         derivations = new ArrayList<>();
     }
     
-    public void addDerivation(Derivation d){
+    public void addRightSide(RightSide d){
         this.derivations.add(d);
     }
     
-    public void addDerivation(Derivation...derivations){
+    public void addRightSide(RightSide...derivations){
         this.derivations.addAll(Arrays.asList(derivations));
     }
     
-    @Override
-    public int checkSymbol(Token t){
-        int c=0;
-        for(Derivation d:derivations){
-            if(d.checkDerivation(t)){
-                return c;
-            }
-            c++;
-        }
-        return -1;
-    }
-    
-    public Derivation getDerivation(int index){
+    public RightSide getRightSide(int index){
         return derivations.get(index);
     }
     
-     public ArrayList<Derivation> getDerivation(){
+     public ArrayList<RightSide> getDerivation(){
         return derivations;
     }
-    
-    
+     
     @Override
-    public int verify(Token t){
-        return checkSymbol(t);
+    public void parse(){
+        //Check the right side and start deriving 
+        RightSide production = null;
+        for(RightSide rs:derivations){
+            if(Terminal.containsToken(rs.getFirst(),Parser.lookahead)){
+                production = rs;
+                break;
+            }
+        }
+        if(production != null){
+            for(Parseable symbol:production.getSymbols()){
+                symbol.parse();
+            }
+        }
     }
+    
+    
+   
     
     
     

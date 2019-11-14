@@ -5,11 +5,12 @@
  */
 package compilador.isptec.sintatico;
 import compilador.isptec.lexico.*;
+import java.util.*;
 /**
  *
  * @author stacks
  */
-public class Terminal extends Symbol implements Derivable  {
+public class Terminal extends Symbol implements Parseable  {
     
     
     
@@ -21,23 +22,33 @@ public class Terminal extends Symbol implements Derivable  {
         this.token = token;
     }
     
-    @Override
-    public int checkSymbol(Token t){
-        if(t.getToken() == this.token || this.descrip.equals(EMPTY_SYMBOL)){
-            return 0;
+    public static boolean containsToken(ArrayList<Terminal> list,Token t){
+        for(Terminal terminal:list){
+            if(terminal.matchToken(t)){
+                return true;
+            }
         }
-        else{
-            return -1;
-        }
+        return false;
+    }
+    
+    public boolean matchToken(Token t){
+        return t.getToken() == this.token || this.descrip.equals(EMPTY_SYMBOL);
     }
     
     public Tokens getToken(){
         return token;
     }
     
+    
     @Override
-    public int verify(Token t){
-        return checkSymbol(t);
+    public void parse(){
+        //Verificar se esse símbolo  
+        if(this.matchToken(Parser.lookahead)){
+             Parser.consume();
+        }
+        else{
+            Parser.error(this.getToken(),this,Parser.EXPECTED_ERROR);
+        }
     }
     
 }

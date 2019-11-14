@@ -12,18 +12,18 @@ import compilador.isptec.lexico.*;
  *
  * @author stacks
  */
-public class Sequence extends Derivation implements Derivable {
+public class Sequence extends RightSide implements Parseable {
     
     public Sequence(){
         super();
     }
     
-    public Sequence(Derivable...ds){
+    public Sequence(Parseable...ds){
         super(ds);
     }
     
     @Override
-    public int verify(Token t){
-        return (super.checkDerivation(t))?0:-1;
+    public void parse(){
+        
     }
 }

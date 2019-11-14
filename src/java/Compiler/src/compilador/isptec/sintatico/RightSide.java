@@ -13,37 +13,36 @@ import java.util.Arrays;
  *
  * @author stacks
  */
-public class Derivation {
+public class RightSide {
     
-    private ArrayList<Derivable> symbols;
+    private ArrayList<Parseable> symbols;
     
-    public Derivation(){
+    public RightSide(){
         this.symbols = new ArrayList<>();
     }
     
-    public Derivation(Derivable...derivables){
+    public RightSide(Parseable...derivables){
         this.symbols = new ArrayList<>();
         symbols.addAll(Arrays.asList(derivables));
     }
     
-    public void addSymbol(Derivable symbol){
+    public void addSymbol(Parseable symbol){
         symbols.add(symbol);
     }
     
-    public boolean checkDerivation(Token t){
-        return (symbols.get(0).verify(t) > -1);
+    public ArrayList<Terminal> getFirst(){
+        return Parser.first(symbols.get(0));
     }
-    
     
     //Método para verificar o lado direito das regras de producao
     public void derive(){
         //Para cada símbolo na regra
-        for(Derivable s:symbols){
+        for(Parseable s:symbols){
             
             //Se for um terminal
             if(s.getClass() == Terminal.class){
                 Terminal aux = (Terminal) s;
-                if(aux.checkSymbol(Parser.lookahead)==0){
+                if(aux.checkSymbol(Parser.lookahead)==true){
                     System.out.printf("A token matchou:%s\n",Parser.lookahead.getToken());
                     Parser.consume();
                 }
@@ -60,7 +59,7 @@ public class Derivation {
                 if(index>=0){
                     System.out.printf("Current non-terminal: %s\n",aux);
                     //Aqui é a chamada recursiva que garante a derivacao
-                    aux.getDerivation(index).derive();
+                    aux.getRightSide(index).derive();
                     
                 }
                 else{
@@ -82,8 +81,7 @@ public class Derivation {
         }
     }
 
-    public ArrayList<Derivable> getSymbols()
-    {
+    public ArrayList<Parseable> getSymbols(){
         return symbols;
     }
     
