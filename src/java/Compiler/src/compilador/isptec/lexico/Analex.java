@@ -418,7 +418,7 @@ public class Analex
                             case "file":
                                 token = new Token(Tokens.FILE,lexema,numeroLinha);
                                 break;
-                            case "char":
+                            /*case "char":
                                 token = new Token(Tokens.CHAR,lexema,numeroLinha);
                                 break;
                             case "real":
@@ -426,7 +426,7 @@ public class Analex
                                 break;
                             case "integer":
                                 token = new Token(Tokens.INT,lexema,numeroLinha);
-                                break;
+                                break;*/
                             case "if":
                                 token = new Token(Tokens.IF,lexema,numeroLinha);
                                 break;

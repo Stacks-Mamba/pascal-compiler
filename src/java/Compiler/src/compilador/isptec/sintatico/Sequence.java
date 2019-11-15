@@ -26,8 +26,13 @@ public class Sequence extends RightSide implements Parseable {
     public void parse(){
         Parseable symbol = this.getSymbols().get(0);
         ArrayList<Terminal> firstList = Parser.first(symbol);
-        firstList.remove(Grammar.empty);
+        System.out.println("**First list********");
+        for(Terminal t:firstList){
+            System.out.println(t);
+        }
+        System.out.println("*****************");
         while(Terminal.containsToken(firstList,Parser.lookahead)){
+            System.out.println("Entrei");
             for(Parseable p:this.getSymbols()){
                 p.parse();
             }

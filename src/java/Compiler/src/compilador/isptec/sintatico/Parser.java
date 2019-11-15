@@ -43,12 +43,17 @@ public class Parser {
 
 
     //Function that advances the input
-    public static void consume()
+    public static void consume(Tokens t,Symbol s)
     {
-      System.out.println("Current input symbol: "+lookahead);
-      //Get next input symbol
-      lookahead = lexer.getToken();
-      System.out.println("Next input symbol: "+lookahead);
+      if(lookahead.getToken()!=t){
+        Parser.error(t,s,Parser.EXPECTED_ERROR);
+      }
+      else{
+          System.out.println("Parsed token: "+lookahead);          
+          //Get next input symbol
+          lookahead = lexer.getToken();
+      }
+      
     }
 
     public static void parse(String file) throws IOException
@@ -107,17 +112,16 @@ public class Parser {
             firstArray.addAll(first(symbol));
             firstArray.add(Grammar.empty);
         }
-       /**********
-        System.out.println("*********First Array*******");
-        for(Derivable d:firstArray){
-            System.out.println(d);
-        }
-        System.out.println("*********************");*/
         return firstArray;
     }
     
     public static void main(String[] args) throws IOException {
-       Parser.parse("source.txt");
+       /*Parser.parse("source.txt");*/
+       Grammar.initGrammar();
+       ArrayList<Terminal> firstList = Parser.first(Grammar.expression);
+       for(Parseable t:firstList){
+           System.out.println(t.toString());
+       }
     }
 
 }

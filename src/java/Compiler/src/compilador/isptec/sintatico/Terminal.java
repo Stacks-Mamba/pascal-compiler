@@ -28,11 +28,11 @@ public class Terminal extends Symbol implements Parseable  {
                 return true;
             }
         }
-        return false;
+        return list.contains(Grammar.empty);
     }
     
     public boolean matchToken(Token t){
-        return t.getToken() == this.token || this.descrip.equals(EMPTY_SYMBOL);
+        return t.getToken() == this.token;
     }
     
     public Tokens getToken(){
@@ -47,10 +47,10 @@ public class Terminal extends Symbol implements Parseable  {
             return;
         }
         else if(this.matchToken(Parser.lookahead)){
-             Parser.consume();
+             Parser.consume(this.token,this);
         }
         else{
-            Parser.error(this.getToken(),this,Parser.EXPECTED_ERROR);
+           Parser.error(this.getToken(),this,Parser.EXPECTED_ERROR);
         }
     }
     

@@ -11,8 +11,6 @@ import java.io.*;
  * @author stacks
  */
 public class Grammar {
-    //Primeiro símbolo da gramática
-    public static NonTerminal FIRST_PRODUCTION = Grammar.program;
     //Símbolos terminais
     public static Terminal atribT = new Terminal("ATRIB",Tokens.ATRIB);
     public static Terminal numintT = new Terminal("NUMINT",Tokens.NUMINT);
@@ -164,6 +162,7 @@ public class Grammar {
     public static NonTerminal sign_1 = new NonTerminal("sign_1");
     public static NonTerminal type_definition = new NonTerminal("type_definition");
     public static NonTerminal type = new NonTerminal("type");
+    public static NonTerminal type1 = new NonTerminal("type1");
     public static NonTerminal scalar_type = new NonTerminal("scalar_type");
     public static NonTerminal subrange_type = new NonTerminal("subrange_type");
     public static NonTerminal structured_type = new NonTerminal("structured_type");
@@ -239,6 +238,9 @@ public class Grammar {
     public static NonTerminal for_list_1 = new NonTerminal("for_list_1");
     public static NonTerminal record_variable_list = new NonTerminal("record_variable_list");
     
+    //Primeiro símbolo da gramática
+    public static NonTerminal FIRST_PRODUCTION = Grammar.program;
+    
     public static void produceSign(){
         sign.addRightSide(new RightSide(maisT),new RightSide(menosT));
     }
@@ -264,9 +266,6 @@ public class Grammar {
         constant_definition.addRightSide(new RightSide(idT,igualT,constant));
     }
     
-    public static void produceSubrangeType(){
-        subrange_type.addRightSide(new RightSide(constant,pontopontoT,constant));
-    }
     
     public static void produceScalarType(){
         scalar_type.addRightSide(new RightSide(abreparT,idT,new Sequence(virgulaT,idT),fechaparT));
@@ -274,7 +273,7 @@ public class Grammar {
     }
     
     public static void produceIndexType(){
-        index_type.addRightSide(new RightSide(scalar_type),new RightSide(subrange_type),new RightSide(idT));
+        index_type.addRightSide(new RightSide(scalar_type),new RightSide(unsigned_number,pontopontoT,constant),new RightSide(sign,sign_1,pontopontoT,constant),new RightSide(idT,type1),new RightSide(stringT,pontopontoT,constant));
     }
     
     
@@ -283,7 +282,7 @@ public class Grammar {
     }
     
     public static void producePH(){
-        program_heading.addRightSide(new RightSide(programT,idT,abreparT,idT,/*new Sequence(pontovirgulaT,idT),*/fechaparT,pontovirgulaT));
+        program_heading.addRightSide(new RightSide(programT,idT,abreparT,idT,new Sequence(pontovirgulaT,idT),fechaparT,pontovirgulaT));
     }
 
     public static void produceBlock(){
@@ -307,7 +306,11 @@ public class Grammar {
     }
     
     public static void produceType(){
-        type.addRightSide(new RightSide(scalar_type),new RightSide(subrange_type),new RightSide(structured_type),new RightSide(idT),new RightSide(empty));     
+        type.addRightSide(new RightSide(scalar_type),new RightSide(unsigned_number,pontopontoT,constant),new RightSide(sign,sign_1,pontopontoT,constant),new RightSide(idT,type1),new RightSide(stringT,pontopontoT,constant),new RightSide(structured_type),new RightSide(empty));     
+    }
+    
+    public static void produceType1(){
+        type1.addRightSide(new RightSide(Grammar.pontopontoT,constant),new RightSide(Grammar.empty));
     }
     
     public static void produceStructuredType(){
@@ -360,7 +363,7 @@ public class Grammar {
     }
     
     public static void ProducebaseType(){
-        base_type.addRightSide(new RightSide(scalar_type),new RightSide(subrange_type),new RightSide(idT));
+        base_type.addRightSide(new RightSide(scalar_type),new RightSide(unsigned_number,pontopontoT,constant),new RightSide(sign,sign_1,pontopontoT,constant),new RightSide(idT,type1),new RightSide(stringT,pontopontoT,constant));
     }
     
     public static void produceFileType(){
@@ -609,6 +612,7 @@ public class Grammar {
         produceTypeDefPart();
         produceTypeDef();
         produceType();
+        produceType1();
         produceStructuredType();
         produceArrayType();
         produceRecordType();
@@ -688,7 +692,6 @@ public class Grammar {
         produceSign1();
         produceConstant();
         produceConstantdef();
-        produceSubrangeType();
         produceScalarType();
         produceIndexType();
     }
