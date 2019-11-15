@@ -10,12 +10,13 @@
 <sign> ::= MAIS | MENOS
 <type definition part> ::= <empty> | TYPE <type definition> {PONTOVIRGULA <type definition>} PONTOVIRGULA
 <type definition> ::= ID IGUAL <type>
-<type> ::= <scalar type> | <subrange type> | <structured type> | ID | <empty>
+<type> ::= <scalar type> | <unsigned number> PONTOPONTO <constant> | <sign> <sign 1> PONTOPONTO <constant>
+| ID <type 1> | STRING PONTOPONTO <constant> | <structured type> | <empty>
+<type 1> ::= PONTOPONTO <constant> | <empty>
 <scalar type> ::= ABREPAR ID {VIRGULA ID} FECHAPAR
-<subrange type> ::= <constant> PONTOPONTO <constant>
 <structured type> ::= <array type> | <record type> | <set type> | <file type>
 <array type> ::= ARRAY [ <index type> { VIRGULA <index type>} ] OF <type>
-<index type> ::= <scalar type> | <subrange type> | ID
+<index type> ::= <scalar type> | <unsigned number> PONTOPONTO <constant> | <sign> <sign 1> PONTOPONTO <constant>  | ID <type 1>| STRING PONTOPONTO <constant>
 <record type> ::= RECORD <field list> END
 <field list> ::= <fixed part> <fixed part 1> | <variant part>
 <fixed part 1> ::= PONTOVIRGULA <variant part> | <empty>
@@ -26,7 +27,7 @@
 <variant> ::= <case label list> DOISPONTOS ABREPAR <field list> FECHAPAR | <empty>
 <case label list> ::= <constant> {VIRGULA <constant>}
 <set type> ::=SET OF <base type>
-<base type> ::= <scalar type> | <subrange type> | ID
+<base type> ::= <scalar type> | <unsigned number> PONTOPONTO <constant> | <sign> <sign 1> PONTOPONTO <constant>  | ID <type 1> | STRING PONTOPONTO <constant>
 <file type> ::= FILE OF <type>
 <variable declaration part> ::= <empty> | VAR <variable declaration> {PONTOVIRGULA <variable declaration>} PONTOVIRGULA
 <variable declaration> ::= ID {VIRGULA ID} DOISPONTOS <type>
