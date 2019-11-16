@@ -207,6 +207,7 @@ public class Grammar {
     public static NonTerminal array_variable = new NonTerminal("array_variable");
     public static NonTerminal record_variable = new NonTerminal("record_variable");
     public static NonTerminal simple_expression = new NonTerminal("simple_expression");
+    public static NonTerminal simple_expression_1 = new NonTerminal("simple_expression_1");
     public static NonTerminal expression_2 = new NonTerminal("expression_2");
     public static NonTerminal relational_operator = new NonTerminal("relational_operator");
     public static NonTerminal term = new NonTerminal("term");
@@ -473,7 +474,11 @@ public class Grammar {
     }
     
     public static void produceSimpleExpression(){
-        simple_expression.addRightSide(new RightSide(term), new RightSide(sign,term), new RightSide(simple_expression, adding_operator, term));
+        simple_expression.addRightSide(new RightSide(term,Grammar.simple_expression_1), new RightSide(sign,term,Grammar.simple_expression_1));
+    }
+    
+    public static void produceSimpleExpression1(){
+        simple_expression_1.addRightSide(new RightSide(Grammar.adding_operator,Grammar.term,Grammar.simple_expression_1),new RightSide(Grammar.empty));
     }
     
     public static void produceAddingOperator(){
@@ -505,7 +510,7 @@ public class Grammar {
     }
     
     public static void produceUnsignedConstant(){
-        unsigned_constant.addRightSide(new RightSide(unsigned_number), new RightSide(stringT), new RightSide(idT), new RightSide(nilT) );
+        unsigned_constant.addRightSide(new RightSide(unsigned_number), new RightSide(stringT), new RightSide(nilT) );
     }
     
     public static void produceFunctionDesignator(){
@@ -517,7 +522,7 @@ public class Grammar {
     }
     
     public static void produceSet(){
-        set.addRightSide(new RightSide(abreparT,element_list,fechaparT));
+        set.addRightSide(new RightSide(Grammar.abreretT,element_list,Grammar.fecharetT));
     }
     
     public static void produceElementList(){
@@ -654,6 +659,7 @@ public class Grammar {
         produceExpression2();
         produceRelationalOperator();
         produceSimpleExpression();
+        produceSimpleExpression1();
         produceAddingOperator();
         produceTerm();
         produceTerm1();
