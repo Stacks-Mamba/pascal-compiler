@@ -2,7 +2,8 @@
 <program heading> ::= PROGRAM ID ABREPAR ID { PONTOVIRGULA ID } FECHAPAR PONTOVIRGULA
 <block> ::= <label declaration part> <constant definition part> <type definition part> <variable declaration part> <procedure and function declaration part> <statement part>
 <label declaration part> ::= <empty> | LABEL NUMINT {VIRGULA NUMINT} PONTOVIRGULA
-<constant definition part> ::= <empty> | CONST <constant definition> { PONTOVIRGULA <constant definition>} PONTOVIRGULA
+<constant definition part> ::= <empty> | CONST <constant definition> PONTOVIRGULA <constant definition part 1>
+<constant definition part 1> :: = <empty> | <constant definition> PONTOVIRGULA <constant definition part 1>
 <constant definition> ::= ID IGUAL <constant>
 <constant> ::= <unsigned number> | <sign> <sign 1> | ID | STRING
 <sign 1> ::= <unsigned number> | ID
@@ -29,7 +30,8 @@
 <set type> ::=SET OF <base type>
 <base type> ::= <scalar type> | <unsigned number> PONTOPONTO <constant> | <sign> <sign 1> PONTOPONTO <constant>  | ID <type 1> | STRING PONTOPONTO <constant>
 <file type> ::= FILE OF <type>
-<variable declaration part> ::= <empty> | VAR <variable declaration> PONTOVIRGULA <variable declaration>
+<variable declaration part> ::= <empty> | VAR <variable declaration> PONTOVIRGULA <variable declaration part 1>
+<variable declaration part 1> ::= <empty> | <variable declaration> PONTOVIRGULA <variable declaration part 1>
 <variable declaration> ::= ID {VIRGULA ID} DOISPONTOS <type>
 <procedure and function declaration part> ::= {<procedure or function declaration> PONTOVIRGULA}
 <procedure or function declaration> ::= <procedure declaration> | <function declaration>

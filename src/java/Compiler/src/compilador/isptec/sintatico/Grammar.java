@@ -150,8 +150,10 @@ public class Grammar {
     public static NonTerminal block = new NonTerminal("block");
     public static NonTerminal label_declaration_part = new NonTerminal("label_declaration_part");
     public static NonTerminal constant_definition_part = new NonTerminal("constant_definition_part");
+    public static NonTerminal constant_definition_part_1 = new NonTerminal("constant_definition_part_1");
     public static NonTerminal type_definition_part = new NonTerminal("type_definition_part");
     public static NonTerminal variable_declaration_part = new NonTerminal("variable_declaration_part");
+    public static NonTerminal variable_declaration_part_1 = new NonTerminal("variable_declaration_part_1");
     public static NonTerminal procedure_and_function_declaration_part = new NonTerminal("procedure_and_function_declaration_part");
     public static NonTerminal statement_part = new NonTerminal("statement_part");
     public static NonTerminal constant_definition = new NonTerminal("constant_definition");
@@ -294,7 +296,11 @@ public class Grammar {
     }
     
     public static void produceConstantDefinitionP(){
-        Grammar.constant_definition_part.addRightSide(new RightSide(constT,constant_definition,new Sequence(pontovirgulaT,constant_definition,pontovirgulaT)),new RightSide(empty));
+        Grammar.constant_definition_part.addRightSide(new RightSide(constT,constant_definition,pontovirgulaT,Grammar.constant_definition_part_1),new RightSide(empty));
+    }
+    
+    public static void produceConstantDefinitionP1(){
+        Grammar.constant_definition_part_1.addRightSide(new RightSide(constant_definition,pontovirgulaT,Grammar.constant_definition_part_1),new RightSide(empty));
     }
     
     public static void produceTypeDefPart(){
@@ -371,7 +377,11 @@ public class Grammar {
     }
     
     public static void produceVarDeclPart(){
-        Grammar.variable_declaration_part.addRightSide(new RightSide(varT,Grammar.variable_declaration,pontovirgulaT,Grammar.variable_declaration),new RightSide(Grammar.empty));
+        Grammar.variable_declaration_part.addRightSide(new RightSide(varT,Grammar.variable_declaration,pontovirgulaT,Grammar.variable_declaration_part_1),new RightSide(Grammar.empty));
+    }
+    
+    public static void produceVarDeclPart1(){
+        Grammar.variable_declaration_part_1.addRightSide(new RightSide(variable_declaration,pontovirgulaT,Grammar.variable_declaration_part_1),new RightSide(empty));
     }
     
     public static void produceVarDeclaration(){
@@ -613,6 +623,7 @@ public class Grammar {
         produceBlock();
         produceLabelDecl();
         produceConstantDefinitionP();
+        produceConstantDefinitionP1();
         produceTypeDefPart();
         produceTypeDef();
         produceType();
@@ -632,6 +643,7 @@ public class Grammar {
         ProducebaseType();
         produceFileType();
         produceVarDeclPart();
+        produceVarDeclPart1();
         produceVarDeclaration();
         produceProcAndFuncDeclPart();
         produceProcOrFuncDeclPart();

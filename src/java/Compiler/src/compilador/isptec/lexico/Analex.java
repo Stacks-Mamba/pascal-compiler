@@ -315,7 +315,7 @@ public class Analex
                 break;
                 case NUM_INTEIRO:
                     ch= lerCaracter();
-                    if(Delimitadores.isDelimiter(ch))
+                    if(ch!='.' && Delimitadores.isDelimiter(ch))
                     {
                         token = new Token(Tokens.NUMINT,lexema,numeroLinha);
                         posicaoLinha--;
@@ -348,7 +348,7 @@ public class Analex
                 break;
                 case NUM_REAL_DECIMAL:
                     ch=lerCaracter();
-                    if(Delimitadores.isDelimiter(ch))
+                    if(ch!='.' && Delimitadores.isDelimiter(ch))
                     {
                         token = new Token(Tokens.NUMREAL,lexema,numeroLinha);
                         posicaoLinha--;
@@ -483,6 +483,9 @@ public class Analex
                                 break;
                             case "of":
                                 token = new Token(Tokens.OF,lexema,numeroLinha);
+                                break;
+                            case "until":
+                                token = new Token(Tokens.UNTIL,lexema,numeroLinha);
                                 break;
                             /*case "string":
                                 token = new Token(Tokens.STRING,lexema,numeroLinha);

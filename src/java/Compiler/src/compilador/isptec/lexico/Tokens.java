@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package compilador.isptec.lexico;
-
 /**
  *
  * @author hairt
@@ -26,6 +25,8 @@ public enum Tokens {
     switch(this){
         case FILE:
             return "comando 'file'";
+        case UNTIL:
+            return "comando until";
         case ERRO:
             return "Token inválido";
         case EOF:
