@@ -29,7 +29,7 @@
 <set type> ::=SET OF <base type>
 <base type> ::= <scalar type> | <unsigned number> PONTOPONTO <constant> | <sign> <sign 1> PONTOPONTO <constant>  | ID <type 1> | STRING PONTOPONTO <constant>
 <file type> ::= FILE OF <type>
-<variable declaration part> ::= <empty> | VAR <variable declaration> {PONTOVIRGULA <variable declaration>} PONTOVIRGULA
+<variable declaration part> ::= <empty> | VAR <variable declaration> PONTOVIRGULA <variable declaration>
 <variable declaration> ::= ID {VIRGULA ID} DOISPONTOS <type>
 <procedure and function declaration part> ::= {<procedure or function declaration> PONTOVIRGULA}
 <procedure or function declaration> ::= <procedure declaration> | <function declaration>
@@ -75,7 +75,7 @@
 <go to statement> ::= GOTO NUMINT
 <empty> ::=
 <structured statement> ::= <compound statement> | <conditional statement> | <repetitive statement> | <with statement>
-<compound statement> ::= BEGIN <statement> { PONTOVIRGULA <statement> } END PONTOVIRGULA
+<compound statement> ::= BEGIN <statement> { PONTOVIRGULA <statement> } END
 <conditional statement> ::= <if statement> | <case statement>
 <if statement> ::= IF <expression> THEN <statement> <if statement 2>
 <if statement 2> ::= ELSE <statement> | <empty>

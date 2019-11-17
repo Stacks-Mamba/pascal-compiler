@@ -47,19 +47,22 @@ public class NonTerminal extends Symbol implements Parseable{
                 break;
             }
         }
-        for(RightSide rs:derivations){
-            if(Terminal.containsToken(rs.getFirst(),Parser.lookahead) && !rs.getFirst().contains(Grammar.empty)){
-                production = rs;
+        if(production == null){
+            for(RightSide rs:derivations){
+                if(rs.getFirst().contains(Grammar.empty)){
+                    production = rs;
+                    break;
+                }
             }
         }
-        if(production != null){
+        if(production !=null){
             System.out.println("Choosen production: "+production.getSymbols().get(0));
-            for(Parseable symbol:production.getSymbols()){
-                symbol.parse();
+            for(Parseable p:production.getSymbols()){
+                p.parse();
             }
         }
         else{
-            Parser.error(Tokens.PACKED, this,Parser.UNKNOWN_ERROR);
+            System.out.println("not found");
         }
     }
     

@@ -28,7 +28,7 @@ public class Terminal extends Symbol implements Parseable  {
                 return true;
             }
         }
-        return list.contains(Grammar.empty);
+        return false;
     }
     
     public boolean matchToken(Token t){

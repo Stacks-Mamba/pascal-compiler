@@ -111,7 +111,6 @@ public class Grammar {
     public static Terminal whileT = new Terminal("WHILE",Tokens.WHILE);
     public static Terminal doT = new Terminal("DO",Tokens.DO);
     public static Terminal labelT = new Terminal("LABEL",Tokens.LABEL);
-    public static Terminal strT = new Terminal("STR",Tokens.STR);
     public static Terminal repeatT = new Terminal("REPEAT",Tokens.REPEAT);
     public static Terminal withT = new Terminal("WITH",Tokens.WITH);
     public static Terminal downtoT = new Terminal("DOWNTO",Tokens.DOWNTO);
@@ -372,11 +371,11 @@ public class Grammar {
     }
     
     public static void produceVarDeclPart(){
-        Grammar.variable_declaration_part.addRightSide(new RightSide(varT,Grammar.variable_declaration,new Sequence(pontovirgulaT,Grammar.variable_declaration),pontovirgulaT),new RightSide(Grammar.empty));
+        Grammar.variable_declaration_part.addRightSide(new RightSide(varT,Grammar.variable_declaration,pontovirgulaT,Grammar.variable_declaration),new RightSide(Grammar.empty));
     }
     
     public static void produceVarDeclaration(){
-        Grammar.variable_declaration.addRightSide(new RightSide(idT,new Sequence(virgulaT,idT),atribT,type));
+        Grammar.variable_declaration.addRightSide(new RightSide(idT,new Sequence(virgulaT,idT),Grammar.doispontosT,type));
     }
     
     public static void produceProcAndFuncDeclPart(){
@@ -550,7 +549,7 @@ public class Grammar {
     }
     
     public static void produceCompoundStatement(){
-        compound_statement.addRightSide(new RightSide(beginT, statement, new Sequence(pontovirgulaT, statement), endT, pontovirgulaT));
+        compound_statement.addRightSide(new RightSide(beginT, statement, new Sequence(pontovirgulaT, statement), endT));
     }
     
     public static void produceConditionalStatement(){

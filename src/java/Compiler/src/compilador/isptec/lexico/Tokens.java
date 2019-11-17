@@ -18,7 +18,7 @@ public enum Tokens {
     ABSOLUTE,ELSE,NIL,SET,AND,END,NOT,SHL,ARRAY,OBJECT,SHR,ASM,FOR,OF,STRING,INT,REAL,DOUBLE,CHAR,BOOL,CONSTANTE,BEGIN,FUNCTION,
     ON,THEN,BREAK,GOTO,OPERATOR,TO,CASE,IF,OR,TYPE,CONST,IMPLEMENTATION,PACKED,UNIT,
     CONSTRUCTOR,IN,PROCEDURE,UNTIL,CONTINUE,INHERITED,PROGRAM,USES,DESTRUCTOR,
-    INLINE,RECORD,VAR,DIV,INTERFACE,REINTRODUCE,WHILE,DO,LABEL,STR,REPEAT,WITH,
+    INLINE,RECORD,VAR,DIV,INTERFACE,REINTRODUCE,WHILE,DO,LABEL,REPEAT,WITH,
     DOWNTO,MOD,SELF,XOR,AS,CLASS,EXCEPT,EXPORTS,FINALIZATION,FINALLY,INITIALIZATION,
     IS,LIBRARY,OUT,PROPERTY,RAISE,THREADVAR,TRY,DISPOSE,FALSE,TRUE,EXIT,NEW,OTHERWISE,FILE;
     @Override
@@ -137,7 +137,7 @@ public enum Tokens {
         case OF:
             return "comando 'of'";
         case STRING:
-            return "identificador 'string'";
+            return "string";
         case INT:
             return "identificador 'integer'";
         case REAL:
@@ -212,8 +212,6 @@ public enum Tokens {
             return "comando 'do'";
         case LABEL:
             return "comando 'label'";
-        case STR:
-            return "string";
         case REPEAT:
             return "comando 'repeat'";
         case WITH:

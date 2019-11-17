@@ -38,4 +38,9 @@ public class Sequence extends RightSide implements Parseable {
             }
         }
     }
+    
+    @Override
+    public String toString(){
+        return this.getSymbols().get(0).toString();
+    }
 }

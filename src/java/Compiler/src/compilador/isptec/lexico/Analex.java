@@ -484,7 +484,7 @@ public class Analex
                             case "of":
                                 token = new Token(Tokens.OF,lexema,numeroLinha);
                                 break;
-                            case "string":
+                            /*case "string":
                                 token = new Token(Tokens.STRING,lexema,numeroLinha);
                                 break;
                             case "double":
@@ -492,7 +492,7 @@ public class Analex
                                 break;
                             case "boolean":
                                 token = new Token(Tokens.BOOL,lexema,numeroLinha);
-                                break;
+                                break;*/
                             case "const":
                                 token = new Token(Tokens.CONST,lexema,numeroLinha);
                                 break;
@@ -671,7 +671,7 @@ public class Analex
                           || (ch == '\'' && lexema.charAt(lexema.length()-1) == '{' && lexema.charAt(lexema.length()-2) == '{'))
                         {
                             lexema += String.valueOf(ch);
-                            token = new Token(Tokens.STR, lexema, numeroLinha);
+                            token = new Token(Tokens.STRING, lexema, numeroLinha);
                         }
                         else
                         {
