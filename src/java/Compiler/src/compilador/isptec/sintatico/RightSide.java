@@ -34,6 +34,13 @@ public class RightSide {
         return Parser.first(symbols.get(0));
     }
     
+    public ArrayList<Terminal> getSecond(){
+        if(this.symbols.size()>1){
+            return Parser.first(this.symbols.get(1));
+        }
+        return Parser.first(this.symbols.get(0));
+    }
+    
 
     public ArrayList<Parseable> getSymbols(){
         return symbols;

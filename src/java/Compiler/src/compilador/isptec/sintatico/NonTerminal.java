@@ -39,6 +39,7 @@ public class NonTerminal extends Symbol implements Parseable{
      
     @Override
     public void parse(){
+        //System.out.println("Parsing: "+this);
         //Check the right side and start deriving 
         RightSide production = null;
         for(RightSide rs:derivations){
@@ -49,7 +50,8 @@ public class NonTerminal extends Symbol implements Parseable{
         }
         if(production == null){
             for(RightSide rs:derivations){
-                if(rs.getFirst().contains(Grammar.empty)){
+                if((rs.getFirst().contains(Grammar.empty) && Terminal.containsToken(rs.getSecond(),Parser.lookahead))||
+                    (rs.getFirst().contains(Grammar.empty) && rs.getSecond().contains(Grammar.empty))){
                     production = rs;
                     break;
                 }
@@ -60,9 +62,6 @@ public class NonTerminal extends Symbol implements Parseable{
             for(Parseable p:production.getSymbols()){
                 p.parse();
             }
-        }
-        else{
-            System.out.println("not found");
         }
     }
     

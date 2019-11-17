@@ -116,9 +116,9 @@ public class Parser {
     }
     
     public static void main(String[] args) throws IOException {
-       Parser.parse("source.txt");/*
-       Grammar.initGrammar();
-       ArrayList<Terminal> firstList = Parser.first(Grammar.expression);
+       Parser.parse("source.txt");
+       Grammar.initGrammar();/*
+       ArrayList<Terminal> firstList = Parser.first(Grammar.simple_statement_1);
        for(Parseable t:firstList){
            System.out.println(t.toString());
        }*/
