@@ -46,12 +46,12 @@ public class Terminal extends Symbol implements Parseable  {
         if(this.descrip.equals(EMPTY_SYMBOL)){
             return;
         }
-        else if(this.matchToken(Parser.lookahead)){
+        else{
              Parser.consume(this.token,this);
         }
-        else{
+        /*else{
            Parser.error(this.getToken(),this,Parser.EXPECTED_ERROR);
-        }
+        }*/
     }
     
 }
