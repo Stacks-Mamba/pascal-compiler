@@ -1,16 +1,3 @@
-<expression 2> ::= <relational operator> <simple expression> | <empty>
-<relational operator> ::= IGUAL | DIFERENTE | MENOR | MENORIGUAL | MAIORIGUAL | MAIOR | IN
-<simple expression> ::= <term> <simple expression 1> | <sign> <term> <simple expression 1>
-<simple expression 1> ::= <adding operator> <term> <simple expression 1> | <empty>
-<adding operator> ::= MAIS | MENOS | OR
-<term> ::= <factor> <term 1>
-<term 1> ::= <multiplying operator> <factor> <term 1> | <empty>
-<multiplying operator> ::= VEZES | DIVISAO | DIV | MOD | AND
-<factor> ::= ID <factor 2> | <unsigned constant> | ABREPAR <expression> FECHAPAR | <set> | NOT <factor>
-<factor 2> ::= <variable 2> <factor 3> | <function designator 1> |<empty>
-<factor 3> ::= <array variable> | <record variable> | <empty>
-<unsigned constant> ::= <unsigned number> | STRING | NIL
-<function designator > ::= ID <function designator 1>
 <function designator 1> ::= ABREPAR <actual parameter> {VIRGULA <actual parameter>} FECHAPAR | <empty>
 <set> ::= ABRERET <element list> FECHARET
 <element list> ::= <element> {VIRGULA <element> } | <empty>

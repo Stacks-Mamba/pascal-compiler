@@ -65,7 +65,6 @@
 <factor 2> ::= <variable 2> <factor 3> | <function designator 1> |<empty>
 <factor 3> ::= <array variable> | <record variable> | <empty>
 <unsigned constant> ::= <unsigned number> | STRING | NIL
-<function designator > ::= ID <function designator 1>
 <function designator 1> ::= ABREPAR <actual parameter> {VIRGULA <actual parameter>} FECHAPAR | <empty>
 <set> ::= ABRERET <element list> FECHARET
 <element list> ::= <element> {VIRGULA <element> } | <empty>

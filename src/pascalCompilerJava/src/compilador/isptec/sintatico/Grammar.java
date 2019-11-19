@@ -6,6 +6,8 @@
 package compilador.isptec.sintatico;
 import compilador.isptec.lexico.*;
 import java.io.*;
+
+
 /**
  *
  * @author stacks
@@ -292,7 +294,7 @@ public class Grammar {
     public static void fixedPart(){
         Tokens lookahead = Parser.lookahead.getToken();
         recordSection();
-        while(lookahead == Tokens.PONTOVIRGULA){
+        while(Parser.lookahead.getToken() == Tokens.PONTOVIRGULA){
             Parser.consume(Tokens.PONTOVIRGULA);
             recordSection();
         }
@@ -311,7 +313,7 @@ public class Grammar {
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ID){
             Parser.consume(Tokens.ID);
-            while(lookahead == Tokens.VIRGULA){
+            while(Parser.lookahead.getToken() == Tokens.VIRGULA){
                 Parser.consume(Tokens.VIRGULA);
                 Parser.consume(Tokens.ID);
             }
@@ -327,7 +329,7 @@ public class Grammar {
         Parser.consume(Tokens.ID);
         Parser.consume(Tokens.OF);
         variant();
-        while(lookahead == Tokens.PONTOVIRGULA){
+        while(Parser.lookahead.getToken() == Tokens.PONTOVIRGULA){
             Parser.consume(Tokens.PONTOVIRGULA);
             variant();
         }
@@ -397,7 +399,7 @@ public class Grammar {
     public static void varDecl(){
         Tokens lookahead = Parser.lookahead.getToken();
         Parser.consume(Tokens.ID);
-        while(lookahead == Tokens.VIRGULA){
+        while(Parser.lookahead.getToken() == Tokens.VIRGULA){
             Parser.consume(Tokens.VIRGULA);
             Parser.consume(Tokens.ID);
         }
@@ -407,7 +409,7 @@ public class Grammar {
 
     public static void procAndFuncDeclPart(){
         Tokens lookahead = Parser.lookahead.getToken();
-        while(lookahead == Tokens.FUNCTION || lookahead==Tokens.PROCEDURE){
+        while(Parser.lookahead.getToken() == Tokens.FUNCTION || lookahead==Tokens.PROCEDURE){
             procOrFuncDecl();
         }
     }
@@ -454,7 +456,7 @@ public class Grammar {
         Tokens lookahead = Parser.lookahead.getToken();
         Parser.consume(Tokens.ABREPAR);
         formalParamSection();
-        while(lookahead == Tokens.PONTOVIRGULA){
+        while(Parser.lookahead.getToken() == Tokens.PONTOVIRGULA){
             Parser.consume(Tokens.PONTOVIRGULA);
             formalParamSection();
         }
@@ -477,7 +479,7 @@ public class Grammar {
         else if(lookahead == Tokens.PROCEDURE){
             Parser.consume(Tokens.PROCEDURE);
             Parser.consume(Tokens.ID);
-            while(lookahead == Tokens.VIRGULA){
+            while(Parser.lookahead.getToken() == Tokens.VIRGULA){
                 Parser.consume(Tokens.VIRGULA);
                 Parser.consume(Tokens.ID);
             }
@@ -529,9 +531,9 @@ public class Grammar {
     public static void unlabelledStatement(){
         Tokens lookahead = Parser.lookahead.getToken();
 
-        if(lookahead == Tokens.BEGIN | lookahead == Tokens.IF|
-                lookahead == Tokens.CASE | lookahead ==Tokens.WHILE |
-                lookahead == Tokens.REPEAT|lookahead == Tokens.FOR|
+        if(lookahead == Tokens.BEGIN || lookahead == Tokens.IF||
+                lookahead == Tokens.CASE || lookahead ==Tokens.WHILE ||
+                lookahead == Tokens.REPEAT||lookahead == Tokens.FOR||
                 lookahead == Tokens.WITH
             ){
             structuredStatement();
@@ -597,7 +599,7 @@ public class Grammar {
         Tokens lookahead = Parser.lookahead.getToken();
         Parser.consume(Tokens.ABRERET);
         expression();
-        while(lookahead == Tokens.VIRGULA){
+        while(Parser.lookahead.getToken() == Tokens.VIRGULA){
             Parser.consume(Tokens.VIRGULA);
             expression();
         }
@@ -606,10 +608,12 @@ public class Grammar {
 
     public static void expression(){
         Tokens lookahead = Parser.lookahead.getToken();
-        if(lookahead == Tokens.MAIS| lookahead == Tokens.MENOS|
-                lookahead == Tokens.ID|lookahead == Tokens.NUMINT|
-                lookahead == Tokens.NUMREAL|
-                lookahead == Tokens.STRING | lookahead == Tokens.NIL |              lookahead==Tokens.ABREPAR | lookahead == Tokens.NOT|
+        if(lookahead == Tokens.MAIS|| lookahead == Tokens.MENOS||
+                lookahead == Tokens.ID||lookahead == Tokens.NUMINT||
+                lookahead == Tokens.NUMREAL||
+                lookahead == Tokens.STRING ||
+                lookahead == Tokens.NIL ||
+                lookahead==Tokens.ABREPAR || lookahead == Tokens.NOT|
                 lookahead == Tokens.ABRERET){
             simpleExpression();
             expression2();
@@ -617,8 +621,258 @@ public class Grammar {
     }
 
     public static void expression2(){
-        
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.IGUAL||lookahead == Tokens.DIFERENTE||
+                lookahead == Tokens.MENOR||
+                lookahead == Tokens.MENORIGUAL||
+                lookahead == Tokens.MAIORIGUAL||
+                lookahead == Tokens.MAIOR|| lookahead == Tokens.IN ){
+            relationalOperator();
+            simpleExpression();
+        }
     }
+
+    public static void relationalOperator(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        switch(lookahead){
+            case IGUAL:
+                Parser.consume(Tokens.IGUAL);
+                break;
+            case DIFERENTE:
+                Parser.consume(Tokens.DIFERENTE);
+                break;
+            case MENOR:
+                Parser.consume(Tokens.MENOR);
+                break;
+            case MENORIGUAL:
+                Parser.consume(Tokens.MENORIGUAL);
+                break;
+            case MAIOR:
+                Parser.consume(Tokens.MAIOR);
+                break;
+            case MAIORIGUAL:
+                Parser.consume(Tokens.MAIORIGUAL);
+                break;
+            case IN:
+                Parser.consume(Tokens.IN);
+                break;
+            default:
+                Parser.error(Tokens.MENORIGUAL,Parser.UNKNOWN_ERROR);
+        }
+    }
+
+    public static void simpleExpression(){
+        Tokens lookahead = Parser.lookahead.getToken();
+
+        if(lookahead == Tokens.ID || lookahead == Tokens.NUMINT||
+                lookahead == Tokens.NUMREAL||
+                lookahead == Tokens.STRING ||
+                lookahead == Tokens.NIL ||
+                lookahead==Tokens.ABREPAR ||
+                lookahead == Tokens.NOT||
+                lookahead == Tokens.ABRERET ){
+            term();
+            simpleExpression1();
+        }
+
+        else if(lookahead == Tokens.MAIS || lookahead ==Tokens.MENOS){
+            sign();
+            term();
+            simpleExpression1();
+        }
+        else{
+            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+        }
+    }
+
+    public static void simpleExpression1(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.MAIS || lookahead ==Tokens.MENOS ||
+        lookahead == Tokens.OR){
+            addingOperator();
+            term();
+            simpleExpression1();
+        }
+    }
+
+    public static void addingOperator(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        switch(lookahead){
+            case MAIS:
+                Parser.consume(Tokens.MAIS);
+                break;
+            case MENOS:
+                Parser.consume(Tokens.MENOS);
+                break;
+            case OR:
+                Parser.consume(Tokens.OR);
+                break;
+            default:
+                Parser.error(Tokens.MAIS,Parser.EXPECTED_ERROR);
+                break;
+        }
+    }
+
+    public static void term(){
+        factor();
+        term1();
+    }
+
+    public static void term1(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.VEZES || lookahead ==Tokens.DIVISAO ||
+                lookahead == Tokens.DIV || lookahead == Tokens.MOD ||
+                lookahead == Tokens.AND){
+            multiplyingOperator();
+            factor();
+            term1();
+        }
+    }
+
+
+    public static void multiplyingOperator(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        switch(lookahead){
+            case VEZES:
+                Parser.consume(Tokens.VEZES);
+                break;
+            case DIVISAO:
+                Parser.consume(Tokens.DIVISAO);
+                break;
+            case DIV:
+                Parser.consume(Tokens.DIV);
+                break;
+            case MOD:
+                Parser.consume(Tokens.MOD);
+                break;
+            case AND:
+                Parser.consume(Tokens.AND);
+                break;
+            default:
+                Parser.error(Tokens.VEZES,Parser.EXPECTED_ERROR);
+                break;
+        }
+    }
+
+    public static void factor(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.ID){
+            Parser.consume(Tokens.ID);
+            factor2();
+        }
+        else if(lookahead == Tokens.NUMINT||
+                lookahead == Tokens.NUMREAL||
+                lookahead == Tokens.STRING || lookahead == Tokens.NIL){
+            unsignedConstant();
+        }
+         else if(lookahead==Tokens.ABREPAR) {
+             Parser.consume(Tokens.ABREPAR);
+             expression();
+             Parser.consume(Tokens.FECHAPAR);
+
+        }
+         else if(lookahead == Tokens.ABRERET){
+             set();
+        }
+        else if (lookahead == Tokens.NOT){
+            Parser.consume(Tokens.NOT);
+            factor();
+        }
+        else{
+            Parser.error(Tokens.MAIS,Parser.UNKNOWN_ERROR);
+        }
+    }
+
+    public static void factor2(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.PONTO || lookahead == Tokens.ABRERET){
+            variable2();
+            factor3();
+        }
+        else{
+            functionDesignator1();
+        }
+    }
+
+    public static void factor3(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.ABRERET){
+            arrayVariable();
+        }
+        else if(lookahead == Tokens.PONTO){
+            recordVariable();
+        }
+    }
+
+    public static void unsignedConstant(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.NUMINT || lookahead ==Tokens.NUMREAL){
+            unsignedNumber();
+        }
+        else if (lookahead == Tokens.STRING){
+            Parser.consume(Tokens.STRING);
+        }
+        else if (lookahead == Tokens.NIL){
+            Parser.consume(Tokens.NIL);
+        }
+        else{
+            Parser.error(Tokens.INT,Parser.UNKNOWN_ERROR);
+        }
+    }
+
+    public static void functionDesignator1(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.ABREPAR){
+            Parser.consume(Tokens.ABREPAR);
+            actualParamater();
+            while(Parser.lookahead.getToken() == Tokens.VIRGULA){
+                Parser.consume(Tokens.VIRGULA);
+                actualParamater();
+            }
+            Parser.consume(Tokens.FECHAPAR);
+        }
+    }
+
+    public static void set(){
+        Parser.consume(Tokens.ABRERET);
+        elementList();
+        Parser.consume(Tokens.FECHARET);
+    }
+
+    public static void elementList(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.MAIS|| lookahead == Tokens.MENOS||
+                lookahead == Tokens.ID||lookahead == Tokens.NUMINT||
+                lookahead == Tokens.NUMREAL||
+                lookahead == Tokens.STRING ||
+                lookahead == Tokens.NIL ||
+                lookahead==Tokens.ABREPAR || lookahead == Tokens.NOT|
+                lookahead == Tokens.ABRERET){
+            expression();
+            while(Parser.lookahead.getToken()==Tokens.VIRGULA){
+                Parser.consume(Tokens.VIRGULA);
+                element();
+            }
+        }
+    }
+
+    public static void element(){
+        expression();
+        element1();
+    }
+
+    public static void element1(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if (lookahead == Tokens.PONTOPONTO){
+            Parser.consume(Tokens.PONTOPONTO);
+            expression();
+        }
+    }
+
+
+
+
+
 
 
 
