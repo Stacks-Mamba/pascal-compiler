@@ -36,11 +36,11 @@ public class Grammar {
 
     public static void block(){
         labelDeclPart();
-        /*constantDefPart();
+        constantDefPart();
         typeDefPart();
         varDeclPart();
         procAndFuncDeclPart();
-        statementPart();*/
+        statementPart();
     }
 
     public static void labelDeclPart(){
@@ -54,6 +54,97 @@ public class Grammar {
             Parser.consume(Tokens.PONTOVIRGULA);
         }
     }
+
+    public static void constantDefPart(){
+        if(Parser.lookahead.getToken()==Tokens.CONST){
+            Parser.consume(Tokens.CONST);
+            constantDef();
+            Parser.consume(Tokens.PONTOVIRGULA);
+            constantDefPart1();
+        }
+    }
+
+    public static void constantDefPart1(){
+        if(Parser.lookahead.getToken()==Tokens.ID){
+            constantDef();
+            Parser.consume(Tokens.PONTOVIRGULA);
+            constantDefPart1();
+        }
+    }
+
+    public static void constantDef(){
+        Parser.consume(Tokens.ID);
+        Parser.consume(Tokens.IGUAL);
+        constant();
+    }
+
+    public static void constant(){
+        if (Parser.lookahead.getToken()==Tokens.NUMINT || Parser.lookahead.getToken()==Tokens.NUMREAL){
+            unsignedNumber();
+        }
+        else if(Parser.lookahead.getToken()==Tokens.MAIS || Parser.lookahead.getToken()==Tokens.MENOS){
+            sign();
+            sign1();
+        }
+        else if(Parser.lookahead.getToken()==Tokens.ID){
+            Parser.consume(Tokens.ID);
+        }
+        else if(Parser.lookahead.getToken()==Tokens.STRING){
+            Parser.consume(Tokens.STRING);
+        }
+        else{
+            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+        }
+    }
+
+
+    public static void sign1(){
+        if (Parser.lookahead.getToken()==Tokens.NUMINT || Parser.lookahead.getToken()==Tokens.NUMREAL){
+            unsignedNumber();
+        }
+        else if(Parser.lookahead.getToken()==Tokens.ID){
+            Parser.consume(Tokens.ID);
+        }
+        else{
+            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+        }
+    }
+
+    public static void unsignedNumber(){
+        if (Parser.lookahead.getToken()==Tokens.NUMINT){
+            Parser.consume(Tokens.NUMINT);
+        }
+        else if( Parser.lookahead.getToken()==Tokens.NUMREAL){
+            Parser.consume(Tokens.REAL);
+        }
+        else{
+            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+        }
+    }
+
+    public static void typeDefPart(){
+        if(Parser.lookahead.getToken()==Tokens.TYPE){
+            Parser.consume(Tokens.TYPE);
+            typeDef();
+            Parser.consume(Tokens.PONTOVIRGULA);
+            typeDefPart1();
+        }
+    }
+
+    public static void typeDefPart1(){
+        if(Parser.lookahead.getToken()==Tokens.ID){
+            typeDef();
+            Parser.consume(Tokens.PONTOVIRGULA);
+            typeDefPart1();
+        }
+    }
+
+    public static void typeDef(){
+        Parser.consume(Tokens.ID);
+        Parser.consume(Tokens.IGUAL);
+        type();
+    }
+
 
     
 }
