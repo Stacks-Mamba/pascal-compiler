@@ -1,5 +1,3 @@
-<function declaration> ::= <function heading> <block>
-<function heading> ::= FUNCTION ID <function heading 1>
 <function heading 1> ::= DOISPONTOS <result type> PONTOVIRGULA |<param section> DOISPONTOS <type> PONTOVIRGULA
 <statement part> ::= <compound statement>
 <statement> ::= <unlabelled statement> | NUMINT DOISPONTOS <unlabelled statement>
