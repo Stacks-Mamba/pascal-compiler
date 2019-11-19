@@ -1,6 +1,3 @@
-<variant> ::= <case label list> DOISPONTOS ABREPAR <field list> FECHAPAR | <empty>
-<case label list> ::= <constant> {VIRGULA <constant>}
-<set type> ::=SET OF <base type>
 <base type> ::= <scalar type> | <unsigned number> PONTOPONTO <constant> | <sign> <sign 1> PONTOPONTO <constant>  | ID <type 1> | STRING PONTOPONTO <constant>
 <file type> ::= FILE OF <type>
 <variable declaration part> ::= <empty> | VAR <variable declaration> PONTOVIRGULA <variable declaration part 1>

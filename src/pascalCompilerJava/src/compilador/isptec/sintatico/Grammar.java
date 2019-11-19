@@ -340,6 +340,34 @@ public class Grammar {
 
     public static void variant(){
         Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.NUMINT || lookahead == Tokens.NUMREAL
+        || lookahead == Tokens.MAIS || lookahead == Tokens.MENOS ||
+          lookahead == Tokens.ID || lookahead == Tokens.STRING){
+            caseLabelList();
+            Parser.consume(Tokens.DOISPONTOS);
+            Parser.consume(Tokens.ABREPAR);
+            fieldList();
+            Parser.consume(Tokens.FECHAPAR);
+        }
+    }
+
+    public static void caseLabelList(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        constant();
+        while (lookahead == Tokens.VIRGULA){
+            Parser.consume(Tokens.VIRGULA);
+            constant();
+        }
+    }
+
+    public static void setType(){
+        Parser.consume(Tokens.SET);
+        Parser.consume(Tokens.OF);
+        baseType();
+    }
+
+    public static void baseType(){
+        Tokens lookahead = Parser.lookahead.getToken();
         
     }
 
