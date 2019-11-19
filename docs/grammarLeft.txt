@@ -1,8 +1,5 @@
-<procedure and function declaration part> ::= {<procedure or function declaration> PONTOVIRGULA}
-<procedure or function declaration> ::= <procedure declaration> | <function declaration>
-<procedure declaration> ::= <procedure heading> <block>
-<procedure heading> ::= PROCEDURE ID <procedure heading 1>
-<procedure heading 1> ::= PONTOVIRGULA |ABREPAR <formal parameter section> {PONTOVIRGULA <formal parameter section>} FECHAPAR PONTOVIRGULA
+<procedure heading 1> ::= PONTOVIRGULA |<param section> PONTOVIRGULA
+<param section> ::= ABREPAR <formal parameter section> {PONTOVIRGULA <formal parameter section>} FECHAPAR
 <formal parameter section> ::= <parameter group> | VAR <parameter group> | FUNCTION <parameter group> | PROCEDURE ID { VIRGULA ID}
 <parameter group> ::= ID {VIRGULA ID} DOISPONTOS <type>
 <function declaration> ::= <function heading> <block>

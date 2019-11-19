@@ -418,8 +418,44 @@ public class Grammar {
     }
 
     public static void procOrFuncDecl(){
-        
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.PROCEDURE){
+            procedureDecl();
+        }
+        else if(lookahead == Tokens.FUNCTION){
+            functionDecl();
+        }
+        else{
+            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+        }
     }
+
+    public static void procedureDecl(){
+        procedureHeading();
+        block();
+    }
+
+    public static void procedureHeading(){
+        Parser.consume(Tokens.PROCEDURE);
+        Parser.consume(Tokens.ID);
+        procedureHeading1();
+    }
+
+    public static void procedureHeading1(){
+        Tokens lookahead = Parser.lookahead.getToken();
+
+        if(lookahead == Tokens.PONTOVIRGULA){
+            Parser.consume(Tokens.PONTOVIRGULA);
+        }
+        else if (lookahead == Tokens.ABREPAR){
+            
+        }
+
+    }
+
+
+
+
 
 
 
