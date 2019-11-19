@@ -297,6 +297,49 @@ public class Grammar {
 
 
     public static void fixedPart1(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if (lookahead == Tokens.PONTOVIRGULA){
+            Parser.consume(Tokens.PONTOVIRGULA);
+            variantType();
+        }
+    }
+
+    public static void recordSection(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.ID){
+            Parser.consume(Tokens.ID);
+            while(lookahead == Tokens.VIRGULA){
+                Parser.consume(Tokens.VIRGULA);
+                Parser.consume(Tokens.ID);
+            }
+            Parser.consume(Tokens.PONTOVIRGULA);
+            type();
+        }
+    }
+
+    public static void variantType(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        Parser.consume(Tokens.CASE);
+        tagField();
+        Parser.consume(Tokens.ID);
+        Parser.consume(Tokens.OF);
+        variant();
+        while(lookahead == Tokens.PONTOVIRGULA){
+            Parser.consume(Tokens.PONTOVIRGULA);
+            variant();
+        }
+    }
+
+    public static void tagField(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.ID) {
+            Parser.consume(Tokens.ID);
+            Parser.consume(Tokens.DOISPONTOS);
+        }
+    }
+
+    public static void variant(){
+        Tokens lookahead = Parser.lookahead.getToken();
         
     }
 

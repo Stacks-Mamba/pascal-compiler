@@ -20,9 +20,9 @@
 <array type> ::= ARRAY [ <index type> { VIRGULA <index type>} ] OF <type>
 <index type> ::= <scalar type> | <unsigned number> PONTOPONTO <constant> | <sign> <sign 1> PONTOPONTO <constant>  | ID <type 1>| STRING PONTOPONTO <constant>
 <record type> ::= RECORD <field list> END
-<field list> ::= <fixed part> <fixed part 1> | <variant part>
+<field list> ::= <fixed part> <fixed part 1> | <variant type>
 <fixed part> ::= <record section> {PONTOVIRGULA <record section>}
-<fixed part 1> ::= PONTOVIRGULA <variant part> | <empty>
+<fixed part 1> ::= PONTOVIRGULA <variant type> | <empty>
 <record section> ::= ID {VIRGULA ID} PONTOVIRGULA <type> | <empty>
 <variant type> ::= CASE <tag field> ID OF <variant> { PONTOVIRGULA <variant>}
 <tag field> ::= ID DOISPONTOS | <empty>
