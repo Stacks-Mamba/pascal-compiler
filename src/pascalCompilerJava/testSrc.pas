@@ -1,0 +1,2 @@
+program factorial(output);
+.

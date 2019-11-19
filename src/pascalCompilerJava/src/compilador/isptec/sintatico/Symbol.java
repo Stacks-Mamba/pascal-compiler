@@ -12,7 +12,7 @@ import compilador.isptec.lexico.*;
 
 /*Classe que representa um símbolo terminal ou não terminal*/
 
-public abstract class Symbol implements Parseable  {
+public abstract class Symbol {
     
     protected final String descrip;
     
