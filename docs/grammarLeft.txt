@@ -1,13 +1,3 @@
-<go to statement> ::= GOTO NUMINT
-<empty> ::=
-<structured statement> ::= <compound statement> | <conditional statement> | <repetitive statement> | <with statement>
-<compound statement> ::= BEGIN <statement> { PONTOVIRGULA <statement> } END
-<conditional statement> ::= <if statement> | <case statement>
-<if statement> ::= IF <expression> THEN <statement> <if statement 2>
-<if statement 2> ::= ELSE <statement> | <empty>
-<case statement> ::= CASE <expression> OF <case list element> {PONTOVIRGULA <case list element> } END
-<case list element> ::= <case label list> PONTO <statement> | <empty>
-<case label list> ::= <constant> {VIRGULA <constant>}
 <repetitive statement> ::= <while statement> | <repeat statemant> | <for statement>
 <while statement> ::= WHILE <expression> DO <statement>
 <repeat statement> ::= REPEAT <statement> {PONTOVIRGULA <statement>} UNTIL <expression>

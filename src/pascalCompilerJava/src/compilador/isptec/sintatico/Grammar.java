@@ -5,7 +5,6 @@
  */
 package compilador.isptec.sintatico;
 import compilador.isptec.lexico.*;
-import java.io.*;
 
 
 /**
@@ -17,13 +16,13 @@ import java.io.*;
 
 public class Grammar {
 
-    public static void program(){
+    static void program(){
         programHeading();
         block();
         Parser.consume(Tokens.PONTO);
     }
 
-    public static void programHeading(){
+    private static void programHeading(){
         Parser.consume(Tokens.PROGRAM);
         Parser.consume(Tokens.ID);
         Parser.consume(Tokens.ABREPAR);
@@ -36,7 +35,7 @@ public class Grammar {
         Parser.consume(Tokens.PONTOVIRGULA);
     }
 
-    public static void block(){
+    private static void block(){
         labelDeclPart();
         constantDefPart();
         typeDefPart();
@@ -45,7 +44,7 @@ public class Grammar {
         compoundStatement();
     }
 
-    public static void labelDeclPart(){
+    private static void labelDeclPart(){
         if(Parser.lookahead.getToken()==Tokens.LABEL){
             Parser.consume(Tokens.LABEL);
             Parser.consume(Tokens.NUMINT);
@@ -57,7 +56,7 @@ public class Grammar {
         }
     }
 
-    public static void constantDefPart(){
+    private static void constantDefPart(){
         if(Parser.lookahead.getToken()==Tokens.CONST){
             Parser.consume(Tokens.CONST);
             constantDef();
@@ -66,7 +65,7 @@ public class Grammar {
         }
     }
 
-    public static void constantDefPart1(){
+    private static void constantDefPart1(){
         if(Parser.lookahead.getToken()==Tokens.ID){
             constantDef();
             Parser.consume(Tokens.PONTOVIRGULA);
@@ -74,14 +73,15 @@ public class Grammar {
         }
     }
 
-    public static void constantDef(){
+    private static void constantDef(){
         Parser.consume(Tokens.ID);
         Parser.consume(Tokens.IGUAL);
         constant();
     }
 
-    public static void constant(){
-        if (Parser.lookahead.getToken()==Tokens.NUMINT || Parser.lookahead.getToken()==Tokens.NUMREAL){
+    private static void constant(){
+        if (Parser.lookahead.getToken()==Tokens.NUMINT ||
+                Parser.lookahead.getToken()==Tokens.NUMREAL){
             unsignedNumber();
         }
         else if(Parser.lookahead.getToken()==Tokens.MAIS || Parser.lookahead.getToken()==Tokens.MENOS){
@@ -100,7 +100,7 @@ public class Grammar {
     }
 
 
-    public static void sign1(){
+    private static void sign1(){
         if (Parser.lookahead.getToken()==Tokens.NUMINT || Parser.lookahead.getToken()==Tokens.NUMREAL){
             unsignedNumber();
         }
@@ -112,7 +112,7 @@ public class Grammar {
         }
     }
 
-    public static void unsignedNumber(){
+    private static void unsignedNumber(){
         if (Parser.lookahead.getToken()==Tokens.NUMINT){
             Parser.consume(Tokens.NUMINT);
         }
@@ -124,8 +124,8 @@ public class Grammar {
         }
     }
 
-    public static void sign(){
-        if(Parser.lookahead.getToken()==Tokens.MAIS)){
+    private static void sign(){
+        if(Parser.lookahead.getToken()==Tokens.MAIS){
             Parser.consume(Tokens.MAIS);
         }
         else if(Parser.lookahead.getToken()==Tokens.MENOS){
@@ -136,7 +136,7 @@ public class Grammar {
         }
     }
 
-    public static void typeDefPart(){
+    private static void typeDefPart(){
         if(Parser.lookahead.getToken()==Tokens.TYPE){
             Parser.consume(Tokens.TYPE);
             typeDef();
@@ -145,7 +145,7 @@ public class Grammar {
         }
     }
 
-    public static void typeDefPart1(){
+    private static void typeDefPart1(){
         if(Parser.lookahead.getToken()==Tokens.ID){
             typeDef();
             Parser.consume(Tokens.PONTOVIRGULA);
@@ -153,13 +153,13 @@ public class Grammar {
         }
     }
 
-    public static void typeDef(){
+    private static void typeDef(){
         Parser.consume(Tokens.ID);
         Parser.consume(Tokens.IGUAL);
         type();
     }
 
-    public static void type(){
+    private static void type(){
 
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead==Tokens.ABREPAR){
@@ -194,14 +194,14 @@ public class Grammar {
         }
     }
 
-    public static void type1(){
+    private static void type1(){
         if(Parser.lookahead.getToken()==Tokens.PONTOPONTO){
             Parser.consume(Tokens.PONTOPONTO);
             constant();
         }
     }
 
-    public static void scalarType(){
+    private static void scalarType(){
         Parser.consume(Tokens.ABREPAR);
         Parser.consume(Tokens.ID);
         while(Parser.lookahead.getToken()==Tokens.VIRGULA){
@@ -212,7 +212,7 @@ public class Grammar {
     }
 
 
-    public static void structuredType(){
+    private static void structuredType(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ARRAY){
             arrayType();
@@ -231,7 +231,7 @@ public class Grammar {
         }
     }
 
-    public static void arrayType(){
+    private static void arrayType(){
         Parser.consume(Tokens.ARRAY);
         Parser.consume(Tokens.ABRERET);
         indexType();
@@ -244,7 +244,7 @@ public class Grammar {
         type();
     }
 
-    public static void indexType(){
+    private static void indexType(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ABREPAR){
             scalarType();
@@ -274,13 +274,13 @@ public class Grammar {
         }
     }
 
-    public static void recordType(){
+    private static void recordType(){
         Parser.consume(Tokens.RECORD);
         fieldList();
         Parser.consume(Tokens.END);
     }
 
-    public static void fieldList(){
+    private static void fieldList(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.CASE){
             variantType();
@@ -291,7 +291,7 @@ public class Grammar {
         }
     }
 
-    public static void fixedPart(){
+    private static void fixedPart(){
         Tokens lookahead = Parser.lookahead.getToken();
         recordSection();
         while(Parser.lookahead.getToken() == Tokens.PONTOVIRGULA){
@@ -301,7 +301,7 @@ public class Grammar {
     }
 
 
-    public static void fixedPart1(){
+    private static void fixedPart1(){
         Tokens lookahead = Parser.lookahead.getToken();
         if (lookahead == Tokens.PONTOVIRGULA){
             Parser.consume(Tokens.PONTOVIRGULA);
@@ -309,7 +309,7 @@ public class Grammar {
         }
     }
 
-    public static void recordSection(){
+    private static void recordSection(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ID){
             Parser.consume(Tokens.ID);
@@ -322,7 +322,7 @@ public class Grammar {
         }
     }
 
-    public static void variantType(){
+    private static void variantType(){
         Tokens lookahead = Parser.lookahead.getToken();
         Parser.consume(Tokens.CASE);
         tagField();
@@ -335,7 +335,7 @@ public class Grammar {
         }
     }
 
-    public static void tagField(){
+    private static void tagField(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ID) {
             Parser.consume(Tokens.ID);
@@ -343,7 +343,7 @@ public class Grammar {
         }
     }
 
-    public static void variant(){
+    private static void variant(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.NUMINT || lookahead == Tokens.NUMREAL
         || lookahead == Tokens.MAIS || lookahead == Tokens.MENOS ||
@@ -356,28 +356,20 @@ public class Grammar {
         }
     }
 
-    public static void caseLabelList(){
-        Tokens lookahead = Parser.lookahead.getToken();
-        constant();
-        while (lookahead == Tokens.VIRGULA){
-            Parser.consume(Tokens.VIRGULA);
-            constant();
-        }
-    }
 
-    public static void setType(){
+    private static void setType(){
         Parser.consume(Tokens.SET);
         Parser.consume(Tokens.OF);
         indexType();
     }
 
-    public static void fileType(){
+    private static void fileType(){
         Parser.consume(Tokens.FILE);
         Parser.consume(Tokens.OF);
         type();
     }
 
-    public static void varDeclPart(){
+    private static void varDeclPart(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.VAR){
             Parser.consume(Tokens.VAR);
@@ -387,7 +379,7 @@ public class Grammar {
         }
     }
 
-    public static void varDeclPart1(){
+    private static void varDeclPart1(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ID){
             varDecl();
@@ -396,7 +388,7 @@ public class Grammar {
         }
     }
 
-    public static void varDecl(){
+    private static void varDecl(){
         Tokens lookahead = Parser.lookahead.getToken();
         Parser.consume(Tokens.ID);
         while(Parser.lookahead.getToken() == Tokens.VIRGULA){
@@ -407,14 +399,14 @@ public class Grammar {
         type();
     }
 
-    public static void procAndFuncDeclPart(){
+    private static void procAndFuncDeclPart(){
         Tokens lookahead = Parser.lookahead.getToken();
         while(Parser.lookahead.getToken() == Tokens.FUNCTION || lookahead==Tokens.PROCEDURE){
             procOrFuncDecl();
         }
     }
 
-    public static void procOrFuncDecl(){
+    private static void procOrFuncDecl(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.PROCEDURE){
             procedureDecl();
@@ -427,18 +419,18 @@ public class Grammar {
         }
     }
 
-    public static void procedureDecl(){
+    private static void procedureDecl(){
         procedureHeading();
         block();
     }
 
-    public static void procedureHeading(){
+    private static void procedureHeading(){
         Parser.consume(Tokens.PROCEDURE);
         Parser.consume(Tokens.ID);
         procedureHeading1();
     }
 
-    public static void procedureHeading1(){
+    private static void procedureHeading1(){
         Tokens lookahead = Parser.lookahead.getToken();
 
         if(lookahead == Tokens.PONTOVIRGULA){
@@ -452,7 +444,7 @@ public class Grammar {
         }
     }
 
-    public static void paramSection(){
+    private static void paramSection(){
         Tokens lookahead = Parser.lookahead.getToken();
         Parser.consume(Tokens.ABREPAR);
         formalParamSection();
@@ -463,7 +455,7 @@ public class Grammar {
         Parser.consume(Tokens.FECHAPAR);
     }
 
-    public static void formalParamSection(){
+    private static void formalParamSection(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ID){
             varDecl();
@@ -489,18 +481,18 @@ public class Grammar {
         }
     }
 
-    public static void functionDecl(){
+    private static void functionDecl(){
         functionHeading();
         block();
     }
 
-    public static void functionHeading(){
+    private static void functionHeading(){
         Parser.consume(Tokens.FUNCTION);
         Parser.consume(Tokens.ID);
         functionHeading1();
     }
 
-    public static void functionHeading1(){
+    private static void functionHeading1(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.DOISPONTOS) {
             Parser.consume(Tokens.DOISPONTOS);
@@ -515,7 +507,7 @@ public class Grammar {
         }
     }
 
-    public static void statement(){
+    private static void statement(){
         Tokens lookahead = Parser.lookahead.getToken();
 
         if(lookahead == Tokens.NUMINT){
@@ -528,7 +520,7 @@ public class Grammar {
         }
     }
 
-    public static void unlabelledStatement(){
+    private static void unlabelledStatement(){
         Tokens lookahead = Parser.lookahead.getToken();
 
         if(lookahead == Tokens.BEGIN || lookahead == Tokens.IF||
@@ -543,7 +535,7 @@ public class Grammar {
         }
     }
 
-    public static void simpleStatement(){
+    private static void simpleStatement(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ID){
             Parser.consume(Tokens.ID);
@@ -554,7 +546,7 @@ public class Grammar {
         }
     }
 
-    public static void simpleStatement1(){
+    private static void simpleStatement1(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ABREPAR){
             functionDesignator1();
@@ -564,7 +556,7 @@ public class Grammar {
         }
     }
 
-    public static void assignment(){
+    private static void assignment(){
         variable2();
         Parser.consume(Tokens.DOISPONTOSIGUAL);
         expression();
@@ -575,7 +567,7 @@ public class Grammar {
         variable2();
     }
 
-    public static void variable2(){
+    private static void variable2(){
         Tokens lookahead = Parser.lookahead.getToken();
 
         if(lookahead == Tokens.ABRERET){
@@ -589,13 +581,13 @@ public class Grammar {
     }
 
 
-    public static void recordVariable(){
+    private static void recordVariable(){
         Parser.consume(Tokens.PONTO);
         Parser.consume(Tokens.ID);
     }
 
 
-    public static void arrayVariable(){
+    private static void arrayVariable(){
         Tokens lookahead = Parser.lookahead.getToken();
         Parser.consume(Tokens.ABRERET);
         expression();
@@ -606,7 +598,7 @@ public class Grammar {
         Parser.consume(Tokens.FECHARET);
     }
 
-    public static void expression(){
+    private static void expression(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.MAIS|| lookahead == Tokens.MENOS||
                 lookahead == Tokens.ID||lookahead == Tokens.NUMINT||
@@ -620,7 +612,7 @@ public class Grammar {
         }
     }
 
-    public static void expression2(){
+    private static void expression2(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.IGUAL||lookahead == Tokens.DIFERENTE||
                 lookahead == Tokens.MENOR||
@@ -632,7 +624,7 @@ public class Grammar {
         }
     }
 
-    public static void relationalOperator(){
+    private static void relationalOperator(){
         Tokens lookahead = Parser.lookahead.getToken();
         switch(lookahead){
             case IGUAL:
@@ -661,7 +653,7 @@ public class Grammar {
         }
     }
 
-    public static void simpleExpression(){
+    private static void simpleExpression(){
         Tokens lookahead = Parser.lookahead.getToken();
 
         if(lookahead == Tokens.ID || lookahead == Tokens.NUMINT||
@@ -685,7 +677,7 @@ public class Grammar {
         }
     }
 
-    public static void simpleExpression1(){
+    private static void simpleExpression1(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.MAIS || lookahead ==Tokens.MENOS ||
         lookahead == Tokens.OR){
@@ -695,7 +687,7 @@ public class Grammar {
         }
     }
 
-    public static void addingOperator(){
+    private static void addingOperator(){
         Tokens lookahead = Parser.lookahead.getToken();
         switch(lookahead){
             case MAIS:
@@ -713,12 +705,12 @@ public class Grammar {
         }
     }
 
-    public static void term(){
+    private static void term(){
         factor();
         term1();
     }
 
-    public static void term1(){
+    private static void term1(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.VEZES || lookahead ==Tokens.DIVISAO ||
                 lookahead == Tokens.DIV || lookahead == Tokens.MOD ||
@@ -730,7 +722,7 @@ public class Grammar {
     }
 
 
-    public static void multiplyingOperator(){
+    private static void multiplyingOperator(){
         Tokens lookahead = Parser.lookahead.getToken();
         switch(lookahead){
             case VEZES:
@@ -754,7 +746,7 @@ public class Grammar {
         }
     }
 
-    public static void factor(){
+    private static void factor(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ID){
             Parser.consume(Tokens.ID);
@@ -783,7 +775,7 @@ public class Grammar {
         }
     }
 
-    public static void factor2(){
+    private static void factor2(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.PONTO || lookahead == Tokens.ABRERET){
             variable2();
@@ -794,7 +786,7 @@ public class Grammar {
         }
     }
 
-    public static void factor3(){
+    private static void factor3(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ABRERET){
             arrayVariable();
@@ -804,7 +796,7 @@ public class Grammar {
         }
     }
 
-    public static void unsignedConstant(){
+    private static void unsignedConstant(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.NUMINT || lookahead ==Tokens.NUMREAL){
             unsignedNumber();
@@ -820,7 +812,7 @@ public class Grammar {
         }
     }
 
-    public static void functionDesignator1(){
+    private static void functionDesignator1(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ABREPAR){
             Parser.consume(Tokens.ABREPAR);
@@ -833,13 +825,13 @@ public class Grammar {
         }
     }
 
-    public static void set(){
+    private static void set(){
         Parser.consume(Tokens.ABRERET);
         elementList();
         Parser.consume(Tokens.FECHARET);
     }
 
-    public static void elementList(){
+    private static void elementList(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.MAIS|| lookahead == Tokens.MENOS||
                 lookahead == Tokens.ID||lookahead == Tokens.NUMINT||
@@ -856,12 +848,12 @@ public class Grammar {
         }
     }
 
-    public static void element(){
+    private static void element(){
         expression();
         element1();
     }
 
-    public static void element1(){
+    private static void element1(){
         Tokens lookahead = Parser.lookahead.getToken();
         if (lookahead == Tokens.PONTOPONTO){
             Parser.consume(Tokens.PONTOPONTO);
@@ -869,7 +861,7 @@ public class Grammar {
         }
     }
 
-    public static void actualParamater(){
+    private static void actualParamater(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead ==Tokens.ID){
             Parser.consume(Tokens.ID);
@@ -904,7 +896,7 @@ public class Grammar {
         }
     }
 
-    public static void actualParamater1(){
+    private static void actualParamater1(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.VEZES || lookahead ==Tokens.DIVISAO ||
                 lookahead == Tokens.DIV || lookahead == Tokens.MOD ||
@@ -913,7 +905,7 @@ public class Grammar {
         }
     }
 
-    public static void actualParamater2(){
+    private static void actualParamater2(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.VEZES || lookahead ==Tokens.DIVISAO ||
                 lookahead == Tokens.DIV || lookahead == Tokens.MOD ||
@@ -926,6 +918,121 @@ public class Grammar {
             Parser.error(Tokens.EXCEPT,Parser.UNKNOWN_ERROR);
         }
     }
+
+    private static void goToStatement(){
+        Parser.consume(Tokens.GOTO);
+        Parser.consume(Tokens.NUMINT);
+    }
+
+    private static void structuredStatement(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.BEGIN){
+            compoundStatement();
+        }
+        else if(lookahead == Tokens.IF|| lookahead == Tokens.CASE){
+            conditionalStatement()
+        }
+        else if(lookahead ==Tokens.WHILE ||
+                lookahead == Tokens.REPEAT||
+                lookahead == Tokens.FOR){
+            repetitiveStatement();
+        }
+        else if(lookahead == Tokens.WITH){
+            withStatement();
+        }
+        else{
+            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+        }
+
+    }
+
+    private static void compoundStatement(){
+        Parser.consume(Tokens.BEGIN);
+        while(Parser.lookahead.getToken()==Tokens.PONTOVIRGULA){
+            Parser.consume(Tokens.PONTOVIRGULA);
+            statement();
+        }
+        Parser.consume(Tokens.END);
+    }
+
+    private static void conditionalStatement(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.IF){
+            ifStatement();
+        }
+        else if(lookahead == Tokens.CASE){
+            caseStatement();
+        }
+    }
+
+    private static void ifStatement(){
+        Parser.consume(Tokens.IF);
+        expression();
+        Parser.consume(Tokens.THEN);
+        statement();
+        ifStatement2();
+    }
+
+    private static void ifStatement2(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.ELSE){
+            Parser.consume(Tokens.ELSE);
+            statement();
+        }
+    }
+
+    private static void caseStatement(){
+        Parser.consume(Tokens.CASE);
+        expression();
+        Parser.consume(Tokens.OF);
+        caseListElement();
+        while(Parser.lookahead.getToken() == Tokens.PONTOVIRGULA){
+            Parser.consume(Tokens.PONTOVIRGULA);
+            caseListElement();
+        }
+        Parser.consume(Tokens.END);
+        caseLabelList();
+    }
+
+    private static void caseListElement(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead==Tokens.NUMINT || lookahead==Tokens.NUMREAL) {
+            caseLabelList();
+            Parser.consume(Tokens.PONTO);
+            statement();
+        }
+    }
+
+    private static void caseLabelList(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead==Tokens.NUMINT || lookahead==Tokens.NUMREAL) {
+            constant();
+            while(Parser.lookahead.getToken()==Tokens.VIRGULA){
+                Parser.consume(Tokens.VIRGULA);
+                constant();
+            }
+        }
+        else{
+            Parser.error(Tokens.CASE,Parser.UNKNOWN_ERROR);
+        }
+    }
+
+    private static void repetitiveStatement(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.WHILE){
+            whileStatement();
+        }
+        else if(lookahead == Tokens.REPEAT){
+            repeatStatement();
+        }
+        else if(lookahead == Tokens.FOR){
+            forStatement();
+        }
+    }
+
+
+
+
 
 
 
