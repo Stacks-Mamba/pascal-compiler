@@ -187,6 +187,9 @@ public class Grammar {
                 || lookahead ==Tokens.SET || lookahead == Tokens.FILE){
             structuredType();
         }
+        else{
+            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+        }
     }
 
     public static void type1(){
@@ -373,6 +376,48 @@ public class Grammar {
     }
 
     public static void varDeclPart(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.VAR){
+            Parser.consume(Tokens.VAR);
+            varDecl();
+            Parser.consume(Tokens.PONTOVIRGULA);
+            varDeclPart1();
+        }
+    }
+
+    public static void varDeclPart1(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.ID){
+            varDecl();
+            Parser.consume(Tokens.PONTOVIRGULA);
+            varDeclPart1();
+        }
+    }
+
+    public static void varDecl(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.ID){
+            Parser.consume(Tokens.ID);
+            while(lookahead == Tokens.VIRGULA){
+                Parser.consume(Tokens.VIRGULA);
+                Parser.consume(Tokens.ID);
+            }
+            Parser.consume(Tokens.DOISPONTOS);
+            type();
+        }
+        else{
+            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+        }
+    }
+
+    public static void procAndFuncDeclPart(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        while(lookahead == Tokens.FUNCTION || lookahead==Tokens.PROCEDURE){
+            procOrFuncDecl();
+        }
+    }
+
+    public static void procOrFuncDecl(){
         
     }
 

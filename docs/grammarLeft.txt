@@ -1,6 +1,3 @@
-<variable declaration part> ::= <empty> | VAR <variable declaration> PONTOVIRGULA <variable declaration part 1>
-<variable declaration part 1> ::= <empty> | <variable declaration> PONTOVIRGULA <variable declaration part 1>
-<variable declaration> ::= ID {VIRGULA ID} DOISPONTOS <type>
 <procedure and function declaration part> ::= {<procedure or function declaration> PONTOVIRGULA}
 <procedure or function declaration> ::= <procedure declaration> | <function declaration>
 <procedure declaration> ::= <procedure heading> <block>
