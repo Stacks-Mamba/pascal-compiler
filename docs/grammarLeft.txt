@@ -1,8 +1,2 @@
-<repetitive statement> ::= <while statement> | <repeat statemant> | <for statement>
-<while statement> ::= WHILE <expression> DO <statement>
-<repeat statement> ::= REPEAT <statement> {PONTOVIRGULA <statement>} UNTIL <expression>
-<for statement> ::= FOR ID DOISPONTOSIGUAL <for list> DO <statement>
-<for list> ::= <expression> <for list 1>
-<for list 1> ::=  TO <expression> | DOWNTO <expression>
 <with statement> ::= WITH <record variable list> DO <statement>
 <record variable list> ::= <variable> {VIRGULA <variable>}

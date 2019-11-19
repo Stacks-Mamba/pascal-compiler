@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package compilador.isptec.sintatico;
+import com.sun.org.apache.regexp.internal.RE;
 import compilador.isptec.lexico.*;
 
 
@@ -610,6 +611,9 @@ public class Grammar {
             simpleExpression();
             expression2();
         }
+        else{
+            Parser.error(Tokens.CASE,Parser.UNKNOWN_ERROR);
+        }
     }
 
     private static void expression2(){
@@ -930,7 +934,7 @@ public class Grammar {
             compoundStatement();
         }
         else if(lookahead == Tokens.IF|| lookahead == Tokens.CASE){
-            conditionalStatement()
+            conditionalStatement();
         }
         else if(lookahead ==Tokens.WHILE ||
                 lookahead == Tokens.REPEAT||
@@ -1004,17 +1008,12 @@ public class Grammar {
     }
 
     private static void caseLabelList(){
-        Tokens lookahead = Parser.lookahead.getToken();
-        if(lookahead==Tokens.NUMINT || lookahead==Tokens.NUMREAL) {
+        constant();
+        while(Parser.lookahead.getToken()==Tokens.VIRGULA){
+            Parser.consume(Tokens.VIRGULA);
             constant();
-            while(Parser.lookahead.getToken()==Tokens.VIRGULA){
-                Parser.consume(Tokens.VIRGULA);
-                constant();
-            }
         }
-        else{
-            Parser.error(Tokens.CASE,Parser.UNKNOWN_ERROR);
-        }
+
     }
 
     private static void repetitiveStatement(){
@@ -1028,7 +1027,76 @@ public class Grammar {
         else if(lookahead == Tokens.FOR){
             forStatement();
         }
+        else{
+            Parser.error(Tokens.WHILE,Parser.UNKNOWN_ERROR);
+        }
     }
+
+    private static void whileStatement(){
+        Parser.consume(Tokens.WHILE);
+        expression();
+        Parser.consume(Tokens.DO);
+        statement();
+    }
+
+    private static void repeatStatement(){
+        Parser.consume(Tokens.REPEAT);
+        statement();
+        while(Parser.lookahead.getToken() == Tokens.PONTOVIRGULA){
+            Parser.consume(Tokens.PONTOVIRGULA);
+            statement();
+        }
+        Parser.consume(Tokens.UNTIL);
+        expression();
+    }
+
+    private static void forStatement(){
+        Parser.consume(Tokens.FOR);
+        Parser.consume(Tokens.ID);
+        Parser.consume(Tokens.DOISPONTOSIGUAL);
+        forList();
+        Parser.consume(Tokens.DO);
+        statement();
+    }
+
+    private static void forList(){
+        expression();
+        forList1();
+    }
+
+    private static void forList1(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.TO){
+            Parser.consume(Tokens.TO);
+            expression();
+        }
+        else if(lookahead == Tokens.DOWNTO){
+            expression();
+        }
+        else{
+            Parser.error(Parser.lookahead.getToken(),
+                    Parser.UNKNOWN_ERROR);
+        }
+    }
+
+    private static void withStatement(){
+        Parser.consume(Tokens.WITH);
+        recordVariableList();
+        Parser.consume(Tokens.DO);
+        statement();
+    }
+
+    private static void recordVariableList(){
+        variable();
+        while(Parser.lookahead.getToken() == Tokens.VIRGULA){
+            Parser.consume(Tokens.VIRGULA);
+            variable();
+        }
+    }
+
+
+
+
 
 
 
