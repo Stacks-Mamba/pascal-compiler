@@ -1,6 +1,6 @@
 <program> ::= <program heading> <block> PONTO
 <program heading> ::= PROGRAM ID ABREPAR ID { PONTOVIRGULA ID } FECHAPAR PONTOVIRGULA
-<block> ::= <label declaration part> <constant definition part> <type definition part> <variable declaration part> <procedure and function declaration part> <statement part>
+<block> ::= <label declaration part> <constant definition part> <type definition part> <variable declaration part> <procedure and function declaration part> <compound statement>
 <label declaration part> ::= <empty> | LABEL NUMINT {VIRGULA NUMINT} PONTOVIRGULA
 <constant definition part> ::= <empty> | CONST <constant definition> PONTOVIRGULA <constant definition part 1>
 <constant definition part 1> :: = <empty> | <constant definition> PONTOVIRGULA <constant definition part 1>
@@ -42,13 +42,12 @@
 <formal parameter section> ::= <variable declaration> | VAR <variable declaration> | FUNCTION <variable declaration> | PROCEDURE ID { VIRGULA ID}
 <function declaration> ::= <function heading> <block>
 <function heading> ::= FUNCTION ID <function heading 1>
-<function heading 1> ::= DOISPONTOS <result type> PONTOVIRGULA |<param section> DOISPONTOS <type> PONTOVIRGULA
-<statement part> ::= <compound statement>
+<function heading 1> ::= DOISPONTOS ID PONTOVIRGULA |<param section> DOISPONTOS <type> PONTOVIRGULA
 <statement> ::= <unlabelled statement> | NUMINT DOISPONTOS <unlabelled statement>
 <unlabelled statement> ::= <simple statement> | <structured statement>
 <simple statement> ::= ID <simple statement 1> | <go to statement> | <empty>
-<simple statement 1> ::= <variable 2> DOISPONTOSIGUAL <expression> | <function designator 1>
-<assignment statement> ::=ID <variable 2> DOISPONTOSIGUAL <expression>
+<simple statement 1> ::= <assignment> | <function designator 1>
+<assignment> := <variable 2> DOISPONTOSIGUAL <expression>
 <variable> ::= ID <variable 2>
 <variable 2>  ::= <array variable> <variable 2> | <record variable>  <variable 2> | <empty>
 <record variable>  ::=  PONTO ID

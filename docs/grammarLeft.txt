@@ -1,15 +1,3 @@
-<function heading 1> ::= DOISPONTOS <result type> PONTOVIRGULA |<param section> DOISPONTOS <type> PONTOVIRGULA
-<statement part> ::= <compound statement>
-<statement> ::= <unlabelled statement> | NUMINT DOISPONTOS <unlabelled statement>
-<unlabelled statement> ::= <simple statement> | <structured statement>
-<simple statement> ::= ID <simple statement 1> | <go to statement> | <empty>
-<simple statement 1> ::= <variable 2> DOISPONTOSIGUAL <expression> | <function designator 1>
-<assignment statement> ::=ID <variable 2> DOISPONTOSIGUAL <expression>
-<variable> ::= ID <variable 2>
-<variable 2>  ::= <array variable> <variable 2> | <record variable>  <variable 2> | <empty>
-<record variable>  ::=  PONTO ID
-<array variable> ::= ABRERET <expression> {VIRGULA <expression>} FECHARET
-<expression> ::= <simple expression> <expression 2>
 <expression 2> ::= <relational operator> <simple expression> | <empty>
 <relational operator> ::= IGUAL | DIFERENTE | MENOR | MENORIGUAL | MAIORIGUAL | MAIOR | IN
 <simple expression> ::= <term> <simple expression 1> | <sign> <term> <simple expression 1>

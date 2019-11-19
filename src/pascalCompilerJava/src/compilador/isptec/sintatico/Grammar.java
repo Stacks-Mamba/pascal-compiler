@@ -40,7 +40,7 @@ public class Grammar {
         typeDefPart();
         varDeclPart();
         procAndFuncDeclPart();
-        statementPart();
+        compoundStatement();
     }
 
     public static void labelDeclPart(){
@@ -499,8 +499,132 @@ public class Grammar {
     }
 
     public static void functionHeading1(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.DOISPONTOS) {
+            Parser.consume(Tokens.DOISPONTOS);
+            Parser.consume(Tokens.ID);
+            Parser.consume(Tokens.PONTOVIRGULA);
+        }
+        else if(lookahead == Tokens.ABREPAR){
+            paramSection();
+            Parser.consume(Tokens.DOISPONTOS);
+            type();
+            Parser.consume(Tokens.PONTOVIRGULA);
+        }
+    }
+
+    public static void statement(){
+        Tokens lookahead = Parser.lookahead.getToken();
+
+        if(lookahead == Tokens.NUMINT){
+            Parser.consume(Tokens.NUMINT);
+            Parser.consume(Tokens.DOISPONTOS);
+            unlabelledStatement();
+        }
+        else{
+            unlabelledStatement();
+        }
+    }
+
+    public static void unlabelledStatement(){
+        Tokens lookahead = Parser.lookahead.getToken();
+
+        if(lookahead == Tokens.BEGIN | lookahead == Tokens.IF|
+                lookahead == Tokens.CASE | lookahead ==Tokens.WHILE |
+                lookahead == Tokens.REPEAT|lookahead == Tokens.FOR|
+                lookahead == Tokens.WITH
+            ){
+            structuredStatement();
+        }
+        else{
+            simpleStatement();
+        }
+    }
+
+    public static void simpleStatement(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.ID){
+            Parser.consume(Tokens.ID);
+            simpleStatement1();
+        }
+        else if (lookahead == Tokens.GOTO){
+            goToStatement();
+        }
+    }
+
+    public static void simpleStatement1(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.ABREPAR){
+            functionDesignator1();
+        }
+        else{
+            assignment();
+        }
+    }
+
+    public static void assignment(){
+        variable2();
+        Parser.consume(Tokens.DOISPONTOSIGUAL);
+        expression();
+    }
+
+    public static void variable(){
+        Parser.consume(Tokens.ID);
+        variable2();
+    }
+
+    public static void variable2(){
+        Tokens lookahead = Parser.lookahead.getToken();
+
+        if(lookahead == Tokens.ABRERET){
+            arrayVariable();
+            variable2();
+        }
+        else if(lookahead == Tokens.PONTO){
+            recordVariable();
+            variable2();
+        }
+    }
+
+
+    public static void recordVariable(){
+        Parser.consume(Tokens.PONTO);
+        Parser.consume(Tokens.ID);
+    }
+
+
+    public static void arrayVariable(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        Parser.consume(Tokens.ABRERET);
+        expression();
+        while(lookahead == Tokens.VIRGULA){
+            Parser.consume(Tokens.VIRGULA);
+            expression();
+        }
+        Parser.consume(Tokens.FECHARET);
+    }
+
+    public static void expression(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.MAIS| lookahead == Tokens.MENOS|
+                lookahead == Tokens.ID|lookahead == Tokens.NUMINT|
+                lookahead == Tokens.NUMREAL|
+                lookahead == Tokens.STRING | lookahead == Tokens.NIL |              lookahead==Tokens.ABREPAR | lookahead == Tokens.NOT|
+                lookahead == Tokens.ABRERET){
+            simpleExpression();
+            expression2();
+        }
+    }
+
+    public static void expression2(){
         
     }
+
+
+
+
+
+
 
 
 
