@@ -396,18 +396,13 @@ public class Grammar {
 
     public static void varDecl(){
         Tokens lookahead = Parser.lookahead.getToken();
-        if(lookahead == Tokens.ID){
+        Parser.consume(Tokens.ID);
+        while(lookahead == Tokens.VIRGULA){
+            Parser.consume(Tokens.VIRGULA);
             Parser.consume(Tokens.ID);
-            while(lookahead == Tokens.VIRGULA){
-                Parser.consume(Tokens.VIRGULA);
-                Parser.consume(Tokens.ID);
-            }
-            Parser.consume(Tokens.DOISPONTOS);
-            type();
         }
-        else{
-            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
-        }
+        Parser.consume(Tokens.DOISPONTOS);
+        type();
     }
 
     public static void procAndFuncDeclPart(){
@@ -448,10 +443,70 @@ public class Grammar {
             Parser.consume(Tokens.PONTOVIRGULA);
         }
         else if (lookahead == Tokens.ABREPAR){
-            
+            paramSection();
         }
-
+        else{
+            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+        }
     }
+
+    public static void paramSection(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        Parser.consume(Tokens.ABREPAR);
+        formalParamSection();
+        while(lookahead == Tokens.PONTOVIRGULA){
+            Parser.consume(Tokens.PONTOVIRGULA);
+            formalParamSection();
+        }
+        Parser.consume(Tokens.FECHAPAR);
+    }
+
+    public static void formalParamSection(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.ID){
+            varDecl();
+        }
+        else if (lookahead == Tokens.VAR){
+            Parser.consume(Tokens.VAR);
+            varDecl();
+        }
+        else if(lookahead == Tokens.FUNCTION){
+            Parser.consume(Tokens.FUNCTION);
+            varDecl();
+        }
+        else if(lookahead == Tokens.PROCEDURE){
+            Parser.consume(Tokens.PROCEDURE);
+            Parser.consume(Tokens.ID);
+            while(lookahead == Tokens.VIRGULA){
+                Parser.consume(Tokens.VIRGULA);
+                Parser.consume(Tokens.ID);
+            }
+        }
+        else{
+            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+        }
+    }
+
+    public static void functionDecl(){
+        functionHeading();
+        block();
+    }
+
+    public static void functionHeading(){
+        Parser.consume(Tokens.FUNCTION);
+        Parser.consume(Tokens.ID);
+        functionHeading1();
+    }
+
+    public static void functionHeading1(){
+        
+    }
+
+
+
+
+
+
 
 
 

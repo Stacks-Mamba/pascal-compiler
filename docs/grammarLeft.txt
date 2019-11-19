@@ -1,10 +1,6 @@
-<procedure heading 1> ::= PONTOVIRGULA |<param section> PONTOVIRGULA
-<param section> ::= ABREPAR <formal parameter section> {PONTOVIRGULA <formal parameter section>} FECHAPAR
-<formal parameter section> ::= <parameter group> | VAR <parameter group> | FUNCTION <parameter group> | PROCEDURE ID { VIRGULA ID}
-<parameter group> ::= ID {VIRGULA ID} DOISPONTOS <type>
 <function declaration> ::= <function heading> <block>
 <function heading> ::= FUNCTION ID <function heading 1>
-<function heading 1> ::= DOISPONTOS <result type> PONTOVIRGULA |ABREPAR <formal parameter section> {PONTOVIRGULA <formal parameter section>} FECHAPAR DOISPONTOS <type> PONTOVIRGULA
+<function heading 1> ::= DOISPONTOS <result type> PONTOVIRGULA |<param section> DOISPONTOS <type> PONTOVIRGULA
 <statement part> ::= <compound statement>
 <statement> ::= <unlabelled statement> | NUMINT DOISPONTOS <unlabelled statement>
 <unlabelled statement> ::= <simple statement> | <structured statement>
