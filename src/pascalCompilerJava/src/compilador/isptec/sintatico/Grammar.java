@@ -363,13 +363,20 @@ public class Grammar {
     public static void setType(){
         Parser.consume(Tokens.SET);
         Parser.consume(Tokens.OF);
-        baseType();
+        indexType();
     }
 
-    public static void baseType(){
-        Tokens lookahead = Parser.lookahead.getToken();
+    public static void fileType(){
+        Parser.consume(Tokens.FILE);
+        Parser.consume(Tokens.OF);
+        type();
+    }
+
+    public static void varDeclPart(){
         
     }
+
+
 
 
 
