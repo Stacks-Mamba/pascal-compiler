@@ -70,8 +70,11 @@
 <element list> ::= <element> {VIRGULA <element> } | <empty>
 <element> ::= <expression> <element 1>
 <element 1> ::= PONTOPONTO <expression> | <empty>
-<procedure statement> ::= ID <function designator 1>
-<actual parameter> ::= <expression> | <unsigned constant>| ID <factor 2>
+<actual parameter> ::=  ID <factor 2> <actual parameter 1> | ABREPAR <expression> FECHAPAR <actual parameter 2>
+| <set> <actual parameter 2> |NOT <factor> <actual parameter 2>
+| <sign> <term> <expression 2> | <unsigned constant> <actual parameter 1>
+<actual parameter 1> ::= <actual parameter 2> | <empty>
+<actual parameter 2> ::=  <term 1> <simple expression 1> <expression 2>
 <go to statement> ::= GOTO NUMINT
 <empty> ::=
 <structured statement> ::= <compound statement> | <conditional statement> | <repetitive statement> | <with statement>

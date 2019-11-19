@@ -869,6 +869,64 @@ public class Grammar {
         }
     }
 
+    public static void actualParamater(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead ==Tokens.ID){
+            Parser.consume(Tokens.ID);
+            factor2();
+            actualParamater1();
+        }
+        else if(lookahead == Tokens.ABREPAR){
+            Parser.consume(Tokens.ABREPAR);
+            expression();
+            Parser.consume(Tokens.FECHAPAR);
+            actualParamater2();
+        }
+        else if(lookahead == Tokens.ABRERET){
+            set();
+            actualParamater2();
+        }
+        else if (lookahead == Tokens.NOT){
+            Parser.consume(Tokens.NOT);
+            factor();
+            actualParamater2();
+        }
+        else if(lookahead == Tokens.MAIS || lookahead==Tokens.MENOS){
+            sign();
+            term();
+            expression2();
+        }
+        else if(lookahead == Tokens.NUMREAL||
+                lookahead == Tokens.STRING ||
+                lookahead == Tokens.NIL){
+            unsignedConstant();
+            actualParamater1();
+        }
+    }
+
+    public static void actualParamater1(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.VEZES || lookahead ==Tokens.DIVISAO ||
+                lookahead == Tokens.DIV || lookahead == Tokens.MOD ||
+                lookahead == Tokens.AND){
+            actualParamater2();
+        }
+    }
+
+    public static void actualParamater2(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.VEZES || lookahead ==Tokens.DIVISAO ||
+                lookahead == Tokens.DIV || lookahead == Tokens.MOD ||
+                lookahead == Tokens.AND){
+            term1();
+            simpleExpression1();
+            expression2();
+        }
+        else{
+            Parser.error(Tokens.EXCEPT,Parser.UNKNOWN_ERROR);
+        }
+    }
+
 
 
 
