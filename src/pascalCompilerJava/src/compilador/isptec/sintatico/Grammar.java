@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package compilador.isptec.sintatico;
-import com.sun.org.apache.regexp.internal.RE;
 import compilador.isptec.lexico.*;
 
 
@@ -293,7 +292,6 @@ public class Grammar {
     }
 
     private static void fixedPart(){
-        Tokens lookahead = Parser.lookahead.getToken();
         recordSection();
         while(Parser.lookahead.getToken() == Tokens.PONTOVIRGULA){
             Parser.consume(Tokens.PONTOVIRGULA);
@@ -324,7 +322,6 @@ public class Grammar {
     }
 
     private static void variantType(){
-        Tokens lookahead = Parser.lookahead.getToken();
         Parser.consume(Tokens.CASE);
         tagField();
         Parser.consume(Tokens.ID);
@@ -390,7 +387,6 @@ public class Grammar {
     }
 
     private static void varDecl(){
-        Tokens lookahead = Parser.lookahead.getToken();
         Parser.consume(Tokens.ID);
         while(Parser.lookahead.getToken() == Tokens.VIRGULA){
             Parser.consume(Tokens.VIRGULA);
@@ -446,7 +442,6 @@ public class Grammar {
     }
 
     private static void paramSection(){
-        Tokens lookahead = Parser.lookahead.getToken();
         Parser.consume(Tokens.ABREPAR);
         formalParamSection();
         while(Parser.lookahead.getToken() == Tokens.PONTOVIRGULA){
@@ -563,7 +558,7 @@ public class Grammar {
         expression();
     }
 
-    public static void variable(){
+    private static void variable(){
         Parser.consume(Tokens.ID);
         variable2();
     }
@@ -589,7 +584,6 @@ public class Grammar {
 
 
     private static void arrayVariable(){
-        Tokens lookahead = Parser.lookahead.getToken();
         Parser.consume(Tokens.ABRERET);
         expression();
         while(Parser.lookahead.getToken() == Tokens.VIRGULA){

@@ -1,2 +1,1 @@
-<with statement> ::= WITH <record variable list> DO <statement>
-<record variable list> ::= <variable> {VIRGULA <variable>}
+
