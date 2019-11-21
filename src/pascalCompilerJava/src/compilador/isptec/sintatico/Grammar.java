@@ -117,7 +117,7 @@ public class Grammar {
             Parser.consume(Tokens.NUMINT);
         }
         else if( Parser.lookahead.getToken()==Tokens.NUMREAL){
-            Parser.consume(Tokens.REAL);
+            Parser.consume(Tokens.NUMREAL);
         }
         else{
             Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
@@ -125,6 +125,7 @@ public class Grammar {
     }
 
     private static void sign(){
+        System.out.println("In sign");
         if(Parser.lookahead.getToken()==Tokens.MAIS){
             Parser.consume(Tokens.MAIS);
         }
@@ -185,12 +186,32 @@ public class Grammar {
             Parser.consume(Tokens.ID);
             type1();
         }
+        else if(lookahead==Tokens.REAL || lookahead==Tokens.BOOL ||
+                lookahead==Tokens.CHAR || lookahead==Tokens.INT){
+            standardType();
+        }
         else if(lookahead==Tokens.ARRAY || lookahead==Tokens.RECORD
                 || lookahead ==Tokens.SET || lookahead == Tokens.FILE){
             structuredType();
         }
         else{
             Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+        }
+    }
+
+    private static void standardType(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.INT){
+            Parser.consume(Tokens.INT);
+        }
+        else if(lookahead == Tokens.CHAR){
+            Parser.consume(Tokens.CHAR);
+        }
+        else if(lookahead == Tokens.BOOL){
+            Parser.consume(Tokens.BOOL);
+        }
+        else if(lookahead == Tokens.REAL){
+            Parser.consume(Tokens.REAL);
         }
     }
 
@@ -397,13 +418,13 @@ public class Grammar {
     }
 
     private static void procAndFuncDeclPart(){
-        Tokens lookahead = Parser.lookahead.getToken();
-        while(Parser.lookahead.getToken() == Tokens.FUNCTION || lookahead==Tokens.PROCEDURE){
+        while(Parser.lookahead.getToken() == Tokens.FUNCTION || Parser.lookahead.getToken()==Tokens.PROCEDURE){
             procOrFuncDecl();
         }
     }
 
     private static void procOrFuncDecl(){
+        System.out.println("In proc or func declaration");
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.PROCEDURE){
             procedureDecl();
@@ -544,15 +565,16 @@ public class Grammar {
 
     private static void simpleStatement1(){
         Tokens lookahead = Parser.lookahead.getToken();
-        if(lookahead == Tokens.ABREPAR){
-            functionDesignator1();
+        if(lookahead == Tokens.ABRERET || lookahead==Tokens.PONTO||lookahead==Tokens.DOISPONTOSIGUAL){
+            assignment();
         }
         else{
-            assignment();
+            functionDesignator1();
         }
     }
 
     private static void assignment(){
+        System.out.println("In assignment");
         variable2();
         Parser.consume(Tokens.DOISPONTOSIGUAL);
         expression();
@@ -567,10 +589,12 @@ public class Grammar {
         Tokens lookahead = Parser.lookahead.getToken();
 
         if(lookahead == Tokens.ABRERET){
+            System.out.println("ret");
             arrayVariable();
             variable2();
         }
         else if(lookahead == Tokens.PONTO){
+            System.out.println("ponto");
             recordVariable();
             variable2();
         }
@@ -811,6 +835,7 @@ public class Grammar {
     }
 
     private static void functionDesignator1(){
+        System.out.println("in function designator.");
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ABREPAR){
             Parser.consume(Tokens.ABREPAR);
@@ -860,62 +885,11 @@ public class Grammar {
     }
 
     private static void actualParamater(){
-        Tokens lookahead = Parser.lookahead.getToken();
-        if(lookahead ==Tokens.ID){
-            Parser.consume(Tokens.ID);
-            factor2();
-            actualParamater1();
-        }
-        else if(lookahead == Tokens.ABREPAR){
-            Parser.consume(Tokens.ABREPAR);
-            expression();
-            Parser.consume(Tokens.FECHAPAR);
-            actualParamater2();
-        }
-        else if(lookahead == Tokens.ABRERET){
-            set();
-            actualParamater2();
-        }
-        else if (lookahead == Tokens.NOT){
-            Parser.consume(Tokens.NOT);
-            factor();
-            actualParamater2();
-        }
-        else if(lookahead == Tokens.MAIS || lookahead==Tokens.MENOS){
-            sign();
-            term();
-            expression2();
-        }
-        else if(lookahead == Tokens.NUMREAL||
-                lookahead == Tokens.STRING ||
-                lookahead == Tokens.NIL){
-            unsignedConstant();
-            actualParamater1();
-        }
+        System.out.println("In actual parameter");
+        expression();
     }
 
-    private static void actualParamater1(){
-        Tokens lookahead = Parser.lookahead.getToken();
-        if(lookahead == Tokens.VEZES || lookahead ==Tokens.DIVISAO ||
-                lookahead == Tokens.DIV || lookahead == Tokens.MOD ||
-                lookahead == Tokens.AND){
-            actualParamater2();
-        }
-    }
 
-    private static void actualParamater2(){
-        Tokens lookahead = Parser.lookahead.getToken();
-        if(lookahead == Tokens.VEZES || lookahead ==Tokens.DIVISAO ||
-                lookahead == Tokens.DIV || lookahead == Tokens.MOD ||
-                lookahead == Tokens.AND){
-            term1();
-            simpleExpression1();
-            expression2();
-        }
-        else{
-            Parser.error(Tokens.EXCEPT,Parser.UNKNOWN_ERROR);
-        }
-    }
 
     private static void goToStatement(){
         Parser.consume(Tokens.GOTO);
@@ -945,7 +919,9 @@ public class Grammar {
     }
 
     private static void compoundStatement(){
+        System.out.println("In Compound statement");
         Parser.consume(Tokens.BEGIN);
+        statement();
         while(Parser.lookahead.getToken()==Tokens.PONTOVIRGULA){
             Parser.consume(Tokens.PONTOVIRGULA);
             statement();
@@ -1087,38 +1063,6 @@ public class Grammar {
             variable();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

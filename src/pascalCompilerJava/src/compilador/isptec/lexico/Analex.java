@@ -235,7 +235,7 @@ public class Analex
                             break;
                         case ':':
                             if(this.verificaProximoChar('='))
-                            token = new Token(Tokens.ATRIB,":=",numeroLinha);
+                            token = new Token(Tokens.DOISPONTOSIGUAL,":=",numeroLinha);
                             else
                             {
                                 posicaoLinha--;
@@ -418,7 +418,7 @@ public class Analex
                             case "file":
                                 token = new Token(Tokens.FILE,lexema,numeroLinha);
                                 break;
-                            /*case "char":
+                            case "char":
                                 token = new Token(Tokens.CHAR,lexema,numeroLinha);
                                 break;
                             case "real":
@@ -426,7 +426,10 @@ public class Analex
                                 break;
                             case "integer":
                                 token = new Token(Tokens.INT,lexema,numeroLinha);
-                                break;*/
+                                break;
+                            case "Boolean":
+                                token = new Token(Tokens.BOOL,lexema,numeroLinha);
+                                break;
                             case "if":
                                 token = new Token(Tokens.IF,lexema,numeroLinha);
                                 break;
@@ -487,15 +490,6 @@ public class Analex
                             case "until":
                                 token = new Token(Tokens.UNTIL,lexema,numeroLinha);
                                 break;
-                            /*case "string":
-                                token = new Token(Tokens.STRING,lexema,numeroLinha);
-                                break;
-                            case "double":
-                                token = new Token(Tokens.DOUBLE,lexema,numeroLinha);
-                                break;
-                            case "boolean":
-                                token = new Token(Tokens.BOOL,lexema,numeroLinha);
-                                break;*/
                             case "const":
                                 token = new Token(Tokens.CONST,lexema,numeroLinha);
                                 break;

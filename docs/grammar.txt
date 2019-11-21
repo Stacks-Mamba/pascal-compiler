@@ -12,9 +12,11 @@
 <type definition part> ::= <empty> | TYPE <type definition> PONTOVIRGULA <type definition part 1>
 <type definition part 1> ::= <empty> | <type definition> PONTOVIRGULA <type definition part 1>
 <type definition> ::= ID IGUAL <type>
-<type> ::= <scalar type> | <unsigned number> PONTOPONTO <constant>| <sign> <sign 1> PONTOPONTO <constant>
-| ID <type 1> | STRING PONTOPONTO <constant> | <structured type> | <empty>
-<type 1> ::= PONTOPONTO <constant> | <empty>
+<type> ::= <scalar type> | <unsigned number> <subrange end>| <sign> <sign 1> <subrange end>
+| <standard type> | STRING <subrange end> | <structured type> | ID <type 1>
+<standard type> ::= CHAR | BOOLEAN | INTEGER | REAL
+<type 1> ::= <subrange end>| <empty>
+<subrange end> ::= PONTOPONTO <constant>
 <scalar type> ::= ABREPAR ID {VIRGULA ID} FECHAPAR
 <structured type> ::= <array type> | <record type> | <set type> | <file type>
 <array type> ::= ARRAY [ <index type> { VIRGULA <index type>} ] OF <type>
@@ -65,16 +67,11 @@
 <factor 2> ::= <variable 2> <factor 3> | <function designator 1> |<empty>
 <factor 3> ::= <array variable> | <record variable> | <empty>
 <unsigned constant> ::= <unsigned number> | STRING | NIL
-<function designator 1> ::= ABREPAR <actual parameter> {VIRGULA <actual parameter>} FECHAPAR | <empty>
+<function designator 1> ::= ABREPAR <expression> {VIRGULA <expression>} FECHAPAR | <empty>
 <set> ::= ABRERET <element list> FECHARET
 <element list> ::= <element> {VIRGULA <element> } | <empty>
 <element> ::= <expression> <element 1>
 <element 1> ::= PONTOPONTO <expression> | <empty>
-<actual parameter> ::=  ID <factor 2> <actual parameter 1> | ABREPAR <expression> FECHAPAR <actual parameter 2>
-| <set> <actual parameter 2> |NOT <factor> <actual parameter 2>
-| <sign> <term> <expression 2> | <unsigned constant> <actual parameter 1>
-<actual parameter 1> ::= <actual parameter 2> | <empty>
-<actual parameter 2> ::=  <term 1> <simple expression 1> <expression 2>
 <go to statement> ::= GOTO NUMINT
 <empty> ::=
 <structured statement> ::= <compound statement> | <conditional statement> | <repetitive statement> | <with statement>

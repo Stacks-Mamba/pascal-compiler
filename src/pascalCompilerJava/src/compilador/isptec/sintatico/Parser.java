@@ -66,7 +66,7 @@ public class Parser {
 
     
     public static void main(String[] args) throws IOException {
-       Parser.parse("testSrc.txt");
+       Parser.parse("testSrc/source2.txt");
     }
 
 }
