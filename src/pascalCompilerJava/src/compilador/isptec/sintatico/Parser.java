@@ -44,7 +44,8 @@ public class Parser {
     public static void consume(Tokens t)
     {
       if(lookahead.getToken()!=t){
-        Parser.error(t,Parser.EXPECTED_ERROR);
+       Error e = new Error(String.format("Era esperado %s porém foi recebido %s",t,lookahead.getToken()),lookahead.getLinha());
+       e.throwError();
       }
       else{
           System.out.println("Parsed token: "+lookahead);          
