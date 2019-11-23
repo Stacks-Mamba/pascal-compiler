@@ -1,4 +1,4 @@
-progrram inflation(output);
+program inflation(output);
 const n = 10;
 var i :integer; w1,w2,w3 : real;
 begin

@@ -191,8 +191,12 @@ public class Grammar {
             standardType();
         }
         else if(lookahead==Tokens.ARRAY || lookahead==Tokens.RECORD
-                || lookahead ==Tokens.SET || lookahead == Tokens.FILE){
+                || lookahead ==Tokens.SET || lookahead == Tokens.FILE || lookahead == Tokens.PACKED){
             structuredType();
+        }
+        else if(lookahead == Tokens.ARROBA){
+            Parser.consume(Tokens.ARROBA);
+            Parser.consume(Tokens.ID);
         }
         else{
             Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
@@ -233,7 +237,7 @@ public class Grammar {
     }
 
 
-    private static void structuredType(){
+    private static void unpackedStructuredType(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ARRAY){
             arrayType();
@@ -246,6 +250,21 @@ public class Grammar {
         }
         else if(lookahead == Tokens.FILE) {
             fileType();
+        }
+        else{
+            Parser.error(Tokens.MAIS,Parser.UNKNOWN_ERROR);
+        }
+    }
+
+    private static void structuredType(){
+        Tokens lookahead = Parser.lookahead.getToken();
+        if(lookahead == Tokens.ARRAY || lookahead == Tokens.RECORD ||
+                lookahead == Tokens.SET||lookahead == Tokens.FILE){
+            unpackedStructuredType();
+        }
+        else if(lookahead == Tokens.PACKED){
+            Parser.consume(Tokens.PACKED);
+            unpackedStructuredType();
         }
         else{
             Parser.error(Tokens.MAIS,Parser.UNKNOWN_ERROR);
@@ -589,14 +608,15 @@ public class Grammar {
         Tokens lookahead = Parser.lookahead.getToken();
 
         if(lookahead == Tokens.ABRERET){
-            System.out.println("ret");
             arrayVariable();
             variable2();
         }
         else if(lookahead == Tokens.PONTO){
-            System.out.println("ponto");
             recordVariable();
             variable2();
+        }
+        else if(lookahead == Tokens.ARROBA){
+            Parser.consume(Tokens.ARROBA);
         }
     }
 

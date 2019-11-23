@@ -13,12 +13,13 @@
 <type definition part 1> ::= <empty> | <type definition> PONTOVIRGULA <type definition part 1>
 <type definition> ::= ID IGUAL <type>
 <type> ::= <scalar type> | <unsigned number> <subrange end>| <sign> <sign 1> <subrange end>
-| <standard type> | STRING <subrange end> | <structured type> | ID <type 1>
+| <standard type> | STRING <subrange end> | <structured type> | ID <type 1> | ARROBA ID
 <standard type> ::= CHAR | BOOLEAN | INTEGER | REAL
 <type 1> ::= <subrange end>| <empty>
 <subrange end> ::= PONTOPONTO <constant>
 <scalar type> ::= ABREPAR ID {VIRGULA ID} FECHAPAR
-<structured type> ::= <array type> | <record type> | <set type> | <file type>
+<structured type> ::= <unpacked structured type> | PACKED <unpacked structured type>
+<unpacked structured type> ::= <array type> | <record type> | <set type> | <file type>
 <array type> ::= ARRAY [ <index type> { VIRGULA <index type>} ] OF <type>
 <index type> ::= <scalar type> | <unsigned number> PONTOPONTO <constant> | <sign> <sign 1> PONTOPONTO <constant>  | ID <type 1>| STRING PONTOPONTO <constant>
 <record type> ::= RECORD <field list> END
@@ -51,7 +52,7 @@
 <simple statement 1> ::= <assignment> | <function designator 1>
 <assignment> := <variable 2> DOISPONTOSIGUAL <expression>
 <variable> ::= ID <variable 2>
-<variable 2>  ::= <array variable> <variable 2> | <record variable>  <variable 2> | <empty>
+<variable 2>  ::= <array variable> <variable 2> | <record variable>  <variable 2> | ARROBA |<empty> 
 <record variable>  ::=  PONTO ID
 <array variable> ::= ABRERET <expression> {VIRGULA <expression>} FECHARET
 <expression> ::= <simple expression> <expression 2>
