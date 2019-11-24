@@ -42,7 +42,7 @@ public class Parser {
     {
       if(!recoveryState) {
           if (lookahead.getToken() != t) {
-              Parser.error(String.format("Era esperado %s porém foi recebido %s", t, lookahead.getToken()));
+              Parser.error(String.format("Era esperado a/o %s porém foi recebido %s", t, lookahead.getToken()));
 
           } else {
               System.out.println("Parsed token: " + lookahead);
