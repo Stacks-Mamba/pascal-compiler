@@ -199,7 +199,7 @@ public class Grammar {
             Parser.consume(Tokens.ID);
         }
         else{
-            Parser.error("Esperava se o símbolo type");
+            Parser.error("Esperava-se o início de um type");
         }
     }
 
@@ -252,7 +252,7 @@ public class Grammar {
             fileType();
         }
         else{
-            Parser.error(Tokens.MAIS,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se o início  de um unpacked structured type");
         }
     }
 
@@ -267,7 +267,7 @@ public class Grammar {
             unpackedStructuredType();
         }
         else{
-            Parser.error(Tokens.MAIS,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se o início de um structured type");
         }
     }
 
@@ -310,7 +310,7 @@ public class Grammar {
             type1();
         }
         else{
-            Parser.error(Tokens.ABREPAR,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se o início de um index type");
         }
     }
 
@@ -443,7 +443,6 @@ public class Grammar {
     }
 
     private static void procOrFuncDecl(){
-        System.out.println("In proc or func declaration");
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.PROCEDURE){
             procedureDecl();
@@ -452,7 +451,7 @@ public class Grammar {
             functionDecl();
         }
         else{
-            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se procedure ou function .");
         }
     }
 
@@ -477,7 +476,7 @@ public class Grammar {
             paramSection();
         }
         else{
-            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se ; ou ( .");
         }
     }
 
@@ -513,7 +512,7 @@ public class Grammar {
             }
         }
         else{
-            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se o início da formal parameter section.");
         }
     }
 
@@ -650,7 +649,7 @@ public class Grammar {
             expression2();
         }
         else{
-            Parser.error(Tokens.CASE,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se o início de uma expressão");
         }
     }
 
@@ -691,13 +690,12 @@ public class Grammar {
                 Parser.consume(Tokens.IN);
                 break;
             default:
-                Parser.error(Tokens.MENORIGUAL,Parser.UNKNOWN_ERROR);
+                Parser.error("Esperava-se um relational operator.");
         }
     }
 
     private static void simpleExpression(){
         Tokens lookahead = Parser.lookahead.getToken();
-
         if(lookahead == Tokens.ID || lookahead == Tokens.NUMINT||
                 lookahead == Tokens.NUMREAL||
                 lookahead == Tokens.STRING ||
@@ -715,7 +713,7 @@ public class Grammar {
             simpleExpression1();
         }
         else{
-            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se o início de uma simple expression");
         }
     }
 
@@ -742,7 +740,7 @@ public class Grammar {
                 Parser.consume(Tokens.OR);
                 break;
             default:
-                Parser.error(Tokens.MAIS,Parser.EXPECTED_ERROR);
+                Parser.error("Esperava-se um adding operator");
                 break;
         }
     }
@@ -783,7 +781,7 @@ public class Grammar {
                 Parser.consume(Tokens.AND);
                 break;
             default:
-                Parser.error(Tokens.VEZES,Parser.EXPECTED_ERROR);
+                Parser.error("Esperava-se um multiplying operator");
                 break;
         }
     }
@@ -813,7 +811,7 @@ public class Grammar {
             factor();
         }
         else{
-            Parser.error(Tokens.MAIS,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se o início de um factor");
         }
     }
 
@@ -850,7 +848,7 @@ public class Grammar {
             Parser.consume(Tokens.NIL);
         }
         else{
-            Parser.error(Tokens.INT,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se um unsigned constant");
         }
     }
 
@@ -933,13 +931,12 @@ public class Grammar {
             withStatement();
         }
         else{
-            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se o início de um structured statement");
         }
 
     }
 
     private static void compoundStatement(){
-        System.out.println("In Compound statement");
         Parser.consume(Tokens.BEGIN);
         statement();
         while(Parser.lookahead.getToken()==Tokens.PONTOVIRGULA){
@@ -1018,7 +1015,7 @@ public class Grammar {
             forStatement();
         }
         else{
-            Parser.error(Tokens.WHILE,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se while,repeat ou for.");
         }
     }
 
@@ -1064,8 +1061,7 @@ public class Grammar {
             expression();
         }
         else{
-            Parser.error(Parser.lookahead.getToken(),
-                    Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se 'to' ou 'downto'.");
         }
     }
 
