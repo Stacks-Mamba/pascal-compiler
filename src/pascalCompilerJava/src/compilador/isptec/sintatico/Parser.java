@@ -3,6 +3,7 @@ import compilador.isptec.lexico.Analex;
 import compilador.isptec.lexico.Tokens;
 import compilador.isptec.lexico.Token;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -11,6 +12,8 @@ import java.io.IOException;
 public class Parser {
     public static Token lookahead;
     private static Analex lexer;
+    private static boolean recoveryState = false;
+    private static final ArrayList<Error> errors =new ArrayList<>();
 
     public static final int EXPECTED_ERROR = 1; //Erro quando só tem uma alternativa
     public static final int UNKNOWN_ERROR = 2; // Erro para várias alternativas
@@ -43,25 +46,62 @@ public class Parser {
     //Function that advances the input
     public static void consume(Tokens t)
     {
-      if(lookahead.getToken()!=t){
-       Error e = new Error(String.format("Era esperado %s porém foi recebido %s",t,lookahead.getToken()),lookahead.getLinha());
-       e.throwError();
+      if(!recoveryState) {
+          if (lookahead.getToken() != t) {
+              Error e = new Error(String.format("Era esperado %s porém foi recebido %s", t, lookahead.getToken()), lookahead.getLinha());
+              errors.add(e);
+              recoveryState = true;
+              /* Using the panic method to find a synchronizing token*/
+              panic();
+
+          } else {
+              System.out.println("Parsed token: " + lookahead);
+              //Get next input symbol
+              lookahead = lexer.getToken();
+          }
       }
       else{
-          System.out.println("Parsed token: "+lookahead);          
-          //Get next input symbol
-          lookahead = lexer.getToken();
+          if(lookahead.getToken() == t){
+              lookahead = lexer.getToken();
+              recoveryState = false;
+          }
       }
-      
     }
 
-    public static void parse(String file) throws IOException
-    {
+    private static void panic(){
+        Tokens syncToken = lookahead.getToken();
+        while (syncToken !=Tokens.PONTOVIRGULA && syncToken != Tokens.EOF &&
+                syncToken != Tokens.END && syncToken != Tokens.PONTO ){
+            lookahead = lexer.getToken();
+            syncToken = lookahead.getToken();
+            System.out.println(syncToken);
+        }
+        if(lookahead.getToken() == Tokens.EOF) {
+            showErrors();
+            System.exit(1);
+        }
+    }
+
+    private static void showErrors(){
+        System.err.printf("Erros: %d\n",errors.size());
+        for(Error e : errors){
+            e.throwError();
+        }
+
+    }
+
+    public static void parse(String file) throws IOException {
         //Initialize parser
         initParser(file);
-        Grammar.program();
         //Comecar a execucao da análise léxica
-        System.out.println("Compilacao Terminada com sucesso");
+        Grammar.program();
+        if(errors.size()>0){
+            showErrors();
+            System.err.println("Compilacao Terminada com erros");
+        }
+        else{
+            System.out.println("Compilacao Terminada com sucesso");
+        }
     }
     
 

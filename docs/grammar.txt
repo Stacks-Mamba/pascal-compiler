@@ -1,5 +1,5 @@
 <program> ::= <program heading> <block> PONTO
-<program heading> ::= PROGRAM ID ABREPAR ID { PONTOVIRGULA ID } FECHAPAR PONTOVIRGULA
+<program heading> ::= PROGRAM ID ABREPAR ID { VIRGULA ID } FECHAPAR PONTOVIRGULA
 <block> ::= <label declaration part> <constant definition part> <type definition part> <variable declaration part> <procedure and function declaration part> <compound statement>
 <label declaration part> ::= <empty> | LABEL NUMINT {VIRGULA NUMINT} PONTOVIRGULA
 <constant definition part> ::= <empty> | CONST <constant definition> PONTOVIRGULA <constant definition part 1>
@@ -52,7 +52,7 @@
 <simple statement 1> ::= <assignment> | <function designator 1>
 <assignment> := <variable 2> DOISPONTOSIGUAL <expression>
 <variable> ::= ID <variable 2>
-<variable 2>  ::= <array variable> <variable 2> | <record variable>  <variable 2> | ARROBA |<empty> 
+<variable 2>  ::= <array variable> <variable 2> | <record variable>  <variable 2> | ARROBA |<empty>
 <record variable>  ::=  PONTO ID
 <array variable> ::= ABRERET <expression> {VIRGULA <expression>} FECHARET
 <expression> ::= <simple expression> <expression 2>

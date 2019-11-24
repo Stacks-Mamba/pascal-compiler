@@ -27,8 +27,8 @@ public class Grammar {
         Parser.consume(Tokens.ID);
         Parser.consume(Tokens.ABREPAR);
         Parser.consume(Tokens.ID);
-        while(Parser.lookahead.getToken()==Tokens.PONTOVIRGULA){
-            Parser.consume(Tokens.PONTOVIRGULA);
+        while(Parser.lookahead.getToken()==Tokens.VIRGULA){
+            Parser.consume(Tokens.VIRGULA);
             Parser.consume(Tokens.ID);
         }
         Parser.consume(Tokens.FECHAPAR);

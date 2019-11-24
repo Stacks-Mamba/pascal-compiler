@@ -10,7 +10,6 @@ public class Error {
     }
 
     public void throwError(){
-        System.err.println(message);
-        System.exit(1);
+        System.err.println("Linha "+lineNumber+" : "+message);
     }
 }
