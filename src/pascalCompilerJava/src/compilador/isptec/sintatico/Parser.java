@@ -27,18 +27,12 @@ public class Parser {
 
 
     //Error Handling method
-    public static void error(Tokens expected,int type){
-      switch(type){
-        case 1:
-            System.err.println("Erro na linha "+lookahead.getLinha());
-            System.err.println("Linha "+lookahead.getLinha()+": Era esperado o token " + expected + " porém foi recebido "+ lookahead.getToken()+".");
-            System.exit(1);
-            break;
-        case 2:
-            System.err.println(String.format("Símbolo inesperado:%s. Linha:%d",lookahead.getLexema(),lookahead.getLinha()));
-            System.exit(1);
-            break;
-      }
+    public static void error(String message){
+        Error e = new Error(message, lookahead.getLinha());
+        errors.add(e);
+        recoveryState = true;
+        /* Using the panic method to find a synchronizing token*/
+        panic();
     }
 
 
@@ -48,11 +42,7 @@ public class Parser {
     {
       if(!recoveryState) {
           if (lookahead.getToken() != t) {
-              Error e = new Error(String.format("Era esperado %s porém foi recebido %s", t, lookahead.getToken()), lookahead.getLinha());
-              errors.add(e);
-              recoveryState = true;
-              /* Using the panic method to find a synchronizing token*/
-              panic();
+              Parser.error(String.format("Era esperado %s porém foi recebido %s", t, lookahead.getToken()));
 
           } else {
               System.out.println("Parsed token: " + lookahead);

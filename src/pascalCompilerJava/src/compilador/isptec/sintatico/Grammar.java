@@ -95,7 +95,7 @@ public class Grammar {
             Parser.consume(Tokens.STRING);
         }
         else{
-            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava se o início do símbolo constant");
         }
     }
 
@@ -108,7 +108,7 @@ public class Grammar {
             Parser.consume(Tokens.ID);
         }
         else{
-            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se um número ou identificador");
         }
     }
 
@@ -120,7 +120,7 @@ public class Grammar {
             Parser.consume(Tokens.NUMREAL);
         }
         else{
-            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se um número inteiro ou um número real");
         }
     }
 
@@ -133,7 +133,7 @@ public class Grammar {
             Parser.consume(Tokens.MENOS);
         }
         else{
-            Parser.error(Tokens.MAIS,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava-se + ou -");
         }
     }
 
@@ -199,7 +199,7 @@ public class Grammar {
             Parser.consume(Tokens.ID);
         }
         else{
-            Parser.error(Tokens.ID,Parser.UNKNOWN_ERROR);
+            Parser.error("Esperava se o símbolo type");
         }
     }
 
