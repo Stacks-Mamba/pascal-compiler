@@ -24,13 +24,13 @@ public enum Tokens {
     public String toString(){
     switch(this){
         case FILE:
-            return "comando 'file'";
+            return "palavra reservada 'file'";
         case PROPERTY:
             return "Identifier 'property'";
         case CONTINUE:
             return "Identifier 'continue'";
         case UNTIL:
-            return "comando until";
+            return "palavra reservada until";
         case ERRO:
             return "Token inválido";
         case EOF:
@@ -110,25 +110,25 @@ public enum Tokens {
         case TABULACAO:
             return "'\t'";
         case ID:
-            return "Identificador";
+            return "identificador";
         case ABSOLUTE:
-            return "comando 'absolute'";
+            return "identificador 'absolute'";
         case ELSE:
-            return "comando 'else'";
+            return "palavra reservada 'else'";
         case NIL:
-            return "comando 'nil'";
+            return "palavra reservada 'nil'";
         case SET:
-            return "comando 'set'";
+            return "palavra reservada 'set'";
         case AND:
-            return "comando 'and'";
+            return "palavra reservada 'and'";
         case END:
-            return "comando 'end'";
+            return "palavra reservada 'end'";
         case NOT:
             return "comando 'not'";
         case SHL:
             return "comando 'shl'";
         case ARRAY:
-            return "comando 'array'";
+            return "palavra reservada 'array'";
         case OBJECT:
             return "comando 'object'";
         case SHR:
@@ -136,9 +136,9 @@ public enum Tokens {
         case ASM:
             return "comando 'asm'";
         case FOR:
-            return "comando 'for'";
+            return "palavra reservada 'for'";
         case OF:
-            return "comando 'of'";
+            return "palavra reservada 'of'";
         case STRING:
             return "string";
         case INT:
@@ -152,31 +152,31 @@ public enum Tokens {
         case BOOL:
             return "identificador 'boolean'";
         case CONST:
-            return "comando 'const'";
+            return "palavra reservada 'const'";
         case BEGIN:
-            return "comando 'begin'";
+            return "palavra reservada 'begin'";
         case FUNCTION:
-            return "comando 'function'";
+            return "palavra reservada 'function'";
         case ON:
             return "comando 'on'";
         case THEN:
-            return "comando 'then'";
+            return "palavra reservada 'then'";
         case BREAK:
             return "comando 'break'";
         case GOTO:
-            return "comando 'goto'";
+            return "palavra reservada 'goto'";
         case OPERATOR:
             return "comando 'operator'";
         case TO:
-            return "comando 'to'";
+            return "palavra reservada 'to'";
         case CASE:
-            return "comando 'case'";
+            return "palavra reservada 'case'";
         case IF:
-            return "comando 'if'";
+            return "palavra reservada 'if'";
         case OR:
-             return "comando 'or'";
+             return "palavra reservada 'or'";
         case TYPE:
-            return "comando 'type'";
+            return "palavra reservada 'type'";
         case IMPLEMENTATION:
             return "comando 'implementation'";
         case PACKED:
@@ -186,13 +186,13 @@ public enum Tokens {
         case CONSTRUCTOR:
             return "comando 'constructor'";
         case IN:
-            return "comando 'in'";
+            return "palavra reservada 'in'";
         case PROCEDURE:
-            return "comando 'procedure'";
+            return "palavra reservada 'procedure'";
         case INHERITED:
             return "comando 'inherited'";
         case PROGRAM:
-            return "comando 'program'";
+            return "palavra reservada 'program'";
         case USES:
             return "comando 'uses'";
         case DESTRUCTOR:
@@ -200,29 +200,29 @@ public enum Tokens {
         case INLINE:
             return "comando 'inline'";
         case RECORD:
-            return "comando 'record'";
+            return "palavra reservada 'record'";
         case VAR:
-            return "comando 'var'";
+            return "palavra reservada 'var'";
         case DIV:
-            return "comando 'div'";
+            return "palavra reservada 'div'";
         case INTERFACE:
             return "comando 'interface'";
         case REINTRODUCE:
             return "comando 'reintroduce'";
         case WHILE:
-            return "comando 'while'";
+            return "palavra reservada 'while'";
         case DO:
-            return "comando 'do'";
+            return "palavra reservada 'do'";
         case LABEL:
-            return "comando 'label'";
+            return "palavra reservada 'label'";
         case REPEAT:
-            return "comando 'repeat'";
+            return "palavra reservada 'repeat'";
         case WITH:
-            return "comando 'with'";
+            return "palavra reservada 'with'";
         case DOWNTO:
-            return "comando 'downto'";
+            return "palavra reservada 'downto'";
         case MOD:
-            return "comando 'mod'";
+            return "palavra reservada 'mod'";
         case SELF:
             return "comando 'self'";
         case XOR:
