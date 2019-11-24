@@ -97,7 +97,7 @@ public class Parser {
 
     
     public static void main(String[] args) throws IOException {
-       Parser.parse("testSrc/source.txt");
+       Parser.parse("testSrc/source2.txt");
     }
 
 }

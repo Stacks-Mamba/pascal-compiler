@@ -413,7 +413,7 @@ public class Analex
                     ch = lerCaracter();
                     if(Delimitadores.isDelimiter(ch))
                     {
-                        switch(lexema)
+                        switch(lexema.toLowerCase())
                         {
                             case "file":
                                 token = new Token(Tokens.FILE,lexema,numeroLinha);
@@ -429,6 +429,9 @@ public class Analex
                                 break;
                             case "Boolean":
                                 token = new Token(Tokens.BOOL,lexema,numeroLinha);
+                                break;
+                            case "text":
+                                token = new Token(Tokens.TEXT,lexema,numeroLinha);
                                 break;
                             case "if":
                                 token = new Token(Tokens.IF,lexema,numeroLinha);

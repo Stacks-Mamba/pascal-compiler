@@ -1,5 +1,5 @@
 program Fact_rec(output);
-var n, f: integer;
+var n, f: Integer;
 function factorial(n:integer):integer;
 begin
   if n>1 then

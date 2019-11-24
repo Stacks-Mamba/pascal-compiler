@@ -125,7 +125,6 @@ public class Grammar {
     }
 
     private static void sign(){
-        System.out.println("In sign");
         if(Parser.lookahead.getToken()==Tokens.MAIS){
             Parser.consume(Tokens.MAIS);
         }
@@ -187,7 +186,7 @@ public class Grammar {
             type1();
         }
         else if(lookahead==Tokens.REAL || lookahead==Tokens.BOOL ||
-                lookahead==Tokens.CHAR || lookahead==Tokens.INT){
+                lookahead==Tokens.CHAR || lookahead==Tokens.INT || lookahead == Tokens.TEXT){
             standardType();
         }
         else if(lookahead==Tokens.ARRAY || lookahead==Tokens.RECORD
@@ -216,6 +215,9 @@ public class Grammar {
         }
         else if(lookahead == Tokens.REAL){
             Parser.consume(Tokens.REAL);
+        }
+        else if(lookahead == Tokens.TEXT){
+            Parser.consume(Tokens.TEXT);
         }
     }
 
