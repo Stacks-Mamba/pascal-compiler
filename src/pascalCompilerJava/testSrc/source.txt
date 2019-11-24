@@ -1,4 +1,4 @@
-programk Fact_rec(output);
+program Fact_rec(output);
 var n, f: integer;
 function factorial(n:integer):integer;
 begin
@@ -8,7 +8,7 @@ begin
     factorial:=1;
 end
 begin
-  write('n = ';
+  write('n = ');
   readln(n);
   f:=factorial(n);
   writeln(n,'! = ',f);
