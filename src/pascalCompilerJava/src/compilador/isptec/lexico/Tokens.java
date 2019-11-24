@@ -124,17 +124,17 @@ public enum Tokens {
         case END:
             return "palavra reservada 'end'";
         case NOT:
-            return "comando 'not'";
+            return "identificador 'not'";
         case SHL:
-            return "comando 'shl'";
+            return "identificador 'shl'";
         case ARRAY:
             return "palavra reservada 'array'";
         case OBJECT:
-            return "comando 'object'";
+            return "identificador 'object'";
         case SHR:
-            return "comando 'shr'";
+            return "identificador 'shr'";
         case ASM:
-            return "comando 'asm'";
+            return "identificador 'asm'";
         case FOR:
             return "palavra reservada 'for'";
         case OF:
@@ -178,27 +178,27 @@ public enum Tokens {
         case TYPE:
             return "palavra reservada 'type'";
         case IMPLEMENTATION:
-            return "comando 'implementation'";
+            return "identificador 'implementation'";
         case PACKED:
-            return "comando 'packed'";
+            return "identificador 'packed'";
         case UNIT:
-            return "comando 'unit'";
+            return "identificador 'unit'";
         case CONSTRUCTOR:
-            return "comando 'constructor'";
+            return "identificador 'constructor'";
         case IN:
             return "palavra reservada 'in'";
         case PROCEDURE:
             return "palavra reservada 'procedure'";
         case INHERITED:
-            return "comando 'inherited'";
+            return "identificador 'inherited'";
         case PROGRAM:
             return "palavra reservada 'program'";
         case USES:
             return "comando 'uses'";
         case DESTRUCTOR:
-            return "comando 'destructor'";
+            return "identificador 'destructor'";
         case INLINE:
-            return "comando 'inline'";
+            return "identificador 'inline'";
         case RECORD:
             return "palavra reservada 'record'";
         case VAR:
@@ -206,9 +206,9 @@ public enum Tokens {
         case DIV:
             return "palavra reservada 'div'";
         case INTERFACE:
-            return "comando 'interface'";
+            return "identificador 'interface'";
         case REINTRODUCE:
-            return "comando 'reintroduce'";
+            return "identificador 'reintroduce'";
         case WHILE:
             return "palavra reservada 'while'";
         case DO:
@@ -224,37 +224,37 @@ public enum Tokens {
         case MOD:
             return "palavra reservada 'mod'";
         case SELF:
-            return "comando 'self'";
+            return "identificador 'self'";
         case XOR:
-            return "comando 'xor'";
+            return "identificador 'xor'";
         case AS:
-            return "comando 'as'";
+            return "identificador 'as'";
         case CLASS:
-            return "comando 'class'";
+            return "identificador 'class'";
         case EXCEPT:
-            return "comando 'except'";
+            return "identificador 'except'";
         case EXPORTS:
-            return "comando 'exports'";
+            return "identificador 'exports'";
         case FINALIZATION:
-            return "comando 'finalization'";
+            return "identificador 'finalization'";
         case FINALLY:
-            return "comando 'finally'";
+            return "identificador 'finally'";
         case INITIALIZATION:
-            return "comando 'initialization'";
+            return "identificador 'initialization'";
         case IS:
-            return "comando 'is'";
+            return "identificador 'is'";
         case LIBRARY:
-            return "comando 'library'";
+            return "identificador 'library'";
         case OUT:
-            return "comando 'out'";
+            return "identificador 'out'";
         case RAISE:
-            return "comando 'raise'";
+            return "identificador 'raise'";
         case THREADVAR:
-            return "comando 'thereadvar'";
+            return "identificador 'thereadvar'";
         case TRY:
-            return "comando 'try'";
+            return "identificador 'try'";
         case DISPOSE:
-            return "comando 'dispose'";
+            return "identificador 'dispose'";
         case FALSE:
             return "'false'";
         case TRUE:
