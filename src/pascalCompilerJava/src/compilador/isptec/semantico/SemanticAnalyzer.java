@@ -1,4 +1,4 @@
-package compilador.isptec.sintatico.semantico;
+package compilador.isptec.semantico;
 
 import compilador.isptec.adt.*;
 
