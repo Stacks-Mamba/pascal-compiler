@@ -1,7 +1,7 @@
-package compilador.isptec.nodes;
+package compilador.isptec.adt;
 import compilador.isptec.lexico.Tokens;
 
-public class BinaryOperation extends AST {
+public class BinaryOperation implements AST {
     private Tokens operator;
     private AST leftOperand;
     private AST rightOperand;
@@ -11,4 +11,14 @@ public class BinaryOperation extends AST {
         this.leftOperand = leftOperand;
         this.rightOperand = rightOperand;
     }
+
+    @Override
+    public void visit(){
+        System.out.println("Binary Operation\n_______________");
+        leftOperand.visit();
+        System.out.printf(" %s ",operator);
+        rightOperand.visit();
+    }
+
+
 }
