@@ -2,7 +2,7 @@ program inflation(output);
 const n = 10;
 var i :integer; w1,w2,w3 : real;
 begin
-  i:=0+x+y+z;
+  i:=0;
   w1:=1.0;
   w2:=1.0;
   w3:=1.0;
