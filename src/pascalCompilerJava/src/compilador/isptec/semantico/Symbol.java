@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package compilador.isptec.sintatico;
-import compilador.isptec.lexico.*;
+package compilador.isptec.semantico;
+
 /**
  *
  * @author stacks
@@ -14,24 +14,29 @@ import compilador.isptec.lexico.*;
 
 public abstract class Symbol {
     
-    protected final String descrip;
+    protected final String name;
     
-    public Symbol(String descrip){
+    public Symbol(String name){
         
-        this.descrip = descrip;
+        this.name = name;
     }
     
     
     @Override
     public String toString(){
-        return this.descrip;
+        return this.name;
     }
-    
+
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o){
       if(o.getClass()==this.getClass()){
           Symbol aux = (Symbol) o;
-          return this.descrip.equals(aux.toString());
+          return this.name.equals(aux.toString());
       }   
       return false;
     }
