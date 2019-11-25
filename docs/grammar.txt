@@ -49,8 +49,7 @@
 <statement> ::= <unlabelled statement> | NUMINT DOISPONTOS <unlabelled statement>
 <unlabelled statement> ::= <simple statement> | <structured statement>
 <simple statement> ::= ID <simple statement 1> | <go to statement> | <empty>
-<simple statement 1> ::= <assignment> | <function designator 1>
-<assignment> := <variable 2> DOISPONTOSIGUAL <expression>
+<simple statement 1> ::= <variable 2> DOISPONTOSIGUAL <expression> | <function designator 1>
 <variable> ::= ID <variable 2>
 <variable 2>  ::= <array variable> <variable 2> | <record variable>  <variable 2> | ARROBA |<empty>
 <record variable>  ::=  PONTO ID

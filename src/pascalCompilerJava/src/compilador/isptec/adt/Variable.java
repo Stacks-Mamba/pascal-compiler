@@ -13,6 +13,7 @@ public class Variable implements AST {
 
     @Override
     public void showNode(){
+        System.out.println("Variable/Reference");
         System.out.println(token);
     }
 }

@@ -45,9 +45,9 @@ public class Grammar {
         typeDefPart();
         ArrayList<AST> varDecls = varDeclPart();
         procAndFuncDeclPart();
-        compoundStatement();
+        //compoundStatement();
         ArrayList<AST> statements = compoundStatement();
-        return new Block(varDecls,null,null);
+        return new Block(varDecls,null,statements);
     }
 
     private static void labelDeclPart(){
@@ -605,12 +605,12 @@ public class Grammar {
         Tokens lookahead = Parser.lookahead.getToken();
         AST statement = new NullStatement();
         if(lookahead == Tokens.ID){
-            Variable v = new Variable(Parser.lookahead);
-            Assignment assign = new Assignment(v);
+            ArrayList<Reference> refs = new ArrayList<>();
+            refs.add(new Reference(new Variable(Parser.lookahead)));
             Parser.consume(Tokens.ID);
             //simpleStatement1();
-            assign.setRightSide(simpleStatement1());
-            return assign;
+            refs.addAll(simpleStatement1());
+            return new Statement(refs);
         }
         else if (lookahead == Tokens.GOTO){
             goToStatement();
@@ -618,22 +618,18 @@ public class Grammar {
         return statement;
     }
 
-    private static AST simpleStatement1(){
+    private static ArrayList<Reference> simpleStatement1(){
         Tokens lookahead = Parser.lookahead.getToken();
+        ArrayList<Reference> refs = new ArrayList<>();
         if(lookahead == Tokens.ABRERET || lookahead==Tokens.PONTO||lookahead==Tokens.DOISPONTOSIGUAL){
-           return assignment();
+            variable2();
+            Parser.consume(Tokens.DOISPONTOSIGUAL);
+            refs.addAll(expression());
         }
         else{
             functionDesignator1();
-            return new NullStatement();
         }
-    }
-
-    private static AST assignment(){
-        System.out.println("In assignment");
-        variable2();
-        Parser.consume(Tokens.DOISPONTOSIGUAL);
-        return expression();
+        return refs;
     }
 
     private static void variable(){
@@ -674,8 +670,9 @@ public class Grammar {
         Parser.consume(Tokens.FECHARET);
     }
 
-    private static AST expression(){
+    private static ArrayList<Reference> expression(){
         Tokens lookahead = Parser.lookahead.getToken();
+        ArrayList<Reference> refs = new ArrayList<>();
         if(lookahead == Tokens.MAIS|| lookahead == Tokens.MENOS||
                 lookahead == Tokens.ID||lookahead == Tokens.NUMINT||
                 lookahead == Tokens.NUMREAL||
@@ -683,24 +680,27 @@ public class Grammar {
                 lookahead == Tokens.NIL ||
                 lookahead==Tokens.ABREPAR || lookahead == Tokens.NOT|
                 lookahead == Tokens.ABRERET){
-            simpleExpression();
-            expression2();
+            refs.addAll(simpleExpression());
+            refs.addAll(expression2());
         }
         else{
             Parser.error("Esperava-se o início de uma expression");
         }
+        return refs;
     }
 
-    private static void expression2(){
+    private static ArrayList<Reference> expression2(){
         Tokens lookahead = Parser.lookahead.getToken();
+        ArrayList<Reference> refs = new ArrayList<>();
         if(lookahead == Tokens.IGUAL||lookahead == Tokens.DIFERENTE||
                 lookahead == Tokens.MENOR||
                 lookahead == Tokens.MENORIGUAL||
                 lookahead == Tokens.MAIORIGUAL||
                 lookahead == Tokens.MAIOR|| lookahead == Tokens.IN ){
             relationalOperator();
-            simpleExpression();
+            refs.addAll(simpleExpression());
         }
+        return refs;
     }
 
     private static void relationalOperator(){
@@ -732,8 +732,9 @@ public class Grammar {
         }
     }
 
-    private static void simpleExpression(){
+    private static ArrayList<Reference> simpleExpression(){
         Tokens lookahead = Parser.lookahead.getToken();
+        ArrayList<Reference> refs = new ArrayList<>();
         if(lookahead == Tokens.ID || lookahead == Tokens.NUMINT||
                 lookahead == Tokens.NUMREAL||
                 lookahead == Tokens.STRING ||
@@ -741,28 +742,31 @@ public class Grammar {
                 lookahead==Tokens.ABREPAR ||
                 lookahead == Tokens.NOT||
                 lookahead == Tokens.ABRERET ){
-            term();
-            simpleExpression1();
+            refs.addAll(term());
+            refs.addAll(simpleExpression1());
         }
 
         else if(lookahead == Tokens.MAIS || lookahead ==Tokens.MENOS){
             sign();
-            term();
-            simpleExpression1();
+            refs.addAll(term());
+            refs.addAll(simpleExpression1());
         }
         else{
             Parser.error("Esperava-se o início de uma simple expression");
         }
+        return refs;
     }
 
-    private static void simpleExpression1(){
+    private static ArrayList<Reference> simpleExpression1(){
         Tokens lookahead = Parser.lookahead.getToken();
+        ArrayList<Reference> refs = new ArrayList<>();
         if(lookahead == Tokens.MAIS || lookahead ==Tokens.MENOS ||
         lookahead == Tokens.OR){
             addingOperator();
-            term();
-            simpleExpression1();
+            refs.addAll(term());
+            refs.addAll(simpleExpression1());
         }
+        return refs;
     }
 
     private static void addingOperator(){
@@ -783,20 +787,24 @@ public class Grammar {
         }
     }
 
-    private static void term(){
-        factor();
-        term1();
+    private static ArrayList<Reference> term(){
+        ArrayList<Reference> refs = new ArrayList<>();
+        refs.addAll(factor());
+        refs.addAll(term1());
+        return refs;
     }
 
-    private static void term1(){
+    private static ArrayList<Reference> term1(){
+        ArrayList<Reference> refs = new ArrayList<>();
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.VEZES || lookahead ==Tokens.DIVISAO ||
                 lookahead == Tokens.DIV || lookahead == Tokens.MOD ||
                 lookahead == Tokens.AND){
             multiplyingOperator();
-            factor();
-            term1();
+            refs.addAll(factor());
+            refs.addAll(term1());
         }
+        return refs;
     }
 
 
@@ -824,9 +832,11 @@ public class Grammar {
         }
     }
 
-    private static void factor(){
+    private static ArrayList<Reference> factor(){
         Tokens lookahead = Parser.lookahead.getToken();
+        ArrayList<Reference> refs = new ArrayList<>();
         if(lookahead == Tokens.ID){
+            refs.add(new Reference(new Variable(Parser.lookahead)));
             Parser.consume(Tokens.ID);
             factor2();
         }
@@ -837,7 +847,7 @@ public class Grammar {
         }
          else if(lookahead==Tokens.ABREPAR) {
              Parser.consume(Tokens.ABREPAR);
-             expression();
+             refs.addAll(expression());
              Parser.consume(Tokens.FECHAPAR);
 
         }
@@ -851,6 +861,7 @@ public class Grammar {
         else{
             Parser.error("Esperava-se o início de um factor");
         }
+        return refs;
     }
 
     private static void factor2(){
@@ -952,7 +963,7 @@ public class Grammar {
         Parser.consume(Tokens.NUMINT);
     }
 
-    private static void structuredStatement(){
+    private static AST structuredStatement(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.BEGIN){
             compoundStatement();
@@ -971,10 +982,11 @@ public class Grammar {
         else{
             Parser.error("Esperava-se o início de um structured statement");
         }
+        return new NullStatement();
 
     }
 
-    private static AST compoundStatement(){
+    private static ArrayList<AST> compoundStatement(){
         Parser.consume(Tokens.BEGIN);
         ArrayList<AST> statements = new ArrayList<>();
         statements.add(statement());
