@@ -601,32 +601,39 @@ public class Grammar {
         return statement;
     }
 
-    private static void simpleStatement(){
+    private static AST simpleStatement(){
         Tokens lookahead = Parser.lookahead.getToken();
+        AST statement = new NullStatement();
         if(lookahead == Tokens.ID){
+            Variable v = new Variable(Parser.lookahead);
+            Assignment assign = new Assignment(v);
             Parser.consume(Tokens.ID);
-            simpleStatement1();
+            //simpleStatement1();
+            assign.setRightSide(simpleStatement1());
+            return assign;
         }
         else if (lookahead == Tokens.GOTO){
             goToStatement();
         }
+        return statement;
     }
 
-    private static void simpleStatement1(){
+    private static AST simpleStatement1(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ABRERET || lookahead==Tokens.PONTO||lookahead==Tokens.DOISPONTOSIGUAL){
-            assignment();
+           return assignment();
         }
         else{
             functionDesignator1();
+            return new NullStatement();
         }
     }
 
-    private static void assignment(){
+    private static AST assignment(){
         System.out.println("In assignment");
         variable2();
         Parser.consume(Tokens.DOISPONTOSIGUAL);
-        expression();
+        return expression();
     }
 
     private static void variable(){
@@ -667,7 +674,7 @@ public class Grammar {
         Parser.consume(Tokens.FECHARET);
     }
 
-    private static void expression(){
+    private static AST expression(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.MAIS|| lookahead == Tokens.MENOS||
                 lookahead == Tokens.ID||lookahead == Tokens.NUMINT||
