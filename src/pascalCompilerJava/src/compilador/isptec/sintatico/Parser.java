@@ -1,4 +1,5 @@
 package compilador.isptec.sintatico;
+import compilador.isptec.adt.*;
 import compilador.isptec.lexico.Analex;
 import compilador.isptec.lexico.Tokens;
 import compilador.isptec.lexico.Token;
@@ -84,13 +85,14 @@ public class Parser {
         //Initialize parser
         initParser(file);
         //Comecar a execucao da análise léxica
-        Grammar.program();
+        AST program = Grammar.program();
         if(errors.size()>0){
             showErrors();
             System.err.println("Compilacao Terminada com erros");
         }
         else{
             System.out.println("Compilacao Terminada com sucesso");
+            program.showNode();
         }
     }
     

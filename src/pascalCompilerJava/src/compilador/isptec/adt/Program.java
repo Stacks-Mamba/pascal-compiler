@@ -10,7 +10,7 @@ public class Program implements AST {
     }
 
     @Override
-    public void visit(){
-        block.visit();
+    public void showNode(){
+        block.showNode();
     }
 }

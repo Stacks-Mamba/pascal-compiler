@@ -1,21 +1,27 @@
 package compilador.isptec.adt;
 
-import compilador.isptec.lexico.Tokens;
-
 public class VariableDeclaration implements AST {
     private Variable variable;
-    private Tokens type;
+    private Type type;
 
-    public VariableDeclaration(Variable variable, Tokens type) {
+    public VariableDeclaration(Variable variable, Type type) {
         this.variable = variable;
         this.type = type;
     }
 
+    public VariableDeclaration(Variable variable) {
+        this.variable = variable;
+    }
+
+    public void setType(Type type){
+        this.type = type;
+    }
+
     @Override
-    public void visit(){
+    public void showNode(){
         System.out.println("Variable Declaration\n_______________");
-        variable.visit();
-        System.out.println(type);
+        variable.showNode();
+        type.showNode();
 
     }
 }

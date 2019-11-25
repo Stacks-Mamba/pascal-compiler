@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package compilador.isptec.sintatico;
+import compilador.isptec.adt.*;
 import compilador.isptec.lexico.*;
+
+import java.util.ArrayList;
 
 
 /**
@@ -16,10 +19,11 @@ import compilador.isptec.lexico.*;
 
 public class Grammar {
 
-    static void program(){
+    static AST program(){
         programHeading();
-        block();
+        AST block = block();
         Parser.consume(Tokens.PONTO);
+        return block;
     }
 
     private static void programHeading(){
@@ -35,13 +39,15 @@ public class Grammar {
         Parser.consume(Tokens.PONTOVIRGULA);
     }
 
-    private static void block(){
+    private static AST block(){
         labelDeclPart();
         constantDefPart();
         typeDefPart();
-        varDeclPart();
+        ArrayList<AST> varDecls = varDeclPart();
         procAndFuncDeclPart();
         compoundStatement();
+        //ArrayList<AST> statements = compoundStatement();
+        return new Block(varDecls,null,null);
     }
 
     private static void labelDeclPart(){
@@ -159,9 +165,10 @@ public class Grammar {
         type();
     }
 
-    private static void type(){
+    private static Type type(){
 
         Tokens lookahead = Parser.lookahead.getToken();
+        Type type = new NullNode();
         if(lookahead==Tokens.ABREPAR){
             scalarType();
         }
@@ -187,7 +194,7 @@ public class Grammar {
         }
         else if(lookahead==Tokens.REAL || lookahead==Tokens.BOOL ||
                 lookahead==Tokens.CHAR || lookahead==Tokens.INT || lookahead == Tokens.TEXT){
-            standardType();
+            type = new StandardType(standardType());
         }
         else if(lookahead==Tokens.ARRAY || lookahead==Tokens.RECORD
                 || lookahead ==Tokens.SET || lookahead == Tokens.FILE || lookahead == Tokens.PACKED){
@@ -200,25 +207,32 @@ public class Grammar {
         else{
             Parser.error("Esperava-se o início de um type");
         }
+        return type;
     }
 
-    private static void standardType(){
+    private static Tokens standardType(){
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.INT){
             Parser.consume(Tokens.INT);
+            return Tokens.INT;
         }
         else if(lookahead == Tokens.CHAR){
             Parser.consume(Tokens.CHAR);
+            return Tokens.CHAR;
         }
         else if(lookahead == Tokens.BOOL){
             Parser.consume(Tokens.BOOL);
+            return Tokens.BOOL;
         }
         else if(lookahead == Tokens.REAL){
             Parser.consume(Tokens.REAL);
+            return Tokens.REAL;
         }
         else if(lookahead == Tokens.TEXT){
             Parser.consume(Tokens.TEXT);
+            return Tokens.TEXT;
         }
+        return null;
     }
 
     private static void type1(){
@@ -409,33 +423,46 @@ public class Grammar {
         type();
     }
 
-    private static void varDeclPart(){
+    private static ArrayList<AST> varDeclPart(){
         Tokens lookahead = Parser.lookahead.getToken();
+        //Array de declaracoes
+        ArrayList<AST> declarations = new ArrayList<>();
         if(lookahead == Tokens.VAR){
             Parser.consume(Tokens.VAR);
-            varDecl();
+            declarations.addAll(varDecl());
             Parser.consume(Tokens.PONTOVIRGULA);
-            varDeclPart1();
+            declarations.addAll(varDeclPart1());
         }
+        return declarations;
     }
 
-    private static void varDeclPart1(){
+    private static ArrayList<AST> varDeclPart1(){
         Tokens lookahead = Parser.lookahead.getToken();
+        //Array de declaracoes
+        ArrayList<AST> declarations = new ArrayList<>();
         if(lookahead == Tokens.ID){
-            varDecl();
+            declarations.addAll(varDecl());
             Parser.consume(Tokens.PONTOVIRGULA);
-            varDeclPart1();
+            declarations.addAll(varDeclPart1());
         }
+        return declarations;
     }
 
-    private static void varDecl(){
+    private static ArrayList<VariableDeclaration> varDecl(){
+        ArrayList<VariableDeclaration> declarations = new ArrayList<>();
+        declarations.add(new VariableDeclaration(new Variable(Parser.lookahead)));
         Parser.consume(Tokens.ID);
         while(Parser.lookahead.getToken() == Tokens.VIRGULA){
             Parser.consume(Tokens.VIRGULA);
+            declarations.add(new VariableDeclaration(new Variable(Parser.lookahead)));
             Parser.consume(Tokens.ID);
         }
         Parser.consume(Tokens.DOISPONTOS);
-        type();
+        Type declType = type();
+        for(VariableDeclaration vd: declarations){
+            vd.setType(declType);
+        }
+        return declarations;
     }
 
     private static void procAndFuncDeclPart(){

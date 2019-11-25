@@ -16,18 +16,24 @@ public class Block implements AST {
 
 
     @Override
-    public void visit(){
+    public void showNode(){
         System.out.println("Block\n_______________");
-        for(AST node: variableDeclarations){
-            node.visit();
+        if(variableDeclarations != null) {
+            for (AST node : variableDeclarations) {
+                node.showNode();
+            }
         }
 
-        for(AST node: procedureDeclarations){
-            node.visit();
+        if(procedureDeclarations != null) {
+            for (AST node : procedureDeclarations) {
+                node.showNode();
+            }
         }
 
-        for(AST node: statements){
-            node.visit();
+        if(statements != null) {
+            for (AST node : statements) {
+                node.showNode();
+            }
         }
     }
 }

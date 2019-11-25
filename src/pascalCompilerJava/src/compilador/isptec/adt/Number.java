@@ -10,7 +10,7 @@ public class Number implements AST {
     }
 
     @Override
-    public void visit() {
+    public void showNode() {
         System.out.println(number);
     }
 }

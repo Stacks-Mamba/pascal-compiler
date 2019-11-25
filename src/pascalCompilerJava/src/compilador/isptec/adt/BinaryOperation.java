@@ -13,11 +13,11 @@ public class BinaryOperation implements AST {
     }
 
     @Override
-    public void visit(){
+    public void showNode(){
         System.out.println("Binary Operation\n_______________");
-        leftOperand.visit();
+        leftOperand.showNode();
         System.out.printf(" %s ",operator);
-        rightOperand.visit();
+        rightOperand.showNode();
     }
 
 

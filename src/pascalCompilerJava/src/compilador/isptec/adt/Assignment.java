@@ -10,9 +10,9 @@ public class Assignment implements AST {
     }
 
     @Override
-    public void visit(){
+    public void showNode(){
         System.out.println("Assignment\n_______________");
-        leftSide.visit();
-        rightSide.visit();
+        leftSide.showNode();
+        rightSide.showNode();
     }
 }

@@ -12,7 +12,7 @@ public class Variable implements AST {
     }
 
     @Override
-    public void visit(){
+    public void showNode(){
         System.out.println(token);
     }
 }
