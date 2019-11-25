@@ -46,7 +46,7 @@ public class Grammar {
         ArrayList<AST> varDecls = varDeclPart();
         procAndFuncDeclPart();
         compoundStatement();
-        //ArrayList<AST> statements = compoundStatement();
+        ArrayList<AST> statements = compoundStatement();
         return new Block(varDecls,null,null);
     }
 
@@ -571,32 +571,34 @@ public class Grammar {
         }
     }
 
-    private static void statement(){
+    private static AST statement(){
         Tokens lookahead = Parser.lookahead.getToken();
-
+        AST statement = new NullStatement();
         if(lookahead == Tokens.NUMINT){
             Parser.consume(Tokens.NUMINT);
             Parser.consume(Tokens.DOISPONTOS);
-            unlabelledStatement();
+            statement = unlabelledStatement();
         }
         else{
-            unlabelledStatement();
+            statement = unlabelledStatement();
         }
+        return statement;
     }
 
-    private static void unlabelledStatement(){
+    private static AST unlabelledStatement(){
         Tokens lookahead = Parser.lookahead.getToken();
-
+        AST statement = new NullStatement();
         if(lookahead == Tokens.BEGIN || lookahead == Tokens.IF||
                 lookahead == Tokens.CASE || lookahead ==Tokens.WHILE ||
                 lookahead == Tokens.REPEAT||lookahead == Tokens.FOR||
                 lookahead == Tokens.WITH
             ){
-            structuredStatement();
+            statement = structuredStatement();
         }
         else{
-            simpleStatement();
+            statement = simpleStatement();
         }
+        return statement;
     }
 
     private static void simpleStatement(){
@@ -678,7 +680,7 @@ public class Grammar {
             expression2();
         }
         else{
-            Parser.error("Esperava-se o início de uma expressão");
+            Parser.error("Esperava-se o início de uma expression");
         }
     }
 
@@ -965,14 +967,16 @@ public class Grammar {
 
     }
 
-    private static void compoundStatement(){
+    private static AST compoundStatement(){
         Parser.consume(Tokens.BEGIN);
-        statement();
+        ArrayList<AST> statements = new ArrayList<>();
+        statements.add(statement());
         while(Parser.lookahead.getToken()==Tokens.PONTOVIRGULA){
             Parser.consume(Tokens.PONTOVIRGULA);
-            statement();
+            statements.add(statement());
         }
         Parser.consume(Tokens.END);
+        return statements;
     }
 
     private static void conditionalStatement(){
