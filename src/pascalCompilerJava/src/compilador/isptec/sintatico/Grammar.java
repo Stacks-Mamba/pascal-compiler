@@ -16,7 +16,6 @@ import java.util.ArrayList;
  */
 
 /*Classe que contém todas as producoes da nossa gramática*/
-
 public class Grammar {
 
     static AST program(){
@@ -902,7 +901,6 @@ public class Grammar {
     }
 
     private static void functionDesignator1(){
-        System.out.println("in function designator.");
         Tokens lookahead = Parser.lookahead.getToken();
         if(lookahead == Tokens.ABREPAR){
             Parser.consume(Tokens.ABREPAR);
@@ -952,7 +950,6 @@ public class Grammar {
     }
 
     private static void actualParamater(){
-        System.out.println("In actual parameter");
         expression();
     }
 

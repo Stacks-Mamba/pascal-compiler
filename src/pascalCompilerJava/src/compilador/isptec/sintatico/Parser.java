@@ -48,7 +48,6 @@ public class Parser {
               Parser.error(String.format("Era esperado a/o %s porém foi recebido %s", t, lookahead.getToken()));
 
           } else {
-              System.out.println("Parsed token: " + lookahead);
               //Get next input symbol
               lookahead = lexer.getToken();
           }

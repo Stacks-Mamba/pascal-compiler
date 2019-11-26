@@ -37,7 +37,6 @@ public class SemanticAnalyzer {
     public boolean analyze(AST syntaxTree){
         //Método que vai visitar cada nó na ast
         syntaxTree.visit(symbolTable);
-        symbolTable.printTable();
         if(errors.size()>0){
             return false;
         }
