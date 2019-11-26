@@ -19,6 +19,8 @@ public class SymbolTable {
         this.addEntry(new TypeSymbol("REAL"));
         this.addEntry(new TypeSymbol("CHAR"));
         this.addEntry(new TypeSymbol("TEXT"));
+        this.addEntry(new TypeSymbol("WRITELN"));
+        this.addEntry(new TypeSymbol("READLN"));
     }
 
 

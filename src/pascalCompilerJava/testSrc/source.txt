@@ -1,6 +1,6 @@
 program inflation(output);
 const n = 10;
-var i :integer; w1,w2,w3 : real;
+var i :integer; w1,w1,w2,w3 : real;
 begin
   i:=0+x;
   w1:=1.0;
