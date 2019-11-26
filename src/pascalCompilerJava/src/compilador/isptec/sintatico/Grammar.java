@@ -972,6 +972,7 @@ public class Grammar {
 
     private static AST structuredStatement(){
         Tokens lookahead = Parser.lookahead.getToken();
+        AST statement = new NullStatement();
         if(lookahead == Tokens.BEGIN){
             compoundStatement();
         }

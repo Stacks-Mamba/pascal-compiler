@@ -6,7 +6,7 @@ begin
 writeln('test')
 end
 begin
-  i:=0;
+  i:=1.0;
   w1:=1.0;
   w2:=1.0;
   w3:=1.0;
