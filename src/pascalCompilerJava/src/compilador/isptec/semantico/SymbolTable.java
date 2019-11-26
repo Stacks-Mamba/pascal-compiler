@@ -29,4 +29,11 @@ public class SymbolTable {
     public Symbol lookup(String symbol){
         return symbols.get(symbol);
     }
+
+    public void printTable(){
+        System.out.println("\n\n\n-----------Tabela de Símbolos------------");
+        for(String s:symbols.keySet()){
+            System.out.println(symbols.get(s));
+        }
+    }
 }

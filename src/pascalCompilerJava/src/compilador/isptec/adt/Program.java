@@ -18,6 +18,5 @@ public class Program implements AST {
 
     @Override
     public void visit(SymbolTable table) {
-
     }
 }

@@ -3,6 +3,8 @@ import compilador.isptec.adt.*;
 import compilador.isptec.lexico.Analex;
 import compilador.isptec.lexico.Tokens;
 import compilador.isptec.lexico.Token;
+import compilador.isptec.semantico.SemanticAnalyzer;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -92,7 +94,8 @@ public class Parser {
         }
         else{
             System.out.println("Compilacao Terminada com sucesso");
-            program.showNode();
+            SemanticAnalyzer sem = new SemanticAnalyzer(program);
+            sem.analyze();
         }
     }
     

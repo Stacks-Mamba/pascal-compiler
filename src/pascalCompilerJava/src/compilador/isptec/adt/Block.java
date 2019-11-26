@@ -41,7 +41,6 @@ public class Block implements AST {
 
     @Override
     public void visit(SymbolTable table){
-        System.out.println("Block\n_______________");
         if(variableDeclarations != null) {
             for (AST node : variableDeclarations) {
                 node.visit(table);

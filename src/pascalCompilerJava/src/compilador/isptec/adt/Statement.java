@@ -23,7 +23,6 @@ public class Statement implements AST{
 
     @Override
     public void visit(SymbolTable table) {
-        System.out.println("\n\nStatement\n____________");
         for(Reference ref:refs){
             ref.visit(table);
         }

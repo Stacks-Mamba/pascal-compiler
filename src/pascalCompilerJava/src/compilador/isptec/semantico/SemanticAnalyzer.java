@@ -7,13 +7,15 @@ public class SemanticAnalyzer {
     private AST syntaxTree;
     private SymbolTable symbolTable;
 
-    public SemanticAnalyzer(AST syntaxTree,SymbolTable symbolTable) {
+    public SemanticAnalyzer(AST syntaxTree) {
         this.syntaxTree = syntaxTree;
-        this.symbolTable = symbolTable;
+        this.symbolTable = new SymbolTable();
 
     }
 
     public void analyze(){
-
+        //Método que vai visitar cada nó na ast
+        syntaxTree.visit(symbolTable);
+        symbolTable.printTable();
     }
 }
