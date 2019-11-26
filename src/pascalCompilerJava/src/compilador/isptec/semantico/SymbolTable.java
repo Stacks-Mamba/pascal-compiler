@@ -14,7 +14,7 @@ public class SymbolTable {
     }
 
     private void initializeTable(){
-        //Introduzir símbolos padrão na table
+        //Introduzir os tipos padrão na tabela de símbolos
         this.addEntry(new TypeSymbol("INTEGER"));
         this.addEntry(new TypeSymbol("REAL"));
         this.addEntry(new TypeSymbol("CHAR"));
@@ -26,7 +26,7 @@ public class SymbolTable {
         symbols.put(symbol.getName(),symbol);
     }
 
-    public void lookup(String symbol){
-        symbols.get(symbol);
+    public Symbol lookup(String symbol){
+        return symbols.get(symbol);
     }
 }

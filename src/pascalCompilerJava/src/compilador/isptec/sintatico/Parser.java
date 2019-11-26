@@ -14,7 +14,7 @@ public class Parser {
     public static Token lookahead;
     private static Analex lexer;
     private static boolean recoveryState = false;
-    private static final ArrayList<Error> errors =new ArrayList<>();
+    private static final ArrayList<Error> errors = new ArrayList<>();
 
     public static final int EXPECTED_ERROR = 1; //Erro quando só tem uma alternativa
     public static final int UNKNOWN_ERROR = 2; // Erro para várias alternativas

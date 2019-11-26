@@ -1,5 +1,7 @@
 package compilador.isptec.adt;
 
+import compilador.isptec.semantico.SymbolTable;
+
 import java.util.ArrayList;
 
 public class Block implements AST {
@@ -33,6 +35,28 @@ public class Block implements AST {
         if(statements != null) {
             for (AST node : statements) {
                 node.showNode();
+            }
+        }
+    }
+
+    @Override
+    public void visit(SymbolTable table){
+        System.out.println("Block\n_______________");
+        if(variableDeclarations != null) {
+            for (AST node : variableDeclarations) {
+                node.visit(table);
+            }
+        }
+
+        if(procedureDeclarations != null) {
+            for (AST node : procedureDeclarations) {
+                node.visit(table);
+            }
+        }
+
+        if(statements != null) {
+            for (AST node : statements) {
+                node.visit(table);
             }
         }
     }

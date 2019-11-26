@@ -2,10 +2,10 @@ package compilador.isptec.semantico;
 
 
 public class VariableSymbol extends Symbol {
-    private TypeSymbol type;
+    private Symbol type;
 
 
-    public VariableSymbol(String name,TypeSymbol type){
+    public VariableSymbol(String name,Symbol type){
         super(name);
         this.type = type;
     }
@@ -14,11 +14,11 @@ public class VariableSymbol extends Symbol {
         super(name);
     }
 
-    public TypeSymbol getType() {
+    public Symbol getType() {
         return type;
     }
 
-    public void setType(TypeSymbol type) {
+    public void setType(Symbol type) {
         this.type = type;
     }
 }

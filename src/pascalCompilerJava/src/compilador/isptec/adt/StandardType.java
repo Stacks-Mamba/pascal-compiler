@@ -1,19 +1,24 @@
 package compilador.isptec.adt;
 
 import compilador.isptec.lexico.Tokens;
+import compilador.isptec.semantico.SymbolTable;
 
-public class StandardType implements Type {
+public class StandardType extends Type {
 
-    private Tokens type;
 
     public StandardType(Tokens type) {
-        this.type = type;
+        super(type);
     }
 
 
     @Override
     public void showNode(){
         System.out.println("Standard type");
-        System.out.println(type);
+        System.out.println(super.getType());
+    }
+
+    @Override
+    public void visit(SymbolTable table) {
+
     }
 }

@@ -168,7 +168,7 @@ public class Grammar {
     private static Type type(){
 
         Tokens lookahead = Parser.lookahead.getToken();
-        Type type = new NullNode();
+        Type type = new NullType();
         if(lookahead==Tokens.ABREPAR){
             scalarType();
         }

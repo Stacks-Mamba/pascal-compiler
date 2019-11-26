@@ -1,5 +1,7 @@
 package compilador.isptec.adt;
 
+import compilador.isptec.semantico.SymbolTable;
+
 import java.util.ArrayList;
 
 public class Statement implements AST{
@@ -15,6 +17,15 @@ public class Statement implements AST{
         System.out.println("\n\nStatement\n____________");
         for(Reference ref:refs){
             ref.showNode();
+        }
+    }
+
+
+    @Override
+    public void visit(SymbolTable table) {
+        System.out.println("\n\nStatement\n____________");
+        for(Reference ref:refs){
+            ref.visit(table);
         }
     }
 }
