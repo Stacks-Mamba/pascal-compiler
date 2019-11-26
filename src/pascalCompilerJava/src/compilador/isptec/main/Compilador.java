@@ -34,6 +34,7 @@ public class Compilador {
         System.out.println("\n\n\n\n\n");
         File file = new File(filename);
         try{
+            System.out.println("Iniciando compilacão");
             //Parse the file
             AST program = Parser.parse(filename);
             //Se análise sintática terminar sem erros, iniciar a semântica
