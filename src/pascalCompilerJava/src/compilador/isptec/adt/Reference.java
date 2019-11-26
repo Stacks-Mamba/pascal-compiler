@@ -1,8 +1,10 @@
 package compilador.isptec.adt;
 
 import compilador.isptec.lexico.Token;
+import compilador.isptec.semantico.SemanticAnalyzer;
 import compilador.isptec.semantico.SymbolTable;
 import compilador.isptec.semantico.VariableSymbol;
+import compilador.isptec.sintatico.Error;
 
 public class Reference implements AST{
 
@@ -22,7 +24,8 @@ public class Reference implements AST{
     public void visit(SymbolTable table) {
         Token var =  variable.getToken();
         if(table.lookup(var.getLexema().toLowerCase())==null){
-            System.err.printf("Erro na linha %d uso de um identificador não declarado",var.getLinha());
+            Error e = new Error(String.format("O identificador %s não foi declarado.",var.getLexema()),var.getLinha());
+            SemanticAnalyzer.getInstance().reportError(e);
         }
     }
 }

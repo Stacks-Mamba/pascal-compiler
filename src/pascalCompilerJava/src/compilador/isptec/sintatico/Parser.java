@@ -94,8 +94,8 @@ public class Parser {
         }
         else{
             System.out.println("Compilacao Terminada com sucesso");
-            SemanticAnalyzer sem = new SemanticAnalyzer(program);
-            sem.analyze();
+            SemanticAnalyzer sem = SemanticAnalyzer.getInstance();
+            sem.analyze(program);
         }
     }
     

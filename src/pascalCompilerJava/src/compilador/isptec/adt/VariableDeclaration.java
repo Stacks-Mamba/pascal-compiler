@@ -1,8 +1,10 @@
 package compilador.isptec.adt;
 
 import compilador.isptec.lexico.Token;
+import compilador.isptec.semantico.SemanticAnalyzer;
 import compilador.isptec.semantico.SymbolTable;
 import compilador.isptec.semantico.VariableSymbol;
+import compilador.isptec.sintatico.Error;
 
 public class VariableDeclaration implements AST {
     private Variable variable;
@@ -36,7 +38,8 @@ public class VariableDeclaration implements AST {
             table.addEntry(new VariableSymbol(var.getLexema().toLowerCase()));
         }
         else{
-            System.out.printf("Erro na linha %d esta variável já foi declarada",var.getLinha());
+            Error e = new Error(String.format("A variável %s já foi declarada.",var.getLexema()),var.getLinha());
+            SemanticAnalyzer.getInstance().reportError(e);
         }
     }
 }
