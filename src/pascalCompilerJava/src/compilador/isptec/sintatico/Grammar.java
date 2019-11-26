@@ -43,10 +43,10 @@ public class Grammar {
         constantDefPart();
         typeDefPart();
         ArrayList<AST> varDecls = varDeclPart();
-        procAndFuncDeclPart();
+        ArrayList<AST> funcsAndProcs = procAndFuncDeclPart();
         //compoundStatement();
         ArrayList<AST> statements = compoundStatement();
-        return new Block(varDecls,null,statements);
+        return new Block(varDecls,funcsAndProcs,statements);
     }
 
     private static void labelDeclPart(){
@@ -464,34 +464,41 @@ public class Grammar {
         return declarations;
     }
 
-    private static void procAndFuncDeclPart(){
+    private static ArrayList<AST> procAndFuncDeclPart(){
+        ArrayList<AST> funcDecls = new ArrayList<>();
         while(Parser.lookahead.getToken() == Tokens.FUNCTION || Parser.lookahead.getToken()==Tokens.PROCEDURE){
-            procOrFuncDecl();
+            funcDecls.add(procOrFuncDecl());
         }
+        return funcDecls;
     }
 
-    private static void procOrFuncDecl(){
+    private static AST procOrFuncDecl(){
         Tokens lookahead = Parser.lookahead.getToken();
+        AST funcDecl = new NullType();
         if(lookahead == Tokens.PROCEDURE){
-            procedureDecl();
+            funcDecl = procedureDecl();
         }
         else if(lookahead == Tokens.FUNCTION){
-            functionDecl();
+            funcDecl = functionDecl();
         }
         else{
             Parser.error("Esperava-se procedure ou function .");
         }
+        return funcDecl;
     }
 
-    private static void procedureDecl(){
-        procedureHeading();
+    private static AST procedureDecl(){
+        AST heading = procedureHeading();
         block();
+        return heading;
     }
 
-    private static void procedureHeading(){
+    private static AST procedureHeading(){
         Parser.consume(Tokens.PROCEDURE);
+        FunctionDeclaration declaration = new FunctionDeclaration(Parser.lookahead);
         Parser.consume(Tokens.ID);
         procedureHeading1();
+        return declaration;
     }
 
     private static void procedureHeading1(){
@@ -544,15 +551,18 @@ public class Grammar {
         }
     }
 
-    private static void functionDecl(){
-        functionHeading();
+    private static AST functionDecl(){
+        AST heading = functionHeading();
         block();
+        return heading;
     }
 
-    private static void functionHeading(){
+    private static AST functionHeading(){
         Parser.consume(Tokens.FUNCTION);
+        FunctionDeclaration declaration = new FunctionDeclaration(Parser.lookahead);
         Parser.consume(Tokens.ID);
         functionHeading1();
+        return declaration;
     }
 
     private static void functionHeading1(){

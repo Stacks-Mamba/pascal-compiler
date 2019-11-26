@@ -15,12 +15,12 @@ public class SymbolTable {
 
     private void initializeTable(){
         //Introduzir os tipos padrão na tabela de símbolos
-        this.addEntry(new TypeSymbol("INTEGER"));
-        this.addEntry(new TypeSymbol("REAL"));
-        this.addEntry(new TypeSymbol("CHAR"));
-        this.addEntry(new TypeSymbol("TEXT"));
-        this.addEntry(new TypeSymbol("WRITELN"));
-        this.addEntry(new TypeSymbol("READLN"));
+        this.addEntry(new TypeSymbol("INTEGER".toLowerCase()));
+        this.addEntry(new TypeSymbol("REAL".toLowerCase()));
+        this.addEntry(new TypeSymbol("CHAR".toLowerCase()));
+        this.addEntry(new TypeSymbol("TEXT".toLowerCase()));
+        this.addEntry(new TypeSymbol("WRITELN".toLowerCase()));
+        this.addEntry(new TypeSymbol("READLN".toLowerCase()));
     }
 
 

@@ -1,6 +1,10 @@
 program inflation(output);
 const n = 10;
 var i :integer; w1,w2,w3 : real;
+function Power(Base:Real):Real;
+begin
+writeln('test')
+end
 begin
   i:=0;
   w1:=1.0;
