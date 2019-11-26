@@ -27,14 +27,21 @@ public class SemanticAnalyzer {
         errors.add(e);
     }
 
-    public void analyze(AST syntaxTree){
-        //Método que vai visitar cada nó na ast
-        syntaxTree.visit(symbolTable);
-        symbolTable.printTable();
-        //Mostrar erros encontrados
+    public void showErrors(){
         for(Error e:errors){
             e.throwError();
         }
+    }
+
+    //Retorna true se a análise foi realizada e não foram encontrados erros
+    public boolean analyze(AST syntaxTree){
+        //Método que vai visitar cada nó na ast
+        syntaxTree.visit(symbolTable);
+        symbolTable.printTable();
+        if(errors.size()>0){
+            return false;
+        }
+        return true;
     }
 
 }

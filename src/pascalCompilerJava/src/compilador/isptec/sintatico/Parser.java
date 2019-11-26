@@ -75,7 +75,7 @@ public class Parser {
         }
     }
 
-    private static void showErrors(){
+    public static void showErrors(){
         System.err.printf("Erros: %d\n",errors.size());
         for(Error e : errors){
             e.throwError();
@@ -83,7 +83,7 @@ public class Parser {
 
     }
 
-    public static void parse(String file) throws IOException {
+    public static AST parse(String file) throws IOException {
         //Initialize parser
         initParser(file);
         //Comecar a execucao da análise léxica
@@ -91,14 +91,15 @@ public class Parser {
         if(errors.size()>0){
             showErrors();
             System.err.println("Compilacao Terminada com erros");
+            return null;
         }
         else{
-            System.out.println("Compilacao Terminada com sucesso");
+            /*System.out.println("Compilacao Terminada com sucesso");
             SemanticAnalyzer sem = SemanticAnalyzer.getInstance();
-            sem.analyze(program);
+            sem.analyze(program);*/
         }
+        return program;
     }
-    
 
     
     public static void main(String[] args) throws IOException {
